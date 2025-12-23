@@ -1,0 +1,15 @@
+﻿@model SangataWeb.Models.ErrorViewModel
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Home Page";
+    ViewBag.UserName = @Model.ErrorMessage;
+    ViewBag.Content = "Home";
+}
+@section pMain {
+    @{
+
+        <p>@Model.ErrorMessage</p>
+        
+    }
+}

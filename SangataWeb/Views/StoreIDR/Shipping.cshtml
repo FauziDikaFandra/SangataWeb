@@ -1,0 +1,1762 @@
+﻿@model SangataWeb.Models.ViewModel
+@{
+    ViewBag.Title = "Sangata | Shipping";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.UserName = @Model.User_Login.UserName;
+    ViewBag.Content = "Shipping";
+}
+@section pMain {
+    <nav class="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme"
+         id="layout-navbar">
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
+                <i class="icon-base bx bx-menu icon-md"></i>
+
+            </a>
+        </div>
+
+        <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
+            <!-- Search -->
+            <div class="navbar-nav align-items-center me-auto">
+                @* <div class="nav-item d-flex align-items-center">
+            <span class="w-px-22 h-px-22"><i class="icon-base bx bx-search icon-md"></i></span>
+            <input type="text"
+            class="form-control border-0 shadow-none ps-1 ps-sm-2 d-md-block d-none"
+            placeholder="Search..."
+            aria-label="Search..." />
+            </div> *@
+                <div class="row">
+                    <div class="col">
+                        <a id="mainnew" title="Add New" href="#" class="btn btn-primary btn-circle ml-2 tombol">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                        @*                         <a id="mainsave" title="Save" href="#" class="btn btn-success btn-circle ml-4">
+                    <i class="fas fa-save"></i>
+                    </a> *@
+                        <a id="mainfirst" title="Previous" href="#" class="btn btn-info btn-circle ml-4 tombol">
+                            <i class="fas fa-fast-backward"></i>
+                        </a>
+                        <a id="mainprev" title="Previous" href="#" class="btn btn-info btn-circle ml-4 tombol">
+                            <i class="fas fa-step-backward"></i>
+                        </a>
+                        <a id="mainnext" title="Next" href="#" class="btn btn-warning btn-circle ml-4 tombol">
+                            <i class="fas fa-step-forward"></i>
+                        </a>
+                        <a id="mainend" title="Next" href="#" class="btn btn-warning btn-circle ml-4 tombol">
+                            <i class="fas fa-fast-forward"></i>
+                        </a>
+                        <a id="mainfind" title="Find" href="#" class="btn btn-danger btn-circle ml-4 tombol" data-bs-toggle="modal" data-bs-target="#findData">
+                            <i class="fas fa-search"></i>
+                        </a>
+                        @*                                     <a id="popost" title="Post" href="#" class="btn btn-success btn-circle ml-4 btn-sm">
+                    <i class="fas fa-paper-plane"></i>
+                    </a> *@
+                        <input class="d-none" id="pagestatus" value="@((Model.vShipping == null) ? 0 : Model.vShipping.Id)" />
+                    </div>
+                </div>
+            </div>
+            <!-- /Search -->
+
+            <ul class="navbar-nav flex-row align-items-center ms-md-auto">
+
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                    <a class="nav-link dropdown-toggle hide-arrow p-0"
+                       href="javascript:void(0);"
+                       data-bs-toggle="dropdown">
+                        <div class="avatar avatar-online">
+                            <img src="../../../assets/img/avatars/1.png" class="w-px-40 h-auto rounded-circle" />
+                        </div>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0 me-3">
+                                        <div class="avatar avatar-online">
+                                            <img src="../../../assets/img/avatars/1.png" alt="" class="w-px-40 h-auto rounded-circle" />
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0">@Model.User_Login.UserName</h6>
+                                        <small class="text-body-secondary">Admin</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown-divider my-1"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="icon-base bx bx-user icon-md me-3"></i><span>My Profile</span>
+                            </a>
+                        </li>
+                        @*                         <li>
+                    <a class="dropdown-item" href="#">
+                    <i class="icon-base bx bx-cog icon-md me-3"></i><span>Settings</span>
+                    </a>
+                    </li>
+                    <li>
+                    <a class="dropdown-item" href="#">
+                    <span class="d-flex align-items-center align-middle">
+                    <i class="flex-shrink-0 icon-base bx bx-credit-card icon-md me-3"></i><span class="flex-grow-1 align-middle">Billing Plan</span>
+                    <span class="flex-shrink-0 badge rounded-pill bg-danger">4</span>
+                    </span>
+                    </a>
+                    </li> *@
+                        <li>
+                            <div class="dropdown-divider my-1"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="../Home/Logout">
+                                <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--/ User -->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- / Navbar -->
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+            <div class="col-md-12">
+                <div class="col-lg-6 col-xl-12 col-xxl-6 h-100">
+                    <div class="card theme-wizard pb-5">
+                        <div class="card-header bg-body-tertiary pt-5 pb-0">
+                            <ul class="nav nav-pills mb-3" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button id="tabRequest" class="nav-link active" data-wizard-step="1" data-bs-toggle="pill" data-bs-target="#form-wizard-tab1" type="button" role="tab" aria-controls="form-wizard-tab1" aria-selected="true"><span class="fas fa-asterisk me-2" data-fa-transform="shrink-2"></span><span class="d-none d-md-inline-block fs-10">Request</span></button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button id="tabMaterial" class="nav-link" data-wizard-step="2" data-bs-toggle="pill" data-bs-target="#form-wizard-tab2" type="button" role="tab" aria-controls="form-wizard-tab2" aria-selected="false"><span class="fab fa-bimobject me-2" data-fa-transform="shrink-2"></span><span class="d-none d-md-inline-block fs-10">Material</span></button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button id="tabPetty" class="nav-link" data-wizard-step="3" data-bs-toggle="pill" data-bs-target="#form-wizard-tab3" type="button" role="tab" aria-controls="form-wizard-tab2" aria-selected="false"><span class="fab fa-bitbucket me-2" data-fa-transform="shrink-2"></span><span class="d-none d-md-inline-block fs-10">Petty Cash</span></button>
+                                </li>
+                                @* <li id="tabMaterial" class="nav-item" role="presentation">
+                            <button class="nav-link" data-wizard-step="3" data-bs-toggle="pill" data-bs-target="#form-wizard-tab3" type="button" role="tab" aria-controls="form-wizard-tab3" aria-selected="false"><span class="fab fa-bitbucket me-2" data-fa-transform="down-2 shrink-2"></span><span class="d-none d-md-inline-block fs-10">Material</span></button>
+                            </li> *@
+                                @*                         <li class="nav-item" role="presentation">
+                            <button class="nav-link" data-wizard-step="4" data-bs-toggle="pill" data-bs-target="#form-wizard-tab4" type="button" role="tab" aria-controls="form-wizard-tab4" aria-selected="false"><span class="fas fa-thumbs-up me-2" data-fa-transform="shrink-2"></span><span class="d-none d-md-inline-block fs-10">Done</span></button>
+                            </li> *@
+                            </ul>
+                        </div>
+                        <div class="card-body py-0">
+                            <div class="tab-content px-1 py-3">
+                                <div class="tab-pane px-sm-3 px-md-5 active show" role="tabpanel" aria-labelledby="form-wizard-tab1" id="form-wizard-tab1">
+                                    <form id="firstForm" data-wizard-form="1">
+                                        <div class="card pb-5">
+                                            <div class="card-body pb-0">
+                                                <div class="row g-6 pb-3">
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <label for="siID" class="form-label">Shipping No</label>
+                                                            <input class="d-none" id="RequestId" value="@Model.vShipping.Id" />
+                                                            @* <input class="d-none" id="LastNo" value="@(Convert.ToInt32(Model.vShipping.Id) + 1)" /> *@
+                                                            <input id="siID"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@Model.vShipping.siID" disabled />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="siFreightType" class="form-label">Freight Type</label>
+                                                            <select id="siFreightType" data-placeholder="Choose Freight Type" class="form-select form-select-sm select2">
+                                                                @* <option data-code="0" value="" selected disabled hidden>** Choose Type **</option> *@
+                                                                <option data-code="0"></option>
+                                                                @if (Model.vFreightType != null)
+                                                                {
+                                                                    foreach (var item in Model.vFreightType)
+                                                                    {
+                                                                        <!option data-code="@item.siFreightType" value="@item.siFreightType" @((item.siFreightType == Model.vShipping.siFreightType) ? "selected" : "")>@item.siFreightType</!option>
+                                                                    }
+                                                                }
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <label for="siSiteReceived" class="form-label">Site Received</label>
+                                                            <select id="siSiteReceived" data-placeholder="Choose Site Received" class="form-select form-select-sm select2  vtext">
+                                                                @* <option data-code="0" value="" selected disabled hidden>** Choose Type **</option> *@
+
+                                                                <option data-code="0"></option>
+                                                                @if (Model.vStoreMan != null)
+                                                                {
+                                                                    foreach (var item in Model.vStoreMan)
+                                                                    {
+                                                                        <!option data-code="@item.stEmplName" data-city="@item.stEmplNo" value="@item.stEmplName" @((item.stEmplName == Model.vShipping.siSiteReceived) ? " selected" : "")>@item.stEmplName</!option>
+                                                                    }
+                                                                }
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-5">
+                                                                <label for="siFreightCost" class="form-label">Local & Freight Cost</label>
+                                                                <input id="siFreightCost"
+                                                                       class="form-control form-control-sm vtext vnumber"
+                                                                       type="text"
+                                                                       placeholder=""
+                                                                       value="@Model.vShipping.siFreightCost" />
+                                                                <div class="valid-feedback">
+                                                                    Looks good!
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-7">
+                                                                <label for="siDate" class="form-label">Received Date</label>
+                                                                <input id="siDate"
+                                                                       class="form-control form-control-sm"
+                                                                       type="text"
+                                                                       placeholder=""
+                                                                       value="@Convert.ToDateTime(Model.vShipping.siDate).ToString("dd/MM/yyyy")" />
+</div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer bg-body-tertiary pb-3">
+                                                <div class="px-sm-0 px-md-0">
+                                                    <ul class="pager wizard list-inline mb-0">
+                                                        <li class="previous">
+                                                            <button class="btn btn-link ps-0" type="button"></button>
+                                                        </li>
+                                                        <li class="next">
+                                                            <button id="requestAdd" class="btn btn-primary px-5 px-sm-6" type="button"><span id="requestAdds">Update</span><span class="fas fa-save fa-lg ms-2" data-fa-transform="shrink-3"> </span></button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane px-sm-3 px-md-5" role="tabpanel" aria-labelledby="form-wizard-tab2" id="form-wizard-tab2">
+                                    <form data-wizard-form="2">
+                                        <div class="card pb-5">
+                                            <div class="card-body pb-0">
+                                                <div class="row g-6 pb-3">
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <input class="d-none" id="MaterialID" value="0" />
+                                                            <input class="d-none" id="sisNo"
+                                                                   type="text"
+                                                                   placeholder="" value="0" disabled />
+                                                            <input class="d-none" id="sisID"
+                                                                   type="text"
+                                                                   placeholder="" value="0" disabled />
+                                                            <label for="sisItem" class="form-label">Item</label>
+                                                            <input id="sisItem"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="0" disabled />
+                                                        </div>
+                                                        <div>
+                                                            <label for="sisPOSubNo" class="form-label">PO Number</label>
+                                                            <select id="sisPOSubNo" data-placeholder="Choose PO Number" data-first="3" data-two="1" data-three="2" data-four="6" class="form-select form-select-sm select2 ddmulti3 vtext">
+                                                                @* <option data-code="0" value="" selected disabled hidden>** Choose Type **</option> *@
+
+                                                                <option data-code="0"></option>
+                                                                <optgroup class="def-cursor" label="PosID" data-code="Unit" data-group="RegsStock" data-city="Description">
+                                                                    @if (Model.vShippingPONo != null)
+                                                                    {
+                                                                        foreach (var item in Model.vShippingPONo)
+                                                                        {
+                                                                            <option data-id="@item.uID" data-curr="@item.poCurrency" data-cost="@item.posUnitCost" data-fre="@item.poFreight" data-code="@item.uDescription" data-city="@item.sDescription" data-group="@item.reqsStockCode" value="@item.posID">@item.posID</option>
+                                                                        }
+                                                                    }
+                                                                </optgroup>
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <label for="reqsStockCode" class="form-label">Stock Code</label>
+                                                                <input id="reqsStockCode"
+                                                                       class="form-control form-control-sm"
+                                                                       type="text"
+                                                                       placeholder="" disabled />
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label for="uDescription" class="form-label">Unit</label>
+                                                                <input id="uDescription"
+                                                                       class="form-control form-control-sm"
+                                                                       type="text"
+                                                                       placeholder="" disabled />
+
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="sDescription" class="form-label">Material Description</label>
+                                                            <input id="sDescription"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder="" disabled />
+
+                                                        </div>
+                                                        <div>
+                                                            <label for="sisQty" class="form-label">Qty</label>
+                                                            <input id="sisQty"
+                                                                   class="form-control form-control-sm vtext vnumber"
+                                                                   type="text"
+                                                                   placeholder="" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <label for="poCurrency" class="form-label">Currency</label>
+                                                            <input id="poCurrency"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder="" disabled/>
+
+                                                        </div>
+                                                        <div>
+                                                            <label for="sisFreightAlloc" class="form-label">Freight Alloc (%)</label>
+                                                            <input id="sisFreightAlloc"
+                                                                   class="form-control form-control-sm vtext vnumber"
+                                                                   type="text"
+                                                                   placeholder="" />
+                                                        </div>
+                                                        <div>
+                                                            <label for="UnitCost" class="form-label">Unit Cost</label>
+                                                            <input id="UnitCost"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder="" disabled/>
+
+                                                        </div>
+                                                        <div>
+                                                            <label for="UnitCostFreight" class="form-label">Unit Cost + Local Freight Cost</label>
+                                                            <input id="UnitCostFreight"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder="" disabled/>
+                                                        </div>
+                                                        <div>
+                                                            <label for="TotalCost" class="form-label">Total Cost</label>
+                                                            <input id="TotalCost"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder="" disabled />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer bg-body-tertiary pb-3">
+                                                <div class="px-sm-0 px-md-0">
+                                                    <ul class="pager wizard list-inline mb-0">
+                                                        <li class="previous">
+                                                            <button id="MaterialClear" class="btn btn-secondary px-5 px-sm-6" type="button">Clear<span class="fa fa-eraser fa-lg ms-2" data-fa-transform="shrink-3"> </span></button>
+                                                        </li>
+                                                        <li class="next">
+                                                            <button id="MaterialAdd" class="btn btn-info px-5 px-sm-6" type="button"><span id="MaterialAdds">Add</span><span class="far fa-plus-square fa-lg ms-2" data-fa-transform="shrink-3"> </span></button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="table-responsive text-nowrap py-4">
+                                            <table id="MaterialTable" class="table table-striped">
+                                                <thead class="table-dark">
+                                                    <tr>
+                                                        <th class="d-none">Id</th>
+                                                        <th class="d-none">ID</th>
+                                                        <th class="d-none">No</th>
+                                                        <th>Item</th>
+                                                        <th>PO Number</th>
+                                                        <th>Stock Code</th>
+                                                        <th>Material Description</th>
+                                                        <th>Unit</th>
+                                                        <th>Qty</th>
+                                                        <th>Curr</th>
+                                                        <th>Freight Alloc (%)</th>
+                                                        <th>Unit Cost</th>
+                                                        <th>Unit Cost + Local Freight Cost</th>
+                                                        <th>Total Cost</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table-border-bottom-0">
+                                                    @if (Model.vShippingSub.Count > 0)
+                                                    {
+                                                        foreach (var item in Model.vShippingSub)
+                                                        {
+                                                            <tr>
+                                                                <td class="d-none">
+                                                                    <span class="rMaterialId">@item.Id</span>
+                                                                </td>
+                                                                <td class="d-none">
+                                                                    <span class="sisID">@item.sisID</span>
+                                                                </td>
+                                                                <td class="d-none">
+                                                                    <span class="sisNo">@item.sisNo</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="sisItem">@item.sisItem</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="fas fa-circle fs-11 me-1 text-primary"></span><span class="sisPOSubNo">@item.sisPOSubNo</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="fas fa-circle fs-11 me-1 text-primary"></span><span class="reqsStockCode">@item.reqsStockCode</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="sDescription">@item.sDescription</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="uDescription">@item.uDescription</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="sisQty">@item.sisQty</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="poCurrency">@item.poCurrency</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="sisFreightAlloc">@item.sisFreightAlloc</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="UnitCost">@Convert.ToDecimal(item.UnitCost).ToString("N2")</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="UnitCostFreight">@Convert.ToDecimal(item.UnitCostFreight).ToString("N2")</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="UnitCostFreight">@Convert.ToDecimal(item.TotalCost).ToString("N2")</span>
+                                                                </td>
+                                                                <td>
+                                                                    <div>
+                                                                        <a class="sEdit" data-code="@item.Id"><i class="icon-base bx bx-edit-alt icon-xm text-info me-1"></i></a>
+                                                                        <a class="sDelete" data-code="@item.Id"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane px-sm-3 px-md-5" role="tabpanel" aria-labelledby="form-wizard-tab3" id="form-wizard-tab3">
+                                    <form data-wizard-form="3">
+                                        <div class="card pb-5">
+                                            <div class="card-body pb-0">
+                                                <div class="row g-6 pb-3">
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <input class="d-none" id="LabourID" value="0" />
+                                                            <input class="d-none" id="siNo_"
+                                                                   type="text"
+                                                                   placeholder="" value="0" disabled />
+                                                            <input class="d-none" id="siID_"
+                                                                   type="text"
+                                                                   placeholder="" value="0" disabled />
+                                                            <label for="siItem_" class="form-label">Item</label>
+                                                            <input id="siItem_"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="0" disabled />
+                                                        </div>
+                                                        <div>
+                                                            <label for="siOrReqNo_" class="form-label">Original Req No</label>
+                                                            <select id="siOrReqNo_" data-placeholder="Choose Original Req No" data-first="3" data-two="1" data-three="2" data-four="6" class="form-select form-select-sm select2 ddmulti3 vtext">
+                                                                @* <option data-code="0" value="" selected disabled hidden>** Choose Type **</option> *@
+
+                                                                <option data-code="0"></option>
+                                                                <optgroup class="def-cursor" label="reqsID" data-code="Unit" data-group="RegsStock" data-city="Description">
+                                                                    @if (Model.vOrReqNo != null)
+                                                                    {
+                                                                        foreach (var item in Model.vOrReqNo)
+                                                                        {
+                                                                            <option data-id="@item.uID" data-code="@item.uDescription" data-city="@item.sDescription" data-group="@item.reqsStockCode" value="@item.reqsID">@item.reqsID</option>
+                                                                        }
+                                                                    }
+                                                                </optgroup>
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <label for="reqsStockCode_" class="form-label">Stock Code</label>
+                                                                <input id="reqsStockCode_"
+                                                                       class="form-control form-control-sm"
+                                                                       type="text"
+                                                                       placeholder="" disabled />
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label for="uDescription_" class="form-label">Unit</label>
+                                                                <input id="uDescription_"
+                                                                       class="form-control form-control-sm"
+                                                                       type="text"
+                                                                       placeholder="" disabled />
+
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="sDescription_" class="form-label">Material Description</label>
+                                                            <input id="sDescription_"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder="" disabled />
+
+                                                        </div>
+                                                        <div>
+                                                            <label for="siQty_" class="form-label">Qty</label>
+                                                            <input id="siQty_"
+                                                                   class="form-control form-control-sm vtext vnumber"
+                                                                   type="text"
+                                                                   placeholder="" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <label for="siCurrency_" class="form-label">Currency</label>
+                                                            <select id="siCurrency_" data-placeholder="Choose Currency" data-first="3" data-two="9" class="form-select form-select-sm select2 ddmulti1 vtext">
+                    
+                                                                <option data-code="0"></option>
+                                                                <optgroup class="def-cursor" label="Code" data-city="Name">
+                                                                    @if (Model.vCurrency != null)
+                                                                    {
+                                                                        foreach (var item in Model.vCurrency)
+                                                                        {
+                                                                            <!option data-code="@item.cName" data-city="@item.cName" value="@item.cID">@item.cID</!option>
+                                                                        }
+                                                                    }
+                                                                </optgroup>
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="siFreightAlloc_" class="form-label">Freight Alloc (%)</label>
+                                                            <input id="siFreightAlloc_"
+                                                                   class="form-control form-control-sm vtext vnumber"
+                                                                   type="text"
+                                                                   placeholder="" />
+                                                        </div>
+                                                        <div>
+                                                            <label for="siUnitCost_" class="form-label">Unit Cost</label>
+                                                            <input id="siUnitCost_"
+                                                                   class="form-control form-control-sm vtext vnumber"
+                                                                   type="text"
+                                                                   placeholder="" />
+
+                                                        </div>
+                                                        <div>
+                                                            <label for="UnitCostFreight_" class="form-label">Unit Cost + Local Freight Cost</label>
+                                                            <input id="UnitCostFreight_"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder="" disabled />
+                                                        </div>
+                                                        <div>
+                                                            <label for="TotalCost_" class="form-label">Total Cost</label>
+                                                            <input id="TotalCost_"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder="" disabled />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer bg-body-tertiary pb-3">
+                                                <div class="px-sm-0 px-md-0">
+                                                    <ul class="pager wizard list-inline mb-0">
+                                                        <li class="previous">
+                                                            <button id="LabourClear" class="btn btn-secondary px-5 px-sm-6" type="button">Clear<span class="fa fa-eraser fa-lg ms-2" data-fa-transform="shrink-3"> </span></button>
+                                                        </li>
+                                                        <li class="next">
+                                                            <button id="LabourAdd" class="btn btn-info px-5 px-sm-6" type="button"><span id="LabourAdds">Add</span><span class="far fa-plus-square fa-lg ms-2" data-fa-transform="shrink-3"> </span></button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="table-responsive text-nowrap py-4">
+                                            <table id="LabourTable" class="table table-striped">
+                                                <thead class="table-dark">
+                                                    <tr>
+                                                        <th class="d-none">Id</th>
+                                                        <th class="d-none">ID</th>
+                                                        <th class="d-none">No</th>
+                                                        <th>Item</th>
+                                                        <th>Original Req No</th>
+                                                        <th>Stock Code</th>
+                                                        <th>Material Description</th>
+                                                        <th>Unit</th>
+                                                        <th>Qty</th>
+                                                        <th>Curr</th>
+                                                        <th>Freight Alloc (%)</th>
+                                                        <th>Unit Cost</th>
+                                                        <th>Unit Cost + Local Freight Cost</th>
+                                                        <th>Total Cost</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table-border-bottom-0">
+                                                    @if (Model.vStoreIssueSub.Count > 0)
+                                                    {
+                                                        foreach (var item in Model.vStoreIssueSub)
+                                                        {
+                                                            <tr>
+                                                                <td class="d-none">
+                                                                    <span class="rLabourId">@item.Id</span>
+                                                                </td>
+                                                                <td class="d-none">
+                                                                    <span class="siID_">@item.siID</span>
+                                                                </td>
+                                                                <td class="d-none">
+                                                                    <span class="siNo_">@item.siNo</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="siItem_">@item.siItem</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="fas fa-circle fs-11 me-1 text-primary"></span><span class="siOrReqNo_">@item.siOrReqNo</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="fas fa-circle fs-11 me-1 text-primary"></span><span class="reqsStockCode_">@item.reqsStockCode</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="sDescription_">@item.sDescription</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="uDescription_">@item.uDescription</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="siQty_">@item.siQty</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="siCurrency_">@item.siCurrency</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="siFreightAlloc_">@item.siFreightAlloc</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="siUnitCost_">@Convert.ToDecimal(item.siUnitCost).ToString("N2")</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="UnitCostFreight_">@Convert.ToDecimal(item.UnitCostFreight).ToString("N2")</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="TotalCost_">@Convert.ToDecimal(item.TotalCost).ToString("N2")</span>
+                                                                </td>
+                                                                <td>
+                                                                    <div>
+                                                                        <a class="sEdit" data-code="@item.Id"><i class="icon-base bx bx-edit-alt icon-xm text-info me-1"></i></a>
+                                                                        <a class="sDelete" data-code="@item.Id"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <!-- / Content -->
+        <!-- Footer -->
+        <footer class="content-footer footer bg-footer-theme">
+            <div class="container-xxl">
+                <div class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                    <div class="mb-2 mb-md-0">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        made by
+                        <a href="https://ptodg.com/id/" target="_blank" class="footer-link">ODG Indonesia</a>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+        <!-- / Footer -->
+
+        <div class="content-backdrop fade"></div>
+        <div class="modal fade" id="findData" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body px-3 pt-2">
+                        <div class="table-responsive text-nowrap pb-3">
+                            <table id="requestFindTable" class="table table-striped">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="d-none">RequestFindID</th>
+                                        <th>Shipping No</th>
+                                        <th>Received Date</th>
+                                        <th>Site Received</th>
+                                        <th>Freight Type</th>
+                                        
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                    @if (Model.vShippingFind.Count > 0)
+                                    {
+                                        foreach (var item in Model.vShippingFind)
+                                        {
+                                            <tr>
+                                                <td class="d-none">
+                                                    <span class="fRequestID">@item.Id</span>
+                                                </td>
+                                                <td>
+                                                    <span class="fsiID">@item.siID</span>
+                                                </td>
+                                                <td>
+                                                    <span class="fsiDate">@Convert.ToDateTime(item.siDate).ToString("dd-MMM-yyyy")</span>
+                                                </td>
+                                                <td>
+                                                    <span class="firPreparedBy">@item.siSiteReceived</span>
+                                                </td>
+                                                <td>
+                                                    <span class="firJobNo">@item.siFreightType</span>
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Content wrapper -->
+
+
+    <script>
+        $(document).ready(function () {
+            var ext = false;
+            var addtyp = 'labour';
+            var dt_to = $.datepicker.formatDate('dd/mm/yy', new Date());
+            var stopBlinking = false;
+            $('#siDate').datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-5:+1",
+            });
+            $('#sisPOSubNo').on('change', function () {
+                var _unitCost = $(this).find('option:selected').attr('data-cost') == null ? 0 : $(this).find('option:selected').attr('data-cost');
+                var _freight = $(this).find('option:selected').attr('data-fre') == null ? 0 : $(this).find('option:selected').attr('data-fre');
+                var _freightAllo = $('#sisFreightAlloc').val() == '' ? 0 : $('#sisFreightAlloc').val();
+                var _qty = $('#sisQty').val() == '' ? 0 : $('#sisQty').val();
+                var _unitCostFreight = _unitCost + (_freight * _freightAllo / _qty == 0 ? 1 : _qty);
+                $('#uDescription').val($(this).find('option:selected').attr('data-code'));
+                $('#sDescription').val($(this).find('option:selected').attr('data-city'));
+                $('#reqsStockCode').val($(this).find('option:selected').attr('data-group'));
+                $('#poCurrency').val($(this).find('option:selected').attr('data-curr'));
+                $('#UnitCost').val(_unitCost);
+                $('#UnitCostFreight').val(parseFloat(_unitCostFreight).toFixed(2));
+                $('#TotalCost').val(parseFloat(_unitCostFreight * _qty).toFixed(2));
+                
+            });
+            $('#siOrReqNo_').on('change', function () {
+                // var _unitCost = $(this).find('option:selected').attr('data-cost') == null ? 0 : $(this).find('option:selected').attr('data-cost');
+                // var _freight = $(this).find('option:selected').attr('data-fre') == null ? 0 : $(this).find('option:selected').attr('data-fre');
+                // var _freightAllo = $('#sisFreightAlloc').val() == '' ? 0 : $('#sisFreightAlloc').val();
+                // var _qty = $('#sisQty').val() == '' ? 0 : $('#sisQty').val();
+                // var _unitCostFreight = _unitCost + (_freight * _freightAllo / _qty == 0 ? 1 : _qty);
+                $('#uDescription_').val($(this).find('option:selected').attr('data-code'));
+                $('#sDescription_').val($(this).find('option:selected').attr('data-city'));
+                $('#reqsStockCode_').val($(this).find('option:selected').attr('data-group'));
+                // $('#poCurrency').val($(this).find('option:selected').attr('data-curr'));
+                $('#siUnitCost_').val(0);
+                $('#siFreightAlloc_').val(0)
+                $('#UnitCostFreight_').val(0);
+                $('#TotalCost_').val(0);
+
+            });
+            $('#sisQty').on('change', function () {
+                var _unitCost = $('#UnitCost').val();
+                var _freight = $(this).find('option:selected').attr('data-fre') == null ? 0 : $(this).find('option:selected').attr('data-fre');
+                var _freightAllo = $('#sisFreightAlloc').val() == '' ? 0 : $('#sisFreightAlloc').val();
+                var _qty = $(this).val() == '' ? 0 : $(this).val();
+                var _unitCostFreight = _unitCost + (_freight * _freightAllo / _qty == 0 ? 1 : _qty);
+                $('#UnitCostFreight').val(parseFloat(_unitCostFreight).toFixed(2));
+                $('#TotalCost').val(parseFloat(_unitCostFreight * _qty).toFixed(2));
+            });
+            $('#siQty_').on('change', function () {
+                var _unitCost = $('#siUnitCost_').val() == '' ? 0 : $('#siUnitCost_').val();
+                // var _freight = 0;
+                // var _freightAllo = 0;
+                var _qty = $(this).val() == '' ? 0 : $(this).val();
+                var _total = _unitCost * _qty
+                // var _unitCostFreight = _unitCost;
+                $('#UnitCostFreight_').val(parseFloat(_unitCost).toFixed(2));
+                $('#TotalCost_').val(parseFloat(_total).toFixed(2));
+            });
+            $('#siUnitCost_').on('change', function () {
+                var _unitCost = $(this).val() == '' ? 0 : $(this).val();
+                // var _freight = 0;
+                // var _freightAllo = 0;
+                var _qty = $('#siQty_').val() == '' ? 0 : $('#siQty_').val();
+                // var _unitCostFreight = _unitCost;
+                var _total = _unitCost * _qty
+                $('#UnitCostFreight_').val(parseFloat(_unitCost).toFixed(2));
+                $('#TotalCost_').val(parseFloat(_total).toFixed(2));
+            });
+
+            function GetExistingRequest() {
+                $.ajax({
+                    url: '/StoreIDR/GetExistingShipping',
+                    type: "POST",
+                    data: JSON.stringify(getRequest()),
+                    dataType: 'json',
+                    // cache: false,
+                    contentType: 'application/json; charset=utf-8',
+                    // traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            // alert(data.success);
+                            if (data.success) {
+                                Swal.fire({
+                                    title: 'Duplicate!!!',
+                                    text: 'Shipping no : ' + data.typ_ + ' already exist!',
+                                    icon: 'error'
+                                })
+                                ext = false;
+                            }
+                            else {
+                                Swal.fire({
+                                    title: 'Shipping!!!',
+                                    text: 'Shipping no : ' + data.typ_ + ' Saved!',
+                                    icon: 'success'
+                                })
+                                $("#RequestId").val(data.result);
+                                // $("#LastNo").val(parseInt(data.typ_) + 1);
+                                $('.tombol').removeClass('disabled');
+                                clearRequestValid();
+                            }
+
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            // window.location = "/LightingPlant/Index"
+                        }
+                        else {
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            alert(data.text);
+                            ext = false;
+                        }
+                    },
+                    error: function (data) {
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                        alert(data.text);
+                        ext = false;
+                    }
+                });
+                return ext;
+            }
+
+            function UpdateRequest() {
+                $.ajax({
+                    url: '/StoreIDR/UpdateShipping',
+                    type: "POST",
+                    data: JSON.stringify(getRequest()),
+                    dataType: 'json',
+                    // cache: false,
+                    contentType: 'application/json; charset=utf-8',
+                    // traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            Swal.fire({
+                                title: 'Shipping!!!',
+                                text: 'Shipping No : ' + data.typ_ + ' Updated!',
+                                icon: 'success'
+                            })
+
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            clearRequestValid();
+                            // window.location = "/LightingPlant/Index"
+                        }
+                        else {
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            alert(data.text);
+                            ext = false;
+                        }
+                    },
+                    error: function (data) {
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                        alert(data.text);
+                        ext = false;
+                    }
+                });
+                return ext;
+            }
+
+            function getRequest() {
+                var from = $("#siDate").val().split("/");
+                var dt_siDate = new Date(from[2] + '-' + from[1] + '-' + from[0]);
+                var tmp_RequestId = $('#RequestId').val();
+                var tmp_siID = $('#siID').val();
+                var tmp_siFreightType = $('#siFreightType').val();
+                var tmp_siSiteReceived = $('#siSiteReceived').val();
+                var tmp_siFreightCost = $('#siFreightCost').val();
+                var tmp_siDate = dt_siDate;
+                return (tmp_siID == "") ? null :
+                    {
+                        Id: tmp_RequestId,
+                        siID: tmp_siID,
+                        siFreightType: tmp_siFreightType,
+                        siSiteReceived: tmp_siSiteReceived,
+                        siFreightCost: tmp_siFreightCost,
+                        siDate: tmp_siDate
+                    };
+            }
+
+            function clearRequestValid() {
+                clearValidMain();
+            }
+            function clear() {
+                $('#RequestId').val('0');
+                $('#requestAdds').html('Save');
+                $('#siID').val('');
+                $('#siID').prop("disabled", false);
+                $('#siFreightCost').val('');
+                $('#siFreightType').val(null).trigger('change');
+                $('#siSiteReceived').val(null).trigger('change');
+                $('#siDate').val(dt_to);
+                clearValidMain();
+                clearMaterial();
+                clearLabour();
+                $('#MaterialTable tbody').empty();
+                $('#LabourTable tbody').empty();
+                $('#siID').focus();
+            }
+
+            function clearValidMain() {
+                $(".is-valid").each(function () {
+                    $(this).removeClass('is-valid');
+                });
+                $(".is-invalid").each(function () {
+                    $(this).removeClass('is-invalid');
+                });
+                $(".select2-selection.select2-selection--single").each(function () {
+                    $(this).find('.select2-selection__rendered').removeAttr('title');
+                });
+            }
+
+            $('#MaterialTable').DataTable({
+                //responsive: true,
+                // "columnDefs": [
+                //     { "width": "80%", "targets": 2 }
+                // ],
+                paging: true,
+                "autoWidth": false,
+                searching: false,
+                //"lengthChange": false
+            });
+            $('#LabourTable').DataTable({
+                //responsive: true,
+                // "columnDefs": [
+                //     { "width": "80%", "targets": 2 }
+                // ],
+                paging: true,
+                "autoWidth": false,
+                searching: false,
+                //"lengthChange": false
+            });
+            $('#requestFindTable').DataTable({
+                //responsive: true,
+                // "columnDefs": [
+                //     { "width": "80%", "targets": 2 }
+                // ],
+                paging: true,
+                "autoWidth": false,
+                // searching: false,
+                "lengthChange": false
+            });
+
+            $('#MaterialTable').on('click', 'tbody tr td', function () {
+                getEditMaterial($(this))
+            });
+            $('#LabourTable').on('click', 'tbody tr td', function () {
+                getEditLabour($(this))
+            });
+
+
+            function getEditMaterial(ths) {
+                $('#MaterialID').val(ths.closest('tr').find('.rMaterialId').html());
+                $('#sisItem').val(ths.closest('tr').find('.sisItem').html());
+                $('#sisNo').val(ths.closest('tr').find('.sisNo').html());
+                $('#sisPOSubNo').val(ths.closest('tr').find('.sisPOSubNo').html()).trigger('change');
+                $('#sisPOSubNo').removeClass('is-invalid').removeClass('is-valid');
+                $('#reqsStockCode').val(ths.closest('tr').find('.reqsStockCode').html());
+                $('#sisID').val(ths.closest('tr').find('.sisID').html());
+                $('#sDescription').val(ths.closest('tr').find('.sDescription').html());
+                $('#uDescription').val(ths.closest('tr').find('.uDescription').html());
+                $('#sisQty').val(ths.closest('tr').find('.sisQty').html());
+                $('#poCurrency').val(ths.closest('tr').find('.poCurrency').html());
+                $('#sisFreightAlloc').val(ths.closest('tr').find('.sisFreightAlloc').html());
+                $('#UnitCost').val(ths.closest('tr').find('.UnitCost').html());
+                $('#TotalCost').val(ths.closest('tr').find('.TotalCost').html());
+                $('#UnitCostFreight').val(ths.closest('tr').find('.UnitCostFreight').html());
+                $('#MaterialAdds').html('Update');
+            }
+            function getEditLabour(ths) {
+                $('#LabourID').val(ths.closest('tr').find('.rLabourId').html());
+                $('#siItem_').val(ths.closest('tr').find('.siItem_').html());
+                $('#siNo_').val(ths.closest('tr').find('.siNo_').html());
+                $('#siOrReqNo_').val(ths.closest('tr').find('.siOrReqNo_').html()).trigger('change');
+                $('#siOrReqNo_').removeClass('is-invalid').removeClass('is-valid');
+                $('#reqsStockCode_').val(ths.closest('tr').find('.reqsStockCode_').html());
+                $('#siID_').val(ths.closest('tr').find('.siID_').html());
+                $('#sDescription_').val(ths.closest('tr').find('.sDescription_').html());
+                $('#uDescription_').val(ths.closest('tr').find('.uDescription_').html());
+                $('#siQty_').val(ths.closest('tr').find('.siQty_').html());
+                $('#siCurrency_').val(ths.closest('tr').find('.siCurrency_').html()).trigger('change');
+                $('#siCurrency_').removeClass('is-invalid').removeClass('is-valid');
+                $('#siFreightAlloc_').val(ths.closest('tr').find('.siFreightAlloc_').html());
+                $('#siUnitCost_').val(ths.closest('tr').find('.siUnitCost_').html());
+                $('#TotalCost_').val(ths.closest('tr').find('.TotalCost_').html());
+                $('#UnitCostFreight_').val(ths.closest('tr').find('.UnitCostFreight_').html());
+                $('#LabourAdds').html('Update');
+            }
+
+            $('#MaterialTable').on('click', '.sEdit', function () {
+                getEditMaterial($(this))
+            });
+            $('#LabourTable').on('click', '.sEdit', function () {
+                getEditLabour($(this))
+            });
+
+            $('#MaterialTable').on('click', '.sDelete', function () {
+                var Id = $(this).attr('data-code');
+                Swal.fire({
+                    title: 'Delete this Item?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes!',
+                    cancelButtonText: 'No!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        $(this).closest('tr').remove();
+                        DeleteItem('Material', Id);
+                    } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        Swal.fire(
+                            'Cancelled',
+                            '',
+                            'error'
+                        )
+                    }
+                })
+            });
+            $('#LabourTable').on('click', '.sDelete', function () {
+                var Id = $(this).attr('data-code');
+                Swal.fire({
+                    title: 'Delete this Item?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes!',
+                    cancelButtonText: 'No!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        $(this).closest('tr').remove();
+                        DeleteItem('Labour', Id);
+                    } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        Swal.fire(
+                            'Cancelled',
+                            '',
+                            'error'
+                        )
+                    }
+                })
+            });
+            function DeleteItem(typ, id) {
+                var itms = {};
+                itms.Id = id;
+                itms.Typ = typ
+                $.ajax({
+                    url: '/StoreIDR/DeleteShippingSub',
+                    type: "POST",
+                    data: JSON.stringify(itms),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            Swal.fire({
+                                title: 'Shipping!!!',
+                                    text: 'Shipping data has been deleted!',
+                                    icon: 'success'
+                                })
+                        }
+                        else {
+                            alert(data.text);
+                        }
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                    }
+                });
+            }
+
+            function SaveMaterial() {
+                $.ajax({
+                    url: '/StoreIDR/SaveShippingSub',
+                    type: "POST",
+                    data: JSON.stringify(getMaterial()),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            if (data.value.success) {
+                                addMaterial()
+                                if (data.value.typ_ == 'Create') {
+                                    $("#MaterialTable>tbody>tr:first").find('.rMaterialId').text(data.value.result);
+                                    $("#MaterialTable>tbody>tr:first").find('.sisItem').text(data.value.item);
+                                    $("#MaterialTable>tbody>tr:first").find('.sisID').text(data.value.no);
+                                    $("#MaterialTable>tbody>tr:first").find('.sDelete').attr('data-code', data.value.result);
+                                    $("#MaterialTable>tbody>tr:first").find('.sEdit').attr('data-code', data.value.result);
+                                }
+                                // $('#aID').prop("disabled", true);
+
+                                clearMaterial();
+                                clearValidMain();
+
+                            }
+                            else {
+                                Swal.fire({
+                                    title: 'Duplicate!!!',
+                                    text: 'Stock Code No : ' + data.value.typ_ + ' already exist!',
+                                    icon: 'error'
+                                })
+                            }
+
+
+                            // window.location = "/LightingPlant/Index"
+                        }
+                        else {
+                            alert(data.text);
+                        }
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    }
+                });
+            }
+            function SaveLabour() {
+                $.ajax({
+                    url: '/StoreIDR/SaveStoreIssueSub',
+                    type: "POST",
+                    data: JSON.stringify(getLabour()),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            if (data.value.success) {
+                                addLabour()
+                                if (data.value.typ_ == 'Create') {
+                                    $("#LabourTable>tbody>tr:first").find('.rLabourId').text(data.value.result);
+                                    $("#LabourTable>tbody>tr:first").find('.siItem_').text(data.value.item);
+                                    $("#LabourTable>tbody>tr:first").find('.siID_').text(data.value.no);
+                                    $("#LabourTable>tbody>tr:first").find('.sDelete').attr('data-code', data.value.result);
+                                    $("#LabourTable>tbody>tr:first").find('.sEdit').attr('data-code', data.value.result);
+                                }
+                                // $('#aID').prop("disabled", true);
+
+                                clearLabour();
+                                clearValidMain();
+
+                            }
+                            else {
+                                Swal.fire({
+                                    title: 'Duplicate!!!',
+                                    text: 'Stock Code No : ' + data.value.typ_ + ' already exist!',
+                                    icon: 'error'
+                                })
+                            }
+
+
+                            // window.location = "/LightingPlant/Index"
+                        }
+                        else {
+                            alert(data.text);
+                        }
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    }
+                });
+            }
+
+            function addMaterial() {
+                if ($('#MaterialID').val() != '0') {
+                    var elems = $('.rMaterialId').filter(function () {
+                        return this.textContent.trim() === $('#MaterialID').val()
+                    });
+                    elems.closest('tr').find('.sisNo').text($('#sisNo').val());
+                    elems.closest('tr').find('.sisID').text($('#sisID').val());
+                    elems.closest('tr').find('.reqsStockCode').text($('#reqsStockCode').val());
+                    elems.closest('tr').find('.sisPOSubNo').text($('#sisPOSubNo').val());
+                    elems.closest('tr').find('.sDescription').text($('#sDescription').val());
+                    elems.closest('tr').find('.uDescription').text($('#uDescription').val());
+                    elems.closest('tr').find('.sisQty').text($('#sisQty').val());
+                    elems.closest('tr').find('.poCurrency').text($('#poCurrency').val());
+                    elems.closest('tr').find('.sisFreightAlloc').text($('#sisFreightAlloc').val());
+                    elems.closest('tr').find('.UnitCost').text($('#UnitCost').val());
+                    elems.closest('tr').find('.sisItem').text($('#sisItem').val());
+                    elems.closest('tr').find('.UnitCostFreight').text($('#UnitCostFreight').val());
+                    elems.closest('tr').find('.TotalCost').text($('#TotalCost').val());
+                    blink(elems.closest('tr'));
+                }
+                else {
+                    var newRow = $("<tr>");
+                    var cols = '';
+
+                    cols += '<td class="d-none"> <span class="rMaterialId">' + $('#MaterialID').val() + '</span> </td>';
+                    cols += '<td class="d-none"> <span class="sisNo">' + $('#sisNo').val() + '</span> </td>';
+                    cols += '<td class="d-none"> <span class="sisID">' + $('#sisID').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="sisItem">' + $('#sisItem').val() + '</span> </td>';
+                    cols += '<td> <span class="fas fa-circle fs-11 me-1 text-primary"></span><span class="sisPOSubNo">' + $('#sisPOSubNo').val() + '</span> </td>';
+                    cols += '<td> <span class="fas fa-circle fs-11 me-1 text-primary"></span><span class="reqsStockCode">' + $('#reqsStockCode').val() + '</span> </td>';
+                    cols += '<td> <span class="sDescription">' + $('#sDescription').val() + '</span> </td>';
+                    cols += '<td> <span class="uDescription">' + $('#uDescription').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="sisQty">' + $('#sisQty').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="poCurrency">' + $('#poCurrency').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="sisFreightAlloc">' + $('#sisFreightAlloc').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="UnitCost">' + $('#UnitCost').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="UnitCostFreight">' + $('#UnitCostFreight').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="TotalCost">' + $('#TotalCost').val() + '</span> </td>';
+                    cols += '<td> <div> <a class="sEdit" data-code="' + $('#MaterialID').val() + '"><i class="icon-base bx bx-edit-alt icon-xm text-info me-1"></i></a> <a class="sDelete" data-code="' + $('#MaterialID').val() + '"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a> </div> </td>';
+
+
+                    newRow.append(cols);
+
+                    $("#MaterialTable >tbody").prepend(newRow);
+                    // $("#serviceTable").DataTable()
+                    //     .columns.adjust()
+                    //     .responsive.recalc();
+                    blink(newRow);
+                }
+            }
+            function addLabour() {
+                if ($('#LabourID').val() != '0') {
+                    var elems = $('.rLabourId').filter(function () {
+                        return this.textContent.trim() === $('#LabourID').val()
+                    });
+                    elems.closest('tr').find('.siNo_').text($('#siNo_').val());
+                    elems.closest('tr').find('.siID_').text($('#siID_').val());
+                    elems.closest('tr').find('.reqsStockCode_').text($('#reqsStockCode_').val());
+                    elems.closest('tr').find('.siOrReqNo_').text($('#siOrReqNo_').val());
+                    elems.closest('tr').find('.sDescription_').text($('#sDescription_').val());
+                    elems.closest('tr').find('.uDescription_').text($('#uDescription_').val());
+                    elems.closest('tr').find('.siQty_').text($('#siQty_').val());
+                    elems.closest('tr').find('.siCurrency_').text($('#siCurrency_').val());
+                    elems.closest('tr').find('.siFreightAlloc_').text($('#siFreightAlloc_').val());
+                    elems.closest('tr').find('.siUnitCost_').text($('#siUnitCost_').val());
+                    elems.closest('tr').find('.siItem_').text($('#siItem_').val());
+                    elems.closest('tr').find('.UnitCostFreight_').text($('#UnitCostFreight_').val());
+                    elems.closest('tr').find('.TotalCost_').text($('#TotalCost_').val());
+                    blink(elems.closest('tr'));
+                }
+                else {
+                    var newRow = $("<tr>");
+                    var cols = '';
+
+                    cols += '<td class="d-none"> <span class="rLabourId">' + $('#LabourId').val() + '</span> </td>';
+                    cols += '<td class="d-none"> <span class="siNo_">' + $('#siNo_').val() + '</span> </td>';
+                    cols += '<td class="d-none"> <span class="siID_">' + $('#siID_').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="siItem_">' + $('#siItem_').val() + '</span> </td>';
+                    cols += '<td> <span class="fas fa-circle fs-11 me-1 text-primary"></span><span class="siOrReqNo_">' + $('#siOrReqNo_').val() + '</span> </td>';
+                    cols += '<td> <span class="fas fa-circle fs-11 me-1 text-primary"></span><span class="reqsStockCode_">' + $('#reqsStockCode_').val() + '</span> </td>';
+                    cols += '<td> <span class="sDescription_">' + $('#sDescription_').val() + '</span> </td>';
+                    cols += '<td> <span class="uDescription_">' + $('#uDescription_').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="siQty_">' + $('#siQty_').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="siCurrency_">' + $('#siCurrency_').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="siFreightAlloc_">' + $('#siFreightAlloc_').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="siUnitCost_">' + $('#siUnitCost_').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="UnitCostFreight_">' + $('#UnitCostFreight_').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="TotalCost_">' + $('#TotalCost_').val() + '</span> </td>';
+                    cols += '<td> <div> <a class="sEdit" data-code="' + $('#LabourID').val() + '"><i class="icon-base bx bx-edit-alt icon-xm text-info me-1"></i></a> <a class="sDelete" data-code="' + $('#LabourID').val() + '"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a> </div> </td>';
+
+
+                    newRow.append(cols);
+
+                    $("#LabourTable >tbody").prepend(newRow);
+                    // $("#serviceTable").DataTable()
+                    //     .columns.adjust()
+                    //     .responsive.recalc();
+                    blink(newRow);
+                }
+            }
+
+            $('#requestAdd').on('click', function (e) {
+                e.preventDefault();
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                if (!ValidationCheckRequest()) {
+                    if ($('#RequestId').val() == '0') {
+                        GetExistingRequest();
+                    }
+                    else {
+                        UpdateRequest();
+                    }
+                    // $('#requestAdds').html('Save');
+                }
+                else {
+                    $("#spinner").hide();
+                    $("body").css("pointer-events", "");
+                    $(".layout-wrapper").css("opacity", 1);
+                }
+            });
+
+
+
+            $('#MaterialAdd').on('click', function (e) {
+                e.preventDefault();
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                if (!ValidationCheck($(this).closest('form'))) {
+                    if ($('#RequestId').val() == '0') {
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                        Swal.fire({
+                            title: 'Shipping Data!!!',
+                            text: 'Please Adding Shipping data first!!!!',
+                            icon: 'error'
+                        })
+
+                    }
+                    else {
+                        SaveMaterial();
+                    }
+                }
+                else {
+                    $("#spinner").hide();
+                    $("body").css("pointer-events", "");
+                    $(".layout-wrapper").css("opacity", 1);
+                }
+            });
+            $('#LabourAdd').on('click', function (e) {
+                e.preventDefault();
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                if (!ValidationCheck($(this).closest('form'))) {
+                    if ($('#RequestId').val() == '0') {
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                        Swal.fire({
+                            title: 'Shipping Data!!!',
+                            text: 'Please Adding Shipping data first!!!!',
+                            icon: 'error'
+                        })
+
+                    }
+                    else {
+                        SaveLabour();
+                    }
+                }
+                else {
+                    $("#spinner").hide();
+                    $("body").css("pointer-events", "");
+                    $(".layout-wrapper").css("opacity", 1);
+                }
+            });
+
+            function getMaterial() {
+                var tmp_Id = $('#MaterialID').val() == '' ? 0 : $('#MaterialID').val();
+                var tmp_sisNo = $('#siID').val() == '' ? 0 : $('#siID').val();
+                var tmp_sisID = $('#sisID').val() == '' ? 0 : $('#sisID').val();
+                var tmp_sisQty = $('#sisQty').val() == '' ? 0 : $('#sisQty').val();;
+                var tmp_sisPOSubNo = $('#sisPOSubNo').val();
+                var tmp_sisFreightAlloc = $('#sisFreightAlloc').val() == '' ? 0 : $('#sisFreightAlloc').val();
+                var tmp_sisItem = $('#sisItem').val() == '' ? 0 : $('#sisItem').val();
+                return (tmp_Id == "") ? null :
+                    {
+                        Id: tmp_Id,
+                        sisNo: tmp_sisNo,
+                        sisID: tmp_sisID,
+                        sisQty: tmp_sisQty,
+                        sisFreightAlloc: tmp_sisFreightAlloc,
+                        sisPOSubNo: tmp_sisPOSubNo,
+                        sisItem: tmp_sisItem
+                    };
+            }
+            function getLabour() {
+                var tmp_Id = $('#LabourID').val() == '' ? 0 : $('#LabourID').val();
+                var tmp_siNo = $('#siID').val() == '' ? 0 : $('#siID').val();
+                var tmp_siID = $('#siID_').val() == '' ? 0 : $('#siID_').val();
+                var tmp_siQty = $('#siQty_').val() == '' ? 0 : parseInt($('#siQty_').val());
+                var tmp_siUnitCost = $('#siUnitCost_').val() == '' ? 0 : $('#siUnitCost_').val();
+                var tmp_siOrReqNo = $('#siOrReqNo_').val();
+                var tmp_siCurrency = $('#siCurrency_').val();
+                var tmp_siFreightAlloc = $('#siFreightAlloc_').val() == '' ? 0 : $('#siFreightAlloc_').val();
+                var tmp_siItem = $('#siItem_').val() == '' ? 0 : parseInt($('#siItem_').val());
+                return (tmp_Id == "") ? null :
+                    {
+                        Id: tmp_Id,
+                        siNo: tmp_siNo,
+                        siID: tmp_siID,
+                        siQty: tmp_siQty,
+                        siUnitCost: tmp_siUnitCost,
+                        siFreightAlloc: tmp_siFreightAlloc,
+                        siOrReqNo: tmp_siOrReqNo,
+                        siCurrency: tmp_siCurrency,
+                        siItem: tmp_siItem
+                    };
+            }
+            function clearMaterial() {
+                $('#MaterialID').val('0');
+                $('#sisItem').val('0');
+                $('#reqsStockCode').val('');
+                $('#sisPOSubNo').val(null).trigger('change');
+                $('#sisPOSubNo').removeClass('is-valid')
+                $('#sisNo').val('0');
+                $('#sisID').val('0');
+                $('#sDesription').val('');
+                $('#UnitCost').val('');
+                $('#uDesription').val('');
+                $('#sisQty').val('');
+                $('#poCurrency').val('');
+                $('#sisFreightAlloc').val('');
+                $('#TotalCost').val('');
+                $('#UnitCostFreight').val('');
+                $('#MaterialAdds').html('Add');
+            }
+            function clearLabour() {
+                $('#LabourID').val('0');
+                $('#siItem_').val('0');
+                $('#reqsStockCode_').val('');
+                $('#siOrReqNo_').val(null).trigger('change');
+                $('#siOrReqNo_').removeClass('is-valid')
+                $('#siNo_').val('0');
+                $('#siID_').val('0');
+                $('#sDesription_').val('');
+                $('#siUnitCost_').val('');
+                $('#uDesription_').val('');
+                $('#siQty_').val('');
+                $('#siCurrency_').val(null).trigger('change');
+                $('#siCurrency_').removeClass('is-valid')
+                $('#siFreightAlloc_').val('');
+                $('#TotalCost_').val('');
+                $('#UnitCostFreight_').val('');
+                $('#LabourAdds').html('Add');
+            }
+
+            $('#mainnew').on('click', function () {
+                clear();
+            });
+
+            $('#mainfirst').on('click', function () {
+                GetRequestAll("first", $('#RequestId').val());
+                $('#siID').prop("disabled", true);
+                $('#requestAdds').html('Update');
+                $('#labourAdds').html('Update');
+            });
+            $('#mainend').on('click', function () {
+                GetRequestAll("end", $('#RequestId').val());
+                $('#siID').prop("disabled", true);
+                $('#requestAdds').html('Update');
+$('#labourAdds').html('Update');
+            });
+            $('#mainprev').on('click', function () {
+                GetRequestAll("prev", $('#RequestId').val());
+                $('#siID').prop("disabled", true);
+                $('#requestAdds').html('Update');
+                $('#labourAdds').html('Update');
+            });
+            $('#mainnext').on('click', function () {
+                GetRequestAll("next", $('#RequestId').val());
+                $('#siID').prop("disabled", true);
+                $('#requestAdds').html('Update');
+                $('#labourAdds').html('Update');
+            });
+            $('#requestFindTable').on('click', 'tbody tr td', function () {
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                GetRequestAll("keep", $(this).closest('tr').find('.fRequestID').html());
+                $('#siID').prop("disabled", true);
+                $('#requestAdds').html('Update');
+                $('#labourAdds').html('Update');
+                $('#findData').modal('toggle')
+            });
+            $('#siID').on('keypress', function (event) {
+                if (event.which === 13 || event.key === 'Enter') {
+                GetRequestAll("keep2",1, $(this).val());
+                    $('#siID').prop("disabled", true);
+                $('#siID').prop("disabled", true);
+                $('#requestAdds').html('Update');
+                $('#labourAdds').html('Update');
+                }
+            });
+
+
+            function GetRequestAll(typ, id, Idstr) {
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                var itms = {};
+                itms.Id = id;
+                itms.Typ = typ
+                itms.Idstr = Idstr
+                $.ajax({
+                    url: '/StoreIDR/GetShippingBy',
+                    type: "POST",
+                    data: JSON.stringify(itms),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    // traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            if (data.vShipping != null)
+                            {
+                            var dt_siDate = $.datepicker.formatDate('dd/mm/yy', new Date(data.vShipping.siDate));
+                            var dt_siDateRec = $.datepicker.formatDate('dd/mm/yy', new Date(data.vShipping.siDateRec));
+                            $('#MaterialTable').DataTable().clear().destroy();
+                                $('#LabourTable').DataTable().clear().destroy();
+                            $('#RequestId').val(data.vShipping.id);
+                            $('#siID').val(data.vShipping.siID);
+                                $('#siFreightCost').val(data.vShipping.siFreightCost);
+                            $('#siFreightType').val(data.vShipping.siFreightType).trigger('change');
+                            $('#siDate').val(dt_siDate);
+                            $('#siSiteReceived').val(data.vShipping.siSiteReceived).trigger('change');
+                            $('#MaterialTable tbody').empty();
+                            $('#LabourTable tbody').empty();
+                                clearMaterial();
+                                clearLabour();
+                            $(data.vShippingSub).each(function (index, item) {
+                                var newRow = $("<tr>");
+                                var cols = '';
+                                cols += '<td class="d-none"> <span class="rMaterialId">' + item.id + '</span> </td>';
+                                cols += '<td class="d-none"> <span class="sisNo">' + item.sisNo + '</span > </td > ';
+                                    cols += '<td class="d-none"> <span class="sisID">' + item.sisID + '</span > </td > ';
+                                cols += '<td class="dt-type-numeric"> <span class="sisItem">' + item.sisItem + '</span > </td > ';
+                                    cols += '<td> <span class="sisPOSubNo">' + item.sisPOSubNo + '</span > </td > ';
+                                    cols += '<td> <span class="reqsStockCode">' + item.reqsStockCode + '</span > </td > ';
+                                cols += '<td> <span class="sDescription">' + item.sDescription + '</span > </td > ';
+                                cols += '<td> <span class="uDescription">' + item.uDescription + '</span > </td > ';
+                                    cols += '<td class="dt-type-numeric"> <span class="sisQty">' + parseFloat(item.sisQty).toFixed(2) + '</span > </td > ';
+                                cols += '<td class="dt-type-numeric"> <span class="poCurrency">' + item.poCurrency + '</span > </td > ';
+                                    cols += '<td class="dt-type-numeric"> <span class="sisFreightAlloc">' + parseFloat(item.sisFreightAlloc).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</span > </td > ';
+                                    cols += '<td> <span class="UnitCost">' + parseFloat(item.unitCost).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</span > </td > ';
+                                    cols += '<td class="dt-type-numeric"> <span class="UnitCostFreight">' + parseFloat(item.unitCostFreight).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</span > </td > ';
+                                    cols += '<td class="dt-type-numeric"> <span class="TotalCost">' + parseFloat(item.totalCost).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</span > </td > ';
+                                    cols += '<td> <div> <a class="sEdit" data-code="' + item.id + '"><i class="icon-base bx bx-edit-alt icon-xm text-info me-1"></i></a> <a class="sDelete" data-code="' + item.id + '"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a> </div> </td>';
+
+
+
+                                newRow.append(cols);
+
+                                $("#MaterialTable >tbody").prepend(newRow);
+                            });
+                                $(data.vStoreIssueSub).each(function (index, item) {
+                                    var newRow = $("<tr>");
+                                    var cols = '';
+                                    cols += '<td class="d-none"> <span class="rLabourId">' + item.id + '</span> </td>';
+                                    cols += '<td class="d-none"> <span class="siNo_">' + item.siNo + '</span> </td>';
+                                    cols += '<td class="d-none"> <span class="siID_">' + item.siID + '</span> </td>';
+                                    cols += '<td class="dt-type-numeric"> <span class="siItem_">' + item.siItem + '</span> </td>';
+                                    cols += '<td> <span class="fas fa-circle fs-11 me-1 text-primary"></span><span class="siOrReqNo_">' + item.siOrReqNo + '</span> </td>';
+                                    cols += '<td> <span class="fas fa-circle fs-11 me-1 text-primary"></span><span class="reqsStockCode_">' + item.reqsStockCode + '</span> </td>';
+                                    cols += '<td> <span class="sDescription_">' + item.sDescription + '</span> </td>';
+                                    cols += '<td> <span class="uDescription_">' + item.uDescription + '</span> </td>';
+                                    cols += '<td class="dt-type-numeric"> <span class="siQty_">' + parseFloat(item.siQty).toFixed(2) + '</span> </td>';
+                                    cols += '<td class="dt-type-numeric"> <span class="siCurrency_">' + item.siCurrency + '</span> </td>';
+                                    cols += '<td class="dt-type-numeric"> <span class="siFreightAlloc_">' + parseFloat(item.siFreightAlloc).toFixed(2)  + '</span> </td>';
+                                    cols += '<td class="dt-type-numeric"> <span class="siUnitCost_">' + parseFloat(item.siUnitCost).toFixed(2) + '</span> </td>';
+                                    cols += '<td class="dt-type-numeric"> <span class="UnitCostFreight_">' + parseFloat(item.unitCostFreight).toFixed(2)  + '</span> </td>';
+                                    cols += '<td class="dt-type-numeric"> <span class="TotalCost_">' + parseFloat(item.totalCost).toFixed(2) + '</span> </td>';
+                                    cols += '<td> <div> <a class="sEdit" data-code="' + item.id + '"><i class="icon-base bx bx-edit-alt icon-xm text-info me-1"></i></a> <a class="sDelete" data-code="' + item.id + '"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a> </div> </td>';
+
+
+
+                                    newRow.append(cols);
+
+                                    $("#LabourTable >tbody").prepend(newRow);
+                                });
+
+                            $('#MaterialTable').DataTable({
+                                paging: true,
+                                "autoWidth": false,
+                                searching: false,
+                            });
+                                $('#LabourTable').DataTable({
+                                    paging: true,
+                                    "autoWidth": false,
+                                    searching: false,
+                                });
+
+                            clearValidMain();
+                            }
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                        }
+                        else {
+                            alert(data.text);
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                        }
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    }
+                });
+            }
+
+
+            function ValidationCheck(com) {
+                com.find(".vtext").each(function () {
+                    if (!$(this).hasClass('is-valid') || !$(this).hasClass('is-invalid')) {
+                        if ($(this).hasClass('form-select')) {
+                            (($(this).find('option:selected').attr('data-code') == "0") ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                        }
+                        else {
+                            (($(this).val() == '') ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                        }
+                    }
+                });
+                com.find(".select2-selection.select2-selection--single").each(function () {
+                    if (!$(this).hasClass('is-valid') || !$(this).hasClass('is-invalid')) {
+                        if (!$(this).find('.select2-selection__rendered').attr("title")) {
+                            $(this).find('.select2-selection__rendered').children().length > 0 ? $(this).addClass('is-invalid') : $(this).addClass('is-valid')
+                        }
+                    }
+                });
+                return com.find('.vtext').hasClass('is-invalid') || com.find(".select2-selection.select2-selection--single").hasClass('is-invalid') ? true : false;
+
+            }
+            $('select').on('change', function (e) {
+                $(this).removeClass('is-invalid').removeClass('is-valid').addClass('is-valid');
+                $(this).siblings('.select2').find('.select2-selection').removeClass('is-invalid').removeClass('is-valid');
+
+            });
+            function ValidationCheckRequest() {
+                $("#firstForm").find(".vtext").each(function () {
+                    if (!$(this).hasClass('is-valid') || !$(this).hasClass('is-invalid')) {
+                        if ($(this).hasClass('form-select')) {
+                            (($(this).find('option:selected').attr('data-code') == "0") ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                        }
+                        else {
+                            (($(this).val() == '') ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                        }
+                    }
+                });
+                $("#firstForm .select2-selection.select2-selection--single").each(function () {
+                    if (!$(this).hasClass('is-valid') || !$(this).hasClass('is-invalid')) {
+                        if (!$(this).find('.select2-selection__rendered').attr("title")) {
+                            $(this).find('.select2-selection__rendered').children().length > 0 ? $(this).addClass('is-invalid') : $(this).addClass('is-valid')
+                        }
+                    }
+                });
+                // $("#firstForm").find(".vtext").each(function () {
+                //     if (!$(this).hasClass('is-valid')) {
+                //         if (!$(this).hasClass('is-invalid')) {
+                //             $(this).addClass('is-invalid');
+                //         }
+                //     }
+                // });
+                return $("#firstForm").find('.vtext').hasClass('is-invalid') || $("#firstForm .select2-selection.select2-selection--single").hasClass('is-invalid') ? true : false;
+
+            }
+
+            // $('#sisQty,#poCurrency').on('change', function () {
+            //     var _Qty = $('#sisQty').val() == '' ? 0 : $('#sisQty').val();
+            //     var _QtyBack = $('#poCurrency').val() == '' ? 0 : $('#poCurrency').val();
+            //     $('#sisFreightAlloc').val(parseFloat(_Qty - _QtyBack).toFixed(2));
+            // });
+            $('#MaterialClear').on('click', function () {
+                clearMaterial();
+            });
+            $('#LabourClear').on('click', function () {
+                clearLabour();
+            });
+            if ($('#pagestatus').val() == 0) {
+                clear();
+                $('.tombol:not(#mainsave)').addClass('disabled');
+            }
+        });
+
+    </script>
+}

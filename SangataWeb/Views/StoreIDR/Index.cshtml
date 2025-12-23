@@ -1,0 +1,1018 @@
+﻿@model SangataWeb.Models.ViewModel
+@{
+    ViewBag.Title = "Sangata | Store";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.UserName = @Model.User_Login.UserName;
+    ViewBag.Content = "Main Store";
+}
+@section pMain {
+    <nav class="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme"
+         id="layout-navbar">
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
+                <i class="icon-base bx bx-menu icon-md"></i>
+            </a>
+        </div>
+
+        <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
+            <!-- Search -->
+            <div class="navbar-nav align-items-center me-auto">
+                @* <div class="nav-item d-flex align-items-center">
+            <span class="w-px-22 h-px-22"><i class="icon-base bx bx-search icon-md"></i></span>
+            <input type="text"
+            class="form-control border-0 shadow-none ps-1 ps-sm-2 d-md-block d-none"
+            placeholder="Search..."
+            aria-label="Search..." />
+            </div> *@
+                <div class="row">
+                    <div class="col">
+                        <a id="mainnew" title="Add New" href="#" class="btn btn-primary btn-circle ml-2 tombol">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                        <a id="mainsave" title="Save" href="#" class="btn btn-success btn-circle ml-4 tombol">
+                            <i class="fas fa-save"></i>
+                        </a>
+                        <a id="mainfirst" title="Previous" href="#" class="btn btn-info btn-circle ml-4 tombol">
+                            <i class="fas fa-fast-backward"></i>
+                        </a>
+                        <a id="mainprev" title="Previous" href="#" class="btn btn-info btn-circle ml-4 tombol">
+                            <i class="fas fa-step-backward"></i>
+                        </a>
+                        <a id="mainnext" title="Next" href="#" class="btn btn-warning btn-circle ml-4 tombol">
+                            <i class="fas fa-step-forward"></i>
+                        </a>
+                        <a id="mainend" title="Next" href="#" class="btn btn-warning btn-circle ml-4 tombol">
+                            <i class="fas fa-fast-forward"></i>
+                        </a>
+                        <a id="mainfind" title="Find" href="#" class="btn btn-danger btn-circle ml-4 tombol" data-bs-toggle="modal" data-bs-target="#findData">
+                            <i class="fas fa-search"></i>
+                        </a>
+                        @*                                     <a id="popost" title="Post" href="#" class="btn btn-success btn-circle ml-4 btn-sm">
+                    <i class="fas fa-paper-plane"></i>
+                    </a> *@
+                    </div>
+                </div>
+            </div>
+            <!-- /Search -->
+            <input class="d-none" id="pagestatus" value="@((Model.vOneStore == null) ? 0 : Model.vOneStore.Id)" />
+            <ul class="navbar-nav flex-row align-items-center ms-md-auto">
+
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                    <a class="nav-link dropdown-toggle hide-arrow p-0"
+                       href="javascript:void(0);"
+                       data-bs-toggle="dropdown">
+                        <div class="avatar avatar-online">
+                            <img src="../../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0 me-3">
+                                        <div class="avatar avatar-online">
+                                            <img src="../../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0">@Model.User_Login.UserName</h6>
+                                        <small class="text-body-secondary">Admin</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown-divider my-1"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="icon-base bx bx-user icon-md me-3"></i><span>My Profile</span>
+                            </a>
+                        </li>
+                        @*                         <li>
+                    <a class="dropdown-item" href="#">
+                    <i class="icon-base bx bx-cog icon-md me-3"></i><span>Settings</span>
+                    </a>
+                    </li>
+                    <li>
+                    <a class="dropdown-item" href="#">
+                    <span class="d-flex align-items-center align-middle">
+                    <i class="flex-shrink-0 icon-base bx bx-credit-card icon-md me-3"></i><span class="flex-grow-1 align-middle">Billing Plan</span>
+                    <span class="flex-shrink-0 badge rounded-pill bg-danger">4</span>
+                    </span>
+                    </a>
+                    </li> *@
+                        <li>
+                            <div class="dropdown-divider my-1"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="../Home/Logout">
+                                <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--/ User -->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- / Navbar -->
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="col-md-12">
+                <div class="col-lg-6 col-xl-12 col-xxl-6 h-100">
+                    <div class="card theme-wizard pb-5">
+                        <div class="card-header bg-body-tertiary pt-5 pb-0">
+                            <ul class="nav nav-pills mb-3" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button id="tabProduct" class="nav-link active" data-wizard-step="1" data-bs-toggle="pill" data-bs-target="#form-wizard-tab1" type="button" role="tab" aria-controls="form-wizard-tab1" aria-selected="true"><span class="fab fa-artstation me-2" data-fa-transform="shrink-2"></span><span class="d-none d-md-inline-block fs-10">Products</span></button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button id="tabStock" class="nav-link" data-wizard-step="2" data-bs-toggle="pill" data-bs-target="#form-wizard-tab2" type="button" role="tab" aria-controls="form-wizard-tab2" aria-selected="false"><span class="fas fa-archive me-2" data-fa-transform="shrink-2"></span><span class="d-none d-md-inline-block fs-10">Stock Condition</span></button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button id="tabCondition" class="nav-link" data-wizard-step="3" data-bs-toggle="pill" data-bs-target="#form-wizard-tab3" type="button" role="tab" aria-controls="form-wizard-tab3" aria-selected="false"><span class="far fa-file-alt me-2" data-fa-transform="down-2 shrink-2"></span><span class="d-none d-md-inline-block fs-10">Last Entry</span></button>
+                                </li>
+                                @*                         <li class="nav-item" role="presentation">
+                            <button class="nav-link" data-wizard-step="4" data-bs-toggle="pill" data-bs-target="#form-wizard-tab4" type="button" role="tab" aria-controls="form-wizard-tab4" aria-selected="false"><span class="fas fa-thumbs-up me-2" data-fa-transform="shrink-2"></span><span class="d-none d-md-inline-block fs-10">Done</span></button>
+                            </li> *@
+                            </ul>
+                        </div>
+                        <div class="card-body py-0">
+                            <div class="tab-content px-1 py-3">
+                                <div class="tab-pane px-sm-3 px-md-5 active show" role="tabpanel" aria-labelledby="form-wizard-tab1" id="form-wizard-tab1">
+                                    <form id="firstForm" data-wizard-form="1">
+                                        <div class="card pb-5">
+                                            <div class="card-body pb-0">
+
+                                                <div class="row g-6 pb-3">
+                                                    <div class="col-md-8">
+
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <label for="sCCSCode" class="form-label">CCS Code</label>
+                                                                <input class="d-none" id="StoreID" value="@Model.vOneStore.Id" />
+                                                                <select id="sCCSCode" data-placeholder="Choose CSS Code" data-first="2" data-two="3" data-three="7" class="form-select form-select-sm select2 ddmulti2 vtext" disabled>
+                                                                    @* <option data-code="0" value="" selected disabled hidden>** Choose Type **</option> *@
+                                                                    <option data-code="0"></option>
+                                                                    <optgroup class="def-cursor" label="Code" data-code="Stock Code" data-city="Description">
+                                                                        @if (Model.vCCSCode != null)
+                                                                        {
+                                                                            foreach (var item in Model.vCCSCode)
+                                                                            {
+                                                                                <!option data-code="@item.ccsStockCode" data-city="@item.ccsDescription" value="@item.ccsID" @((item.ccsID == Model.vOneStore.sCCSCode) ? "selected" : "")>@item.ccsID</!option>
+                                                                            }
+                                                                        }
+                                                                    </optgroup>
+                                                                </select>
+                                                                <div class="valid-feedback">
+                                                                    Looks good!
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <label for="sCCSName" class="form-label"></label>
+
+                                                                <input id="sCCSName"
+                                                                       class="form-control form-control-sm"
+                                                                       type="text"
+                                                                       placeholder=""
+                                                                       value="@Model.vOneStore.sCCSName" disabled />
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <label for="sStockCode" class="form-label">Stock Code</label>
+
+                                                                <input id="sStockCode"
+                                                                       class="form-control form-control-sm vtext"
+                                                                       type="text"
+                                                                       placeholder=""
+                                                                       value="@Model.vOneStore.sStockCode" disabled />
+                                                                <div class="valid-feedback">
+                                                                    Looks good!
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label for="sCCSNew" class="form-label">New Code</label>
+                                                                        <select id="sCCSNew" data-placeholder="Choose CCS New" data-first="4" data-two="8"  class="form-select form-select-sm select2 ddmulti1 vtext">
+                                                                            <optgroup class="def-cursor" label="Type" data-city="Price">
+                                                                                <option data-code="0"></option>
+                                                                                @if (Model.vCCSCodeNew != null)
+                                                                                {
+                                                                                    foreach (var item in Model.vCCSCodeNew)
+                                                                                    {
+                                                                                        <!option data-code="@item.sStockCodeNew" data-city="@item.sStockCodeNew" value="@item.sCCSNew" @((item.sCCSNew == Model.vOneStore.sCCSNew) ? "selected" : "")>@item.sCCSNew</!option>
+                                                                                    }
+                                                                                }
+                                                                            </optgroup>
+
+                                                                        </select>
+                                                                        <div class="valid-feedback">
+                                                                            Looks good!
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-7">
+                                                                        <label for="sStockCodeNew" class="form-label">New Stock Name</label>
+
+                                                                        <input id="sStockCodeNew"
+                                                                               class="form-control form-control-sm vtext"
+                                                                               type="text"
+                                                                               placeholder=""
+                                                                               value="@Model.vOneStore.sStockCodeNew" disabled />
+                                                                        <div class="valid-feedback">
+                                                                            Looks good!
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div>
+                                                            <label for="sDescription" class="form-label">Material Description</label>
+                                                            <input id="sDescription"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@Model.vOneStore.sDescription" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div>
+                                                            <label for="sModel" class="form-label">Model/Type</label>
+
+                                                            <input id="sModel"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@Model.vOneStore.sModel" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="sManufacture" class="form-label">Manufacture</label>
+
+                                                            <input id="sManufacture"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@Model.vOneStore.sManufacture" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="sNote" class="form-label">Note/Remark</label>
+
+                                                            <input id="sNote"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@Model.vOneStore.sNote" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <div class="tab-pane px-sm-3 px-md-5 " role="tabpanel" aria-labelledby="form-wizard-tab2" id="form-wizard-tab2">
+                                    <form data-wizard-form="2">
+                                        <div class="card pb-5">
+                                            <div class="card-body pb-0">
+                                                <div class="row g-6 pb-3">
+                                                    <div class="col-md-6">
+
+                                                        <div>
+                                                            <label for="sWeight" class="form-label">Weight (KG)</label>
+                                                            <input id="sWeight"
+                                                                   class="form-control form-control-sm vtext vnumber"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@Model.vOneStore.sWeight" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="sUnit" class="form-label">Unit</label>
+                                                            <select id="sUnit" data-placeholder="Choose Unit" class="form-select form-select-sm select2 vtext">
+                                                                @* <option data-code="0" data-city="" selected disabled hidden>Choose S.Type</option> *@
+                                                                <option data-code="0"></option>
+                                                                @if (Model.vUnit != null)
+                                                                    {
+                                                                        foreach (var item in Model.vUnit)
+                                                                        {
+                                                                            <!option data-code="@item.uID" data-city="@item.uDescription" value="@item.uID" @((item.uID == Model.vOneStore.sUnit) ? "selected" : "")>@item.uDescription</!option>
+                                                                        }
+                                                                    }
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="sRackNo" class="form-label">Rack No</label>
+                                                            <select id="sRackNo" data-placeholder="Choose Rack No" class="form-select form-select-sm select2 vtext">
+                                                                @* <option data-code="0" data-city="" selected disabled hidden>Choose S.Type</option> *@
+                                                                <option data-code="0"></option>
+                                                               @if (Model.vRack != null)
+                                                                    {
+                                                                        foreach (var item in Model.vRack)
+                                                                        {
+                                                                            <!option data-code="@item.rRackNo" data-city="@item.rRackNo" value="@item.rRackNo" @((item.rRackNo == Model.vOneStore.sRackNo) ? "selected" : "")>@item.rRackNo</!option>
+                                                                        }
+                                                                    }
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <label for="sBinNo" class="form-label">Bin No</label>
+                                                            <select id="sBinNo" data-placeholder="Choose Bin No" class="form-select form-select-sm select2 vtext">
+                                                                @* <option data-code="0" data-city="" selected disabled hidden>Choose S.Type</option> *@
+                                                                <option data-code="0"></option>
+                                                                @if (Model.vBin != null)
+                                                                    {
+                                                                        foreach (var item in Model.vBin)
+                                                                        {
+                                                                            <!option data-code="@item.rRackNo" data-city="@item.rBinNo" value="@item.rBinNo" @((item.rBinNo == Model.vOneStore.sBinNo) ? "selected" : "")>@item.rBinNo</!option>
+                                                                        }
+                                                                    }
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="sMinStock" class="form-label">Minimum Stock</label>
+                                                            <input id="sMinStock"
+                                                                   class="form-control form-control-sm vtext vnumber"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@Model.vOneStore.sMinStock" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="sMaxStock" class="form-label">Optimum Stock</label>
+                                                            <input id="sMaxStock"
+                                                                   class="form-control form-control-sm vtext vnumber"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@Model.vOneStore.sMaxtock" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                    </form>
+                                </div>
+                                <div class="tab-pane px-sm-3 px-md-5" role="tabpanel" aria-labelledby="form-wizard-tab3" id="form-wizard-tab3">
+                                    <form data-wizard-form="2">
+
+                                        <div class="card pb-5">
+                                            <div class="card-body pb-0">
+                                                <div id="divShowCondition" @(Model.vStoreSum != null ? "" : "style='display: none'") class="row g-6 pb-3">
+                                                    <div class="col-md-4">
+                                                        <div>
+                                                            <label for="TypeIN" class="form-label">Stock IN Type</label>
+                                                            <input id="TypeIN"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@(Model.vStoreSum != null ? Model.vStoreSum.TypeIN : "")" disabled />
+                                                        </div>
+                                                        <div>
+                                                            <label for="NoRefIN" class="form-label">Ref Number</label>
+                                                            <input id="NoRefIN"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@(Model.vStoreSum != null ? Model.vStoreSum.NoRefIN : "")" disabled />
+                                                        </div>
+                                                        <div>
+                                                            <label for="DateIN" class="form-label">Ref Date</label>
+                                                            <input id="DateIN"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@(Model.vStoreSum != null ? Convert.ToDateTime(Model.vStoreSum.DateIN).ToString("dd/MM/yyyy") : "")" disabled />
+                                                            
+                                                        </div>
+                                                        <div>
+                                                            <label for="SupplierIN" class="form-label">Supplier</label>
+                                                            <input id="SupplierIN"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@(Model.vStoreSum != null ? Model.vStoreSum.SupplierIN : "")" disabled />
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div>
+                                                            <label for="CurrencyIN" class="form-label">Currency</label>
+                                                            <input id="CurrencyIN"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@(Model.vStoreSum != null ? Model.vStoreSum.CurrencyIN : "")" disabled />
+                                                            
+                                                        </div>
+                                                        <div>
+                                                            <label for="QtyActual" class="form-label">Actual Stock</label>
+                                                            <input id="QtyActual"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@(Model.vStoreSum != null ? Model.vStoreSum.QtyActual : "")" disabled />
+                                                           
+                                                        </div>
+                                                        <div>
+                                                            <label for="QtyOrder" class="form-label">Reorder Stock</label>
+                                                            <input id="QtyOrder"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text" placeholder=""
+                                                                   value="@(Model.vStoreSum != null ? Model.vStoreSum.QtyOrder : "")" disabled />
+                                                            
+                                                        </div>
+                                                        <div>
+                                                            <label for="qtyOver" class="form-label">Over Supply Stock</label>
+                                                            <input id="qtyOver"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text" placeholder=""
+                                                                   value="@(Model.vStoreSum != null ? Model.vStoreSum.qtyOver : "")" disabled />
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+
+                                                        <div>
+                                                            <label for="TotalCostIN" class="form-label">Original Unit Cost (IDR)</label>
+                                                            <input id="TotalCostIN"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text" placeholder=""
+                                                                   value="@(Model.vStoreSum != null ? Convert.ToDecimal(Model.vStoreSum.TotalCostIN).ToString("N2") : "")" disabled />
+                                                           
+                                                        </div>
+                                                        <div>
+                                                            <label for="ConvertedCost" class="form-label">Converted Unit Cost (USD)</label>
+                                                            <input id="ConvertedCost"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text" placeholder=""
+                                                                   value="@(Model.vStoreSum != null ? Model.vStoreSum.ConvertedCost : "")" disabled />
+                                                            
+                                                        </div>
+                                                        <div>
+                                                            <label for="Total" class="form-label">Total Cost (USD)</label>
+                                                            <input id="Total"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text" placeholder=""
+                                                                   value="@(Model.vStoreSum != null ? Model.vStoreSum.Total : "")" disabled />
+                                                            
+                                                        </div>
+                                                        <div class="d-grid gap-1 mt-5">
+                                                            <button id="getLastEntry" class="btn btn-primary px-5 px-sm-6" type="button">Get Last Entry<span class="fa fa-arrow-circle-right ms-2" aria-hidden="true"> </span></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+
+
+
+
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <!-- / Content -->
+        <!-- Footer -->
+        <footer class="content-footer footer bg-footer-theme">
+            <div class="container-xxl">
+                <div class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                    <div class="mb-2 mb-md-0">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        made by
+                        <a href="https://ptodg.com/id/" target="_blank" class="footer-link">ODG Indonesia</a>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+        <!-- / Footer -->
+
+        <div class="content-backdrop fade"></div>
+        <div class="modal fade" id="findData" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body px-3 pt-2">
+                        <div class="table-responsive text-nowrap pb-3">
+                            <table id="assetMainFindTable" class="table table-striped">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="d-none">StoreFindID</th>
+                                        <th>Stock Code</th>
+                                        <th>Stock New</th>
+                                        <th>Notes</th>
+                                        <th>Manufacture</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+
+                                    @if (Model.vStoreFind != null)
+                                    {
+                                        foreach (var item in Model.vStoreFind)
+                                        {
+                                            <tr>
+                                                <td class="d-none">
+                                                    <span class="fMainID">@item.Id</span>
+                                                </td>
+                                                <td>
+                                                    <span class="fsStockCode">@item.sStockCode</span>
+                                                </td>
+                                                <td>
+                                                    <span class="frsStockCodeNew">@item.sStockCodeNew</span>
+                                                </td>
+                                                <td>
+                                                    <span class="fsNote">@item.sNote</span>
+                                                </td>
+                                                <td>
+                                                    <span class="fsManufacture">@item.sManufacture</span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Content wrapper -->
+
+
+    <script>
+        $(document).ready(function () {
+            var ext = false;
+            var addtyp = 'service';
+            var dt_to = $.datepicker.formatDate('dd/mm/yy', new Date());
+            var stopBlinking = false;
+
+
+            $('select').on('change', function (e) {
+                $(this).removeClass('is-invalid').removeClass('is-valid').addClass('is-valid');
+                $(this).siblings('.select2').find('.select2-selection').removeClass('is-invalid').removeClass('is-valid');
+                
+            });
+
+            $('#sCCSCode').on('change', function () {
+                $('#sStockCode').val($(this).find('option:selected').attr('data-code'));
+                $('#sCCSName').val($(this).find('option:selected').attr('data-city'));
+            });
+            $('#sCCSNew').on('change', function () {
+                $('#sStockCodeNew').val($(this).find('option:selected').attr('data-code'));
+            });
+            $('#mainnew').on('click', function () {
+                clear();
+            });
+
+            function clear() {
+                $('input').val('');
+                $('#StoreID').val('0');
+                $('#sCCSCode').removeAttr('disabled');
+                // $('#sCCSNew').removeAttr('disabled');
+                $('select').val(null).trigger('change');
+                $('input , select').removeClass('is-invalid').removeClass('is-valid');
+                $('#tabProduct').removeClass('active');
+                $('#tabStock').removeClass('active');
+                $('#tabCondition').removeClass('active');
+                $('#tabProduct').addClass('active');
+                $('#form-wizard-tab1').removeClass('active').removeClass('show');
+                $('#form-wizard-tab2').removeClass('active').removeClass('show');
+                $('#form-wizard-tab3').removeClass('active').removeClass('show');
+                $('#form-wizard-tab1').addClass('active').addClass('show');
+                clearValidMain();
+                $('#sCCSCode').focus();
+            };
+            $('#mainsave').on('click', function (e) {
+                e.preventDefault();
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                if (!ValidationCheckMain()) {
+                    if ($('#StoreID').val() == '0') {
+                        GetExistingMain();
+                    }
+                    else {
+                        UpdateMain();
+                    }
+                    
+                }
+                else {
+                    $("#spinner").hide();
+                    $("body").css("pointer-events", "");
+                    $(".layout-wrapper").css("opacity", 1);
+                }
+            });
+            function ValidationCheckMain() {
+                $("form").each(function () {
+                    $(this).find(".vtext").each(function () {
+                        if (!$(this).hasClass('is-valid') || !$(this).hasClass('is-invalid')) {
+                            if ($(this).hasClass('form-select')) {
+                                (($(this).find('option:selected').attr('data-code') == "0") ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                            }
+                            else {
+                                (($(this).val() == '') ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                            }
+                        }
+                    });
+                });
+                $(".select2-selection.select2-selection--single").each(function () {
+                    if (!$(this).hasClass('is-valid') || !$(this).hasClass('is-invalid')) {
+                        if (!$(this).find('.select2-selection__rendered').attr("title"))
+                        {
+                            $(this).find('.select2-selection__rendered').children().length > 0 ? $(this).addClass('is-invalid') : $(this).addClass('is-valid')
+                        }
+                        
+                        // (($(this).closest('.form-select').find('option:selected').attr('data-code') == "0") ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                    }
+                });
+                    return $("form").find('.vtext').hasClass('is-invalid') || $(".select2-selection.select2-selection--single").hasClass('is-invalid') ? true : false;
+            }
+            function GetExistingMain() {
+                $.ajax({
+                    url: '/StoreIDR/GetExistingMain',
+                    type: "POST",
+                    data: JSON.stringify(getMain()),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        if (data) {
+                            // alert(data.success);
+                            if (data.success) {
+                                Swal.fire({
+                                    title: 'Duplicate!!!',
+                                    text: 'CSS Code : ' + data.typ_ + ' already exist!',
+                                    icon: 'error'
+                                })
+                                ext = false;
+                            }
+                            else {
+                                Swal.fire({
+                                    title: 'Minor Main!!!',
+                                    text: 'CSS Code : ' + data.typ_ + ' Saved!',
+                                    icon: 'success'
+                                })
+                                $('#sCCSCode').prop("disabled", true);
+                                // $('#sCCSNew').prop("disabled", true);
+                                $("#StoreID").val(data.result);
+                                $('.tombol').removeClass('disabled');
+                                clearValidMain();
+                            }
+
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            // window.location = "/LightingPlant/Index"
+                        }
+                        else {
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            alert(data.text);
+                            ext = false;
+                        }
+                    },
+                    error: function (data) {
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                        alert(data.text);
+                        ext = false;
+                    }
+                });
+                return ext;
+            }
+            function getMain() {
+
+                var tmp_StoreID = $('#StoreID').val();
+                var tmp_sCCSCode = $('#sCCSCode').find('option:selected').attr('value');
+                var tmp_sStockCode = $('#sStockCode').val();
+                var tmp_sCCSNew = $('#sCCSNew').find('option:selected').attr('value');
+                var tmp_sStockCodeNew = $('#sStockCodeNew').val();
+                var tmp_sDescription = $('#sDescription').val();
+                var tmp_sModel = $('#sModel').val();
+                var tmp_sManufacture = $('#sManufacture').val();
+                var tmp_sNote = $('#sNote').val();
+
+                var tmp_sWeight = $('#sWeight').val();
+                var tmp_sUnit = $('#sUnit').find('option:selected').attr('value');
+                var tmp_sRackNo = $('#sRackNo').find('option:selected').attr('value');
+                var tmp_sBinNo = $('#sBinNo').find('option:selected').attr('value');
+                var tmp_sMinStock = $('#sMinStock').val();
+                var tmp_sMaxtock = $('#sMaxStock').val();
+
+                return (tmp_sCCSCode == "") ? null :
+                    {
+                        Id: tmp_StoreID,
+                        sCCSCode: tmp_sCCSCode,
+                        sStockCode: tmp_sStockCode,
+                        sCCSNew: tmp_sCCSNew,
+                        sStockCodeNew: tmp_sStockCodeNew,
+                        sDescription: tmp_sDescription,
+                        sModel: tmp_sModel,
+                        sManufacture: tmp_sManufacture,
+                        sNote: tmp_sNote,
+                        sWeight: tmp_sWeight,
+                        sUnit: tmp_sUnit,
+                        sRackNo: tmp_sRackNo,
+                        sBinNo: tmp_sBinNo,
+                        sMinStock: tmp_sMinStock,
+                        sMaxtock: tmp_sMaxtock
+                    };
+            }
+            function clearValidMain() {
+                $(".is-valid").each(function () {
+                    $(this).removeClass('is-valid');
+                });
+                $(".is-invalid").each(function () {
+                    $(this).removeClass('is-invalid');
+                });
+                $(".select2-selection.select2-selection--single").each(function () {
+                    $(this).find('.select2-selection__rendered').removeAttr('title');
+                });
+            }
+            function UpdateMain() {
+                $.ajax({
+                    url: '/StoreIDR/UpdateMain',
+                    type: "POST",
+                    data: JSON.stringify(getMain()),
+                    dataType: 'json',
+                    // cache: false,
+                    contentType: 'application/json; charset=utf-8',
+                    // traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            Swal.fire({
+                                title: 'Store Main!!!',
+                                text: 'CSS Code : ' + data.typ_ + ' Updated!',
+                                icon: 'success'
+                            })
+
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            clearValidMain();
+                            // window.location = "/LightingPlant/Index"
+                        }
+                        else {
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            alert(data.text);
+                            ext = false;
+                        }
+                    },
+                    error: function (data) {
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                        alert(data.text);
+                        ext = false;
+                    }
+                });
+                return ext;
+            }
+
+            $('#mainfirst').on('click', function () {
+                GetMainAll("first", $('#StoreID').val(), '');
+                $('#sCCSCode').prop("disabled", true);
+                // $('#sCCSNew').prop("disabled", true);
+            });
+            $('#mainend').on('click', function () {
+                GetMainAll("end", $('#StoreID').val(), '');
+                $('#sCCSCode').prop("disabled", true);
+                // $('#sCCSNew').prop("disabled", true);
+            });
+            $('#mainprev').on('click', function () {
+                GetMainAll("prev", $('#StoreID').val(), '');
+                $('#sCCSCode').prop("disabled", true);
+                // $('#sCCSNew').prop("disabled", true);
+            });
+            $('#mainnext').on('click', function () {
+                GetMainAll("next", $('#StoreID').val(), '');
+                $('#sCCSCode').prop("disabled", true);
+                // $('#sCCSNew').prop("disabled", true);
+            });
+            $('#MainFindTable').on('click', 'tbody tr td', function () {
+                GetMainAll("keep", $(this).closest('tr').find('.fMainID').html(), '');
+                $('#sCCSCode').prop("disabled", true);
+                // $('#sCCSNew').prop("disabled", true);
+                $('#findData').modal('toggle')
+            });
+
+            function GetMainAll(typ, id, idstr) {
+                clearLastEntry();
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                var itms = {};
+                itms.Id = id;
+                itms.Typ = typ
+                itms.Idstr = idstr;
+                $.ajax({
+                    url: '/StoreIDR/GetMainAll',
+                    type: "POST",
+                    data: JSON.stringify(itms),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    // traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            if (data.vOneStore != null)
+                            {
+                                $('#StoreID').val(data.vOneStore.id);
+                            $('#sCCSCode').val(data.vOneStore.sCCSCode).trigger('change');
+                            $('#sCCSName').val(data.vOneStore.sCCSName);
+                            $('#sCCSNew').val(data.vOneStore.sCCSNew).trigger('change');
+                            $('#sStockCode').val(data.vOneStore.sStockCode);
+                            $('#sStockCodeNew').val(data.vOneStore.sStockCodeNew);
+                            $('#sDescription').val(data.vOneStore.sDescription);
+                            $('#sModel').val(data.vOneStore.sModel);
+                            $('#sManufacture').val(data.vOneStore.sManufacture);
+                            $('#sNote').val(data.vOneStore.sNote);
+                            $('#sWeight').val(data.vOneStore.sWeight);
+                            $('#sUnit').val(data.vOneStore.sUnit).trigger('change');
+                            $('#sRackNo').val(data.vOneStore.sRackNo).trigger('change');
+                            $('#sBinNo').val(data.vOneStore.sBinNo).trigger('change');
+                            $('#sMinStock').val(data.vOneStore.sMinStock);
+                            $('#sMaxStock').val(data.vOneStore.sMaxtock);
+                            if (data.vStoreSum != null) {
+                                $('#TypeIN').val(data.vStoreSum.typeIN);
+                                $('#NoRefIN').val(data.vStoreSum.noRefIN);
+                                $('#DateIN').val(data.vStoreSum.dateIN);
+                                $('#SupplierIN').val(data.vStoreSum.supplierIN);
+                                $('#CurrencyIN').val(data.vStoreSum.currencyIN);
+                                $('#QtyActual').val(data.vStoreSum.qtyActual);
+                                $('#QtyOrder').val(data.vStoreSum.qtyOrder);
+                                $('#qtyOver').val(data.vStoreSum.qtyOver);
+                                $('#TotalCostIN').val(data.vStoreSum.totalCostIN);
+                                $('#ConvertedCost').val(data.vStoreSum.convertedCost);
+                                $('#Total').val(data.vStoreSum.total);
+                            }
+
+                            
+                            clearValidMain();
+                            }
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                        }
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    }
+
+                });
+            }
+            $('#getLastEntry').on('click', function () {
+                GetLastEntry();
+            });
+
+            function GetLastEntry() {
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                var itms = {};
+                itms.Typ = $("#sStockCode").val();
+                $.ajax({
+                    url: '/StoreIDR/GetLastEntry',
+                    type: "POST",
+                    data: JSON.stringify(itms),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    // traditional: true,
+                    success: function (data) {
+                        if (data != null) {
+                            var dt_dateIN = $.datepicker.formatDate('dd/mm/yy', new Date(data.dateIN));
+                            $('#TypeIN').val(data.typeIN);
+                            $('#NoRefIN').val(data.noRefIN);
+                            $('#DateIN').val(dt_dateIN);
+                            $('#SupplierIN').val(data.supplierIN);
+                            $('#CurrencyIN').val(data.currencyIN);
+                            $('#QtyActual').val(data.qtyActual);
+                            $('#QtyOrder').val(data.qtyOrder);
+                            $('#qtyOver').val(data.qtyOver);
+                            $('#TotalCostIN').val(data.totalCostIN);
+                            $('#ConvertedCost').val(data.convertedCost);
+                            $('#Total').val(data.total);
+                        }
+                        else
+                        {
+                            Swal.fire({
+                                title: 'Main Store!!!',
+                                text: 'Data not found!!!',
+                                icon: 'success'
+                            })
+                        }
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    }
+
+                });
+            }
+
+            function clearLastEntry(){
+                $('#TypeIN').val('');
+                $('#NoRefIN').val('');
+                $('#DateIN').val('');
+                $('#SupplierIN').val('');
+                $('#CurrencyIN').val('');
+                $('#QtyActual').val('');
+                $('#QtyOrder').val('');
+                $('#qtyOver').val('');
+                $('#TotalCostIN').val('');
+                $('#ConvertedCost').val('');
+                $('#Total').val('');
+            }
+            $('#assetMainFindTable').DataTable({
+                //responsive: true,
+                // "columnDefs": [
+                //     { "width": "80%", "targets": 2 }
+                // ],
+                paging: true,
+                "autoWidth": false,
+                // searching: false,
+                "lengthChange": false
+            });
+            $('#assetMainFindTable').on('click', 'tbody tr td', function () {
+                GetMainAll("keep", $(this).closest('tr').find('.fMainID').html(), '');
+                // $('#sCCSNew').prop("disabled", true);
+                $('#sCCSCode').prop("disabled", true);
+                $('#findData').modal('toggle')
+            });
+            if ($('#pagestatus').val() == 0) {
+                clear();
+                $('.tombol:not(#mainsave)').addClass('disabled');
+            }
+            
+        });
+
+    </script>
+}

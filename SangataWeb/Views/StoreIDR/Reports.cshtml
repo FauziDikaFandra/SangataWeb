@@ -1,0 +1,651 @@
+﻿@model SangataWeb.Models.ViewModel
+@{
+    ViewBag.Title = "Sangata | Reports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.UserName = @Model.User_Login.UserName;
+    ViewBag.Content = "Reports";
+}
+@section pMain {
+    <nav class="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme"
+         id="layout-navbar">
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
+                <i class="icon-base bx bx-menu icon-md"></i>
+
+            </a>
+        </div>
+
+        <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
+            <!-- Search -->
+            <div class="navbar-nav align-items-center me-auto">
+                @* <div class="nav-item d-flex align-items-center">
+            <span class="w-px-22 h-px-22"><i class="icon-base bx bx-search icon-md"></i></span>
+            <input type="text"
+            class="form-control border-0 shadow-none ps-1 ps-sm-2 d-md-block d-none"
+            placeholder="Search..."
+            aria-label="Search..." />
+            </div> *@
+                
+            </div>
+            <!-- /Search -->
+
+            <ul class="navbar-nav flex-row align-items-center ms-md-auto">
+
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                    <a class="nav-link dropdown-toggle hide-arrow p-0"
+                       href="javascript:void(0);"
+                       data-bs-toggle="dropdown">
+                        <div class="avatar avatar-online">
+                            <img src="../../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                        </div>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0 me-3">
+                                        <div class="avatar avatar-online">
+                                            <img src="../../../assets/img/avatars/1.png" alt="" class="w-px-40 h-auto rounded-circle" />
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0">@Model.User_Login.UserName</h6>
+                                        <small class="text-body-secondary">Admin</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown-divider my-1"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="icon-base bx bx-user icon-md me-3"></i><span>My Profile</span>
+                            </a>
+                        </li>
+                        @*                         <li>
+                    <a class="dropdown-item" href="#">
+                    <i class="icon-base bx bx-cog icon-md me-3"></i><span>Settings</span>
+                    </a>
+                    </li>
+                    <li>
+                    <a class="dropdown-item" href="#">
+                    <span class="d-flex align-items-center align-middle">
+                    <i class="flex-shrink-0 icon-base bx bx-credit-card icon-md me-3"></i><span class="flex-grow-1 align-middle">Billing Plan</span>
+                    <span class="flex-shrink-0 badge rounded-pill bg-danger">4</span>
+                    </span>
+                    </a>
+                    </li> *@
+                        <li>
+                            <div class="dropdown-divider my-1"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="../Home/Logout">
+                                <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--/ User -->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- / Navbar -->
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+            <div class="col-md-12">
+                <div class="col-lg-6 col-xl-12 col-xxl-6 h-100">
+                    <div class="card theme-wizard pb-5">
+                        <div class="card-body py-0">
+                            <div class="card mt-5">
+                                <div class="card-body py-2" id="main-body">
+                                    <div class="row g-6 pb-3">
+                                        <div class="col-md">
+                                            <div>
+                                                <label for="rChoices" class="form-label">Report Choices</label>
+                                                <select id="rChoices" data-placeholder="Choose Name of Report" class="form-select form-select-sm select2">
+                                                    @* <option data-code="0" value="" selected disabled hidden>** Choose Type **</option> *@
+                                                    <option data-code="0"></option>
+                                                    @if (Model.vReportMaster != null)
+                                                    {
+                                                        foreach (var item in Model.vReportMaster)
+                                                        {
+                                                            <!option data-id="@item.Id" data-rdd="@item.rDropdown1" data-rdd2="@item.rDropdown2" data-rname="@item.rDDName" data-rname2="@item.rDD2Name" data-rtbl="@item.rDDTable" data-rtbl2="@item.rDD2Table" data-rclm="@item.rDDColumns" data-rclm2="@item.rDD2Columns" data-rdate="@item.rDateCriteria" value="@item.rDescription" >@item.rDescription</!option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" id="rType" style="display:none">
+                                            <div class="row">
+                                                <div class="col" id="rType0">
+                                                    <div>
+                                                        <label for="rTextbox0" class="form-label">Type 1</label>
+                                                        <input id="rTextbox0"
+                                                               class="form-control form-control-sm vtext"
+                                                               type="text"
+                                                               placeholder="" />
+                                                    </div>
+                                                </div>
+                                                <div class="col" id="rType1">
+                                                    <div>
+                                                        <label for="rTyp1" class="form-label">Type 1</label>
+                                                        <select id="rTyp1" data-placeholder="Choose" data-first="3" data-two="9" class="form-select form-select-sm select2 vtext">
+                                                            
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col" id="rType00">
+                                                    <div>
+                                                        <label for="rTextbox00" class="form-label">Type 2</label>
+                                                        <input id="rTextbox00"
+                                                               class="form-control form-control-sm vtext"
+                                                               type="text"
+                                                               placeholder="" />
+                                                    </div>
+                                                </div>
+                                                <div class="col" id="rType2">
+                                                    <div>
+                                                        <label for="rTyp2" class="form-label">Type 2</label>
+                                                        <select id="rTyp2" data-placeholder="Choose" data-first="3" data-two="9" class="form-select form-select-sm select2 vtext">
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                                   @*  <div class="border-top">
+                                    </div> *@
+                                    <div class="row g-6 pb-3">
+                                        <div class="col" id="rDate" style="display:none">
+                                            <label for="rChoices" class="form-label">Date Criteria</label>
+                                            <div>
+                                                <div class="form-check form-check-inline" style="transform: scale(0.9);">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                                    <label class="form-check-label" for="inlineRadio1">All Date</label>
+                                                </div>
+                                                <div class="form-check form-check-inline" style="transform: scale(0.9);">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                                    <label class="form-check-label" for="inlineRadio2">Spesific Date</label>
+                                                </div>
+                                                <div class="form-check form-check-inline" style="transform: scale(0.9);">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                                                    <label class="form-check-label" for="inlineRadio3">Range of Date</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col" id="rDate2" style="display:none">
+
+                                            <div class="row">
+                                                <div class="col" id="rDate21" style="display:none">
+                                                    <div>
+                                                        <label for="rDat1" class="form-label">From Date</label>
+                                                        <input id="rDat1"
+                                                               class="form-control form-control-sm vtext"
+                                                               type="text" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6" id="rDate22" style="display:none">
+                                                    <div>
+                                                        <label for="rDat2" class="form-label">To Date</label>
+                                                        <input id="rDat2"
+                                                               class="form-control form-control-sm vtext"
+                                                               type="text" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row g-2 pb-3">
+                                        <div class="px-sm-0 px-md-0">
+                                            <ul class="pager wizard list-inline mb-0">
+                                                <li class="mt-5 pt-1">
+                                                    <button id="rShow" class="btn btn-primary btn-sm px-5 px-sm-6" type="button">Show<span class="fa fa-eye fa-sm ms-2" data-fa-transform="shrink-3"> </span></button>
+                                                    <button id="rPrint" class="btn btn-primary btn-sm px-5 px-sm-6" type="button">Print<span class="fa fa-print fa-sm ms-2" data-fa-transform="shrink-3"> </span></button>
+                                                    <button id="rDownload" class="btn btn-primary btn-sm px-5 px-sm-6" type="button">Download<span class="fa fa-download fa-sm ms-2" data-fa-transform="shrink-3"> </span></button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="card mt-3">
+                                <div class="card-body py-2 px-2">
+                                    <div id="tbl1" class="table-responsive text-nowrap py-4">
+                                        <table id="ReportTable" class="table table-striped">
+                                            <thead class="table-dark">
+                                                
+                                            </thead>
+                                            <tbody class="table-border-bottom-0">
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="modal fade bd-example-modal-lg" id="RRPrint" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header d-flex justify-content-end">
+                        <div class="text-end px-1">
+                            <button id="mPrint" class="btn btn-outline-primary px-5 px-sm-6" type="button">Print<span class="fa fa-print fa-lg ms-2" data-fa-transform="shrink-3"> </span></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+                        
+        
+        
+      </div>
+                   
+                    <div class="modal-body">
+                        <div class="container px-1">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="cardInv" id="printableArea">
+                                        <div class="card-body border border-secondary">
+                                           @*  <hr class="my-4"> *@
+                                            <div class="py-2 px-2">
+                                                <h5 class="font-size-15 mJudul"></h5>
+
+                                                <div class="table-responsive">
+                                                    <table id="mTable" class="table align-middle table-nowrap table-centered mb-0 border" width="100%">
+                                                        <thead>
+                                                        </thead><!-- end thead -->
+                                                        <tbody>
+                                                           
+                                                        </tbody><!-- end tbody -->
+                                                    </table><!-- end table -->
+                                                </div><!-- end table responsive -->
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- end col -->
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+        <!-- / Content -->
+        <!-- Footer -->
+        <footer class="content-footer footer bg-footer-theme">
+            <div class="container-xxl">
+                <div class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                    <div class="mb-2 mb-md-0">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        made by
+                        <a href="https://ptodg.com/id/" target="_blank" class="footer-link">ODG Indonesia</a>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+        <!-- / Footer -->
+
+        <div class="content-backdrop fade"></div>
+        
+    </div>
+    <!-- Content wrapper -->
+
+
+    <script>
+        $(document).ready(function () {
+                var dt_to = $.datepicker.formatDate('dd/mm/yy', new Date());
+                $('#rDat1').datepicker({
+                    dateFormat: "dd/mm/yy",
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: "-5:+1",
+                });
+                $('#rDat2').datepicker({
+                    dateFormat: "dd/mm/yy",
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: "-5:+1",
+                });
+            $('#rChoices').on('change', function () {
+                    var rDropdown1 = $(this).find('option:selected').attr('data-rdd');
+                    var rDropdown2 = $(this).find('option:selected').attr('data-rdd2');
+                    var rDateCriteria = $(this).find('option:selected').attr('data-rdate');
+                    var rDDTable = $(this).find('option:selected').attr('data-rtbl');
+                    var rDD2Table = $(this).find('option:selected').attr('data-rtbl2');
+                    var rDDColumns = $(this).find('option:selected').attr('data-rclm');
+                    var rDD2Columns = $(this).find('option:selected').attr('data-rclm2');
+                    var rDDName = $(this).find('option:selected').attr('data-rname');
+                    var rDD2Name = $(this).find('option:selected').attr('data-rname2');
+                    $('.mJudul').html($(this).find('option:selected').attr('value'));
+                    $("input[type='radio'][name='inlineRadioOptions']").prop("checked", false);
+                    $('#rTextbox0').siblings('label').html(rDDName);
+                    $('#rTextbox00').siblings('label').html(rDD2Name);
+                    $('#rTyp1').siblings('label').html(rDDName);
+                    $('#rTyp2').siblings('label').html(rDD2Name);
+                    $('#rDat1').siblings('label').html('Date');
+                    $('#rType').hide("slow");
+                    $('#rDate').hide("slow");
+                    $('#rDate2').hide("slow");
+                    $('#rDat21').hide("slow");
+                    $('#rDat22').hide("slow");
+                    $('#rType0').hide("slow");
+                    $('#rType00').hide("slow");
+                    $('#rType1').hide("slow");
+                    $('#rType2').hide("slow");
+                    if (rDropdown1 == 1)
+                    {
+                        $("#rType").show("slow");
+                        if (rDDTable == '')
+                        {
+                            $('#rType0').show("slow");
+                        }
+                        else
+                        {
+                            $('#rType1').show("slow");
+                            GetDropDown($('#rTyp1'), rDDTable, rDDColumns);
+                        }
+                    }   
+                    if (rDropdown2 == 1) {
+                        $("#rType").show("slow");
+                        if (rDD2Table == '') {
+                            $('#rType00').show("slow");
+                        }
+                        else {
+                            $('#rType2').show("slow");
+                            GetDropDown($('#rTyp2'), rDD2Table, rDD2Columns);
+                        }
+                    }
+                    if (rDateCriteria == 1) {
+                        $("#rDate").show("slow");
+                    }
+                });
+                $("input[name='inlineRadioOptions']").change(function () {
+                    var buttonVal = $("input[type='radio'][name='inlineRadioOptions']:checked").val();
+                    if (buttonVal == 'option2')
+                    {
+                        $('#rDate2').show();
+                        $('#rDate21').show("slow");
+                        $('#rDate22').hide();
+                        $('#rDat1').siblings('label').html('Date');
+                    }
+                    else if (buttonVal == 'option3') {
+                        $('#rDate2').show();
+                        $('#rDate21').show("slow");
+                        $('#rDat1').siblings('label').html('From Date');
+                        $('#rDate22').show("slow");
+                    }
+                    else
+                    {
+                        $('#rDate2').hide("slow");
+                        $('#rDate21').hide("slow");
+                        $('#rDate22').hide("slow");
+                    }
+                })
+
+            $('#ReportTable').DataTable({
+                //responsive: true,
+                // "columnDefs": [
+                //     { "width": "80%", "targets": 2 }
+                // ],
+                paging: true,
+                "autoWidth": false,
+                 searching: false,
+                columnDefs: [
+                    { targets: [1, 2, 3, 4, 5, 6], searchable: false }
+                ]
+                //"lengthChange": false
+            });
+            $('#rDownload').on('click', function () {
+                if ($('#drType').find('option:selected').attr('data-code') != "0") {
+                    $("#spinner").show();
+                    $("body").css("pointer-events", "none");
+                    $(".layout-wrapper").css("opacity", 0.6);
+                    window.open('/StoreIDR/PrintListMaterial?Idstr=' + $("#dt-search-0").val() + '&Typ=' + $('#drType').find('option:selected').attr('value') + '', '_blank');
+                    $("#spinner").hide();
+                    $("body").css("pointer-events", "");
+                    $(".layout-wrapper").css("opacity", 1);
+                }
+
+                
+            });
+                function clearValidMain() {
+                    $(".is-valid").each(function () {
+                        $(this).removeClass('is-valid');
+                    });
+                    $(".is-invalid").each(function () {
+                        $(this).removeClass('is-invalid');
+                    });
+                    $(".select2-selection.select2-selection--single").each(function () {
+                        $(this).find('.select2-selection__rendered').removeAttr('title');
+                    });
+                }
+            $('#rPrint').on('click', function () {
+                    if ($('#rChoices').find('option:selected').attr('data-code') != "0") {
+                        clearValidMain();
+                        $(".vtext").each(function () {
+                            if ($(this).is(':visible')) {
+                                if ($(this).val() == '') {
+                                    if ($(this).hasClass('form-select')) {
+                                        $(this).next().find(".select2-selection.select2-selection--single").addClass('is-invalid')
+                                    }
+                                    else {
+                                        $(this).addClass('is-invalid')
+                                    }
+
+                                }
+                                else {
+                                    if ($(this).hasClass('form-select')) {
+                                        $(this).next().find(".select2-selection.select2-selection--single").addClass('is-valid')
+                                    }
+                                    else {
+                                        $(this).addClass('is-valid')
+                                    }
+                                }
+                            }
+                        });
+                        if (!$('#main-body').find('.vtext').hasClass('is-invalid')) {
+                            $('#RRPrint').modal('show');
+                        }
+                    }
+                
+            });
+            $('#mPrint').on('click', function () {
+                printDiv('printableArea');
+            });
+            
+                $('#rShow').on('click', function () {
+                    var whr, whr2, whr3, whr4;
+                    if ($('#rType0').is(':visible')) {
+                        whr = $('#rTextbox0').val();
+                    }
+                    else
+                    {
+                        whr = $('#rTyp1').val();
+                    }
+                    whr2 = $('#rTyp2').val();
+                    whr3 = $('#rDat1').val();
+                    whr4 = $('#rDat2').val();
+                    GetList($('#rChoices').find('option:selected').attr('data-id'), whr, whr2, whr3, whr4);
+                });
+            function printDiv(divName) {
+                var width = $(window).width();
+
+                var printContents = document.getElementById(divName).innerHTML;
+                var originalContents = document.body.innerHTML;
+
+                document.body.innerHTML = printContents;
+
+                window.print();
+
+                if (width > 1000) {
+                    document.body.innerHTML = originalContents;
+                }
+                location.reload();
+            }
+                function GetDropDown(Id, Tbl, Clms) {
+                    $("#spinner").show();
+                    $("body").css("pointer-events", "none");
+                    $(".layout-wrapper").css("opacity", 0.6);
+                    Id.empty();
+
+                    var Clm = Clms.split(",");
+                    var itms = {};
+                    var oneDD = Tbl.includes("_");
+                    itms.Typ = Tbl;
+                    itms.Idstr = Clm[0];
+                    itms.Idstr2 = Clm[1];
+                    $.ajax({
+                        url: '/StoreIDR/GetDropDownReport',
+                        type: "POST",
+                        data: JSON.stringify(itms),
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        // traditional: true,
+                        success: function (data) {
+                            if (data) {
+                                $(Id).removeClass('ddmulti1');
+                                $(Id).append(
+                                    '<option data-code="0"></option>'
+                                );
+                                if (!oneDD) {
+                                    $(Id).addClass('ddmulti1');
+                                    var newRow = $('<optgroup class="def-cursor" label="' + Clm[0] + '" data-city="' + Clm[1] + '">');
+                                    $(data).each(function (index, item) {
+                                        $(newRow).append(
+                                            '<option data-code="' + item.code + '" data-city="' + item.description + '" value="' + ((item.code == "") ? item.description : item.code) + '">' + ((item.code == "") ? item.description : item.code) + '</option>'
+                                        );
+                                    });
+                                    $(Id).append(newRow);
+                                }
+                                else {
+                                    $(data).each(function (index, item) {
+                                        $(Id).append(
+                                            '<option data-code="' + item.code + '" data-city="' + item.description + '" value="' + ((item.code == "") ? item.description : item.code) + '">' + ((item.code == "") ? item.description : item.code) + '</option>'
+                                        );
+                                    });
+                                }
+                                setselect(Id);
+                                
+                                
+                                
+                                $("#spinner").hide();
+                                $("body").css("pointer-events", "");
+                                $(".layout-wrapper").css("opacity", 1);
+                            }
+                            else {
+                                alert(data.text);
+                                $("#spinner").hide();
+                                $("body").css("pointer-events", "");
+                                $(".layout-wrapper").css("opacity", 1);
+                            }
+                        },
+                        error: function (data) {
+                            alert(data.text);
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                        }
+                    });
+                }
+                function GetList(Id, whr, whr2, whr3, whr4) {
+                    $("#spinner").show();
+                    $("body").css("pointer-events", "none");
+                    $(".layout-wrapper").css("opacity", 0.6);
+                    $("#ReportTable").empty();
+                    $("#mTable").empty();
+                    var itms = {};
+                    itms.Id = Id;
+                    itms.Typ = whr;
+                    itms.Idstr = whr2;
+                    itms.Idstr2 = whr3;
+                    itms.Idstr3 = whr4;
+                    $.ajax({
+                        url: '/StoreIDR/GetListReport',
+                        type: "POST",
+                        data: JSON.stringify(itms),
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        // traditional: true,
+                        success: function (data) {
+                            if (data) {
+                                const myArr = JSON.parse(data);
+                                const myHdr = Object.keys(myArr[0]);
+                                var row = $('<thead class="table-dark">');
+                                var rowprint = $('<thead class="table-dark">');
+                                var subrow = $('<tr>');
+                                var subrowprint = $('<tr>');
+                                $(myHdr).each(function (index, item) {
+                                    $(subrow).append(
+                                        '<th>' + item + '</th>'
+                                    );
+                                    $(subrowprint).append(
+                                        '<th>' + item + '</th>'
+                                    );
+                                });
+                                $(row).append(subrow);
+                                $(rowprint).append(subrowprint);
+                                $("#ReportTable").append(row);
+                                $("#mTable").append(rowprint);
+                                var rowdetail = $('<tbody class="table-border-bottom-0">');
+                                var rowdetailprint = $('<tbody class="table-border-bottom-0">');
+                                $(myArr).each(function (index, item) {
+                                    var subrowdetail = $('<tr>');
+                                    var subrowdetailprint = $('<tr>');
+                                    var lp = 0;
+                                    $(myHdr).each(function (index2, item2) {
+                                        $(subrowdetail).append(
+                                            '<td><span class="JobNo">' + item[item2] + '</span></td>'
+                                        );
+                                        $(subrowdetailprint).append(
+                                            '<td><span class="JobNo">' + item[item2] + '</span></td>'
+                                        );
+                                        lp++;
+                                    });
+                                    $(rowdetail).append(subrowdetail);
+                                    $(rowdetailprint).append(subrowdetailprint);
+                                });
+                                
+                                $("#ReportTable").append(rowdetail);
+                                $("#mTable").append(rowdetailprint);
+                                
+                                $("#spinner").hide();
+                                $("body").css("pointer-events", "");
+                                $(".layout-wrapper").css("opacity", 1);
+                            }
+                            else {
+                                alert(data.text);
+                                $("#spinner").hide();
+                                $("body").css("pointer-events", "");
+                                $(".layout-wrapper").css("opacity", 1);
+                            }
+                        },
+                        error: function (data) {
+                            alert(data.text);
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                        }
+                    });
+                }
+        });
+
+    </script>
+}

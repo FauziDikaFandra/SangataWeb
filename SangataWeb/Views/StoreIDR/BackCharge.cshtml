@@ -1,0 +1,1244 @@
+﻿@model SangataWeb.Models.ViewModel
+@{
+    ViewBag.Title = "Sangata | Back Charge";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.UserName = @Model.User_Login.UserName;
+    ViewBag.Content = "Back Charge";
+}
+@section pMain {
+    <nav class="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme"
+         id="layout-navbar">
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
+                <i class="icon-base bx bx-menu icon-md"></i>
+                
+            </a>
+        </div>
+
+        <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
+            <!-- Search -->
+            <div class="navbar-nav align-items-center me-auto">
+                @* <div class="nav-item d-flex align-items-center">
+            <span class="w-px-22 h-px-22"><i class="icon-base bx bx-search icon-md"></i></span>
+            <input type="text"
+            class="form-control border-0 shadow-none ps-1 ps-sm-2 d-md-block d-none"
+            placeholder="Search..."
+            aria-label="Search..." />
+            </div> *@
+                <div class="row">
+                    <div class="col">
+                        <a id="mainnew" title="Add New" href="#" class="btn btn-primary btn-circle ml-2 tombol">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                        @*                         <a id="mainsave" title="Save" href="#" class="btn btn-success btn-circle ml-4">
+                    <i class="fas fa-save"></i>
+                    </a> *@
+                        <a id="mainfirst" title="Previous" href="#" class="btn btn-info btn-circle ml-4 tombol">
+                            <i class="fas fa-fast-backward"></i>
+                        </a>
+                        <a id="mainprev" title="Previous" href="#" class="btn btn-info btn-circle ml-4 tombol">
+                            <i class="fas fa-step-backward"></i>
+                        </a>
+                        <a id="mainnext" title="Next" href="#" class="btn btn-warning btn-circle ml-4 tombol">
+                            <i class="fas fa-step-forward"></i>
+                        </a>
+                        <a id="mainend" title="Next" href="#" class="btn btn-warning btn-circle ml-4 tombol">
+                            <i class="fas fa-fast-forward"></i>
+                        </a>
+                        <a id="mainfind" title="Find" href="#" class="btn btn-danger btn-circle ml-4 tombol" data-bs-toggle="modal" data-bs-target="#findData">
+                            <i class="fas fa-search"></i>
+                        </a>
+                        @*                                     <a id="popost" title="Post" href="#" class="btn btn-success btn-circle ml-4 btn-sm">
+                    <i class="fas fa-paper-plane"></i>
+                    </a> *@
+                        <input class="d-none" id="pagestatus" value="@((Model.vBackCharge == null) ? 0 : Model.vBackCharge.Id)" />
+                    </div>
+                </div>
+            </div>
+            <!-- /Search -->
+
+            <ul class="navbar-nav flex-row align-items-center ms-md-auto">
+
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                    <a class="nav-link dropdown-toggle hide-arrow p-0"
+                       href="javascript:void(0);"
+                       data-bs-toggle="dropdown">
+                        <div class="avatar avatar-online">
+                            <img src="../../../assets/img/avatars/1.png"  class="w-px-40 h-auto rounded-circle" />
+                        </div>
+                    </a>
+                    
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0 me-3">
+                                        <div class="avatar avatar-online">
+                                            <img src="../../../assets/img/avatars/1.png" alt="" class="w-px-40 h-auto rounded-circle" />
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0">@Model.User_Login.UserName</h6>
+                                        <small class="text-body-secondary">Admin</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown-divider my-1"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="icon-base bx bx-user icon-md me-3"></i><span>My Profile</span>
+                            </a>
+                        </li>
+                        @*                         <li>
+                    <a class="dropdown-item" href="#">
+                    <i class="icon-base bx bx-cog icon-md me-3"></i><span>Settings</span>
+                    </a>
+                    </li>
+                    <li>
+                    <a class="dropdown-item" href="#">
+                    <span class="d-flex align-items-center align-middle">
+                    <i class="flex-shrink-0 icon-base bx bx-credit-card icon-md me-3"></i><span class="flex-grow-1 align-middle">Billing Plan</span>
+                    <span class="flex-shrink-0 badge rounded-pill bg-danger">4</span>
+                    </span>
+                    </a>
+                    </li> *@
+                        <li>
+                            <div class="dropdown-divider my-1"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="../Home/Logout">
+                                <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--/ User -->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- / Navbar -->
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+            <div class="col-md-12">
+                <div class="col-lg-6 col-xl-12 col-xxl-6 h-100">
+                    <div class="card theme-wizard pb-5">
+                        <div class="card-header bg-body-tertiary pt-5 pb-0">
+                            <ul class="nav nav-pills mb-3" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button id="tabRequest" class="nav-link active" data-wizard-step="1" data-bs-toggle="pill" data-bs-target="#form-wizard-tab1" type="button" role="tab" aria-controls="form-wizard-tab1" aria-selected="true"><span class="fas fa-asterisk me-2" data-fa-transform="shrink-2"></span><span class="d-none d-md-inline-block fs-10">Request</span></button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button id="tabMaterial" class="nav-link" data-wizard-step="2" data-bs-toggle="pill" data-bs-target="#form-wizard-tab2" type="button" role="tab" aria-controls="form-wizard-tab2" aria-selected="false"><span class="fab fa-bimobject me-2" data-fa-transform="shrink-2"></span><span class="d-none d-md-inline-block fs-10">Material</span></button>
+                                </li>
+                                @* <li id="tabMaterial" class="nav-item" role="presentation">
+                                    <button class="nav-link" data-wizard-step="3" data-bs-toggle="pill" data-bs-target="#form-wizard-tab3" type="button" role="tab" aria-controls="form-wizard-tab3" aria-selected="false"><span class="fab fa-bitbucket me-2" data-fa-transform="down-2 shrink-2"></span><span class="d-none d-md-inline-block fs-10">Material</span></button>
+                                </li> *@
+                                @*                         <li class="nav-item" role="presentation">
+                            <button class="nav-link" data-wizard-step="4" data-bs-toggle="pill" data-bs-target="#form-wizard-tab4" type="button" role="tab" aria-controls="form-wizard-tab4" aria-selected="false"><span class="fas fa-thumbs-up me-2" data-fa-transform="shrink-2"></span><span class="d-none d-md-inline-block fs-10">Done</span></button>
+                            </li> *@
+                            </ul>
+                        </div>
+                        <div class="card-body py-0">
+                            <div class="tab-content px-1 py-3">
+                                <div class="tab-pane px-sm-3 px-md-5 active show" role="tabpanel" aria-labelledby="form-wizard-tab1" id="form-wizard-tab1">
+                                    <form id="firstForm" data-wizard-form="1">
+                                        <div class="card pb-5">
+                                            <div class="card-body pb-0">
+                                                <div class="row g-6 pb-3">
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <label for="bKPCReqNo" class="form-label">KPC RM. No</label>
+                                                            <input class="d-none" id="RequestId" value="@Model.vBackCharge.Id" />
+                                                            <input id="bKPCReqNo"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@Model.vBackCharge.bKPCReqNo" disabled/>
+                                                             <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="bCostCenter" class="form-label">Cost Center</label>
+                                                            <input id="bCostCenter"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@Model.vBackCharge.bCostCenter" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="bIssueBy" class="form-label">KPC Issued By</label>
+                                                            <input id="bIssueBy"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@Model.vBackCharge.bIssueBy" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="bDate" class="form-label">Request Date</label>
+                                                            <input id="bDate"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@Convert.ToDateTime(Model.vBackCharge.bDate).ToString("dd/MM/yyyy")" />
+                                                        </div>                             
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <label for="bPickUP" class="form-label">Pick Up By</label>
+                                                            <select id="bPickUP" data-placeholder="Choose Pick Up By" class="form-select form-select-sm select2">
+                                                                @* <option data-code="0" value="" selected disabled hidden>** Choose Type **</option> *@
+                                                                <option data-code="0"></option>
+                                                                @if (Model.vStoreMan != null)
+                                                                {
+                                                                    foreach (var item in Model.vStoreMan)
+                                                                    {
+                                                                        <!option data-code="@item.stEmplNo" value="@item.stEmplName" @((item.stEmplName == Model.vBackCharge.bPickUP) ? "selected" : "")>@item.stEmplName</!option>
+                                                                    }
+                                                                }
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+</div>
+                                                        <div>
+                                                            <label for="bJobNo" class="form-label">Project No</label>
+                                                            <select id="bJobNo" data-placeholder="Choose Project No" data-first="4" data-two="8" class="form-select form-select-sm select2 ddmulti1 vtext">
+                                                                @* <option data-code="0" value="" selected disabled hidden>** Choose Type **</option> *@
+
+                                                                <option data-code="0"></option>
+                                                                <optgroup class="def-cursor" label="Job No" data-city="Desc">
+                                                                    @if (Model.vProject != null)
+                                                                    {
+                                                                        foreach (var item in Model.vProject)
+                                                                        {
+                                                                            <!option data-code="@item.pName" data-city="@item.pName" value="@item.pNo" @((item.pNo == Convert.ToString(Model.vBackCharge.bJobNo)) ? "selected" : "")>@item.pNo</!option>
+                                                                        }
+                                                                    }
+                                                                </optgroup>
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="bJobName" class="form-label">Project Name</label>
+                                                            <input id="bJobName"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@Model.vBackCharge.bJobName" disabled />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="bCurrency" class="form-label">Currency</label>
+                                                            <select id="bCurrency" data-placeholder="Choose Currency" data-first="3" data-two="9" class="form-select form-select-sm select2 ddmulti1 vtext">
+                                                                @* <option data-code="0" value="" selected disabled hidden>** Choose Type **</option> *@
+
+                                                                <option data-code="0"></option>
+                                                                <optgroup class="def-cursor" label="Code" data-city="Name">
+                                                                    @if (Model.vCurrency != null)
+                                                                    {
+                                                                        foreach (var item in Model.vCurrency)
+                                                                        {
+                                                                            <!option data-code="@item.cName" data-city="@item.cName" value="@item.cID" @((item.cID == Model.vBackCharge.bCurrency) ? " selected" : "")>@item.cID</!option>
+                                                                        }
+                                                                    }
+                                                                </optgroup>
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer bg-body-tertiary pb-3">
+                                                <div class="px-sm-0 px-md-0">
+                                                    <ul class="pager wizard list-inline mb-0">
+                                                        <li class="previous">
+                                                            <button class="btn btn-link ps-0" type="button"></button>
+                                                        </li>
+                                                        <li class="next">
+                                                            <button id="requestAdd" class="btn btn-primary px-5 px-sm-6" type="button"><span id="requestAdds">Update</span><span class="fas fa-save fa-lg ms-2" data-fa-transform="shrink-3"> </span></button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane px-sm-3 px-md-5" role="tabpanel" aria-labelledby="form-wizard-tab2" id="form-wizard-tab2">
+                                    <form data-wizard-form="2">
+                                        <div class="card pb-5">
+                                            <div class="card-body pb-0">
+                                                <div class="row g-6 pb-3">
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <label for="bsID" class="form-label d-none">ID</label>
+                                                            <input class="d-none" id="MaterialID" value="0" />
+                                                            <input id="bsID"
+                                                                   class="form-control form-control-sm d-none"
+                                                                   type="text"
+                                                                   placeholder="" disabled />
+                                                        </div>
+                                                        <div>
+                                                            <label for="bsKPCStoreNo" class="form-label">KPC Stock No</label>
+                                                            <input id="bsKPCStoreNo"
+                                                                   class="form-control form-control-sm vtext vnumber"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="0" disabled/>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <label for="bsODGStockCode" class="form-label">Stock Code</label>
+                                                                <select id="bsODGStockCode" data-placeholder="Choose Stock Code" data-first="4" data-two="2" data-three="5" class="form-select form-select-sm select2 ddmulti2 vtext">
+                                                                    @* <option data-code="0" value="" selected disabled hidden>** Choose Type **</option> *@
+
+                                                                    <option data-code="0"></option>
+                                                                    <optgroup class="def-cursor" label="Code" data-code="Unit" data-city="Material">
+                                                                        @if (Model.vStore != null)
+                                                                        {
+                                                                            foreach (var item in Model.vStore)
+                                                                            {
+                                                                                <option data-code="@item.uDescription" data-city="@item.sDescription" value="@item.sStockCode">@item.sStockCode</option>
+                                                                            }
+                                                                        }
+                                                                    </optgroup>
+                                                                </select>
+                                                                <div class="valid-feedback">
+                                                                    Looks good!
+                                                                </div>
+</div>
+                                                            <div class="col-6">
+                                                                <label for="uDescription" class="form-label">Unit</label>
+                                                                <input id="uDescription"
+                                                                       class="form-control form-control-sm"
+                                                                       type="text"
+                                                                       placeholder="" disabled/>
+                                                             
+</div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="sDescription" class="form-label">Material Description</label>
+                                                            <input id="sDescription"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder="" disabled/>
+                                                      
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-5">
+                                                            <label for="bsQty" class="form-label">Qty Out</label>
+                                                            <input id="bsQty"
+                                                                   class="form-control form-control-sm vtext vnumber"
+                                                                   type="text"
+                                                                   placeholder="" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                            </div>
+                                                           <div class="col-7">
+                                                            <label for="bsQtyUsed" class="form-label">Qty Used</label>
+                                                            <input id="bsQtyUsed"
+                                                                   class="form-control form-control-sm vtext vnumber"
+                                                                   type="text"
+                                                                   placeholder="" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                        
+                                                        
+                                                        <div class="row">
+                                                            <div class="col-5">
+                                                                <label for="bsQtyBack" class="form-label">Qty Back</label>
+                                                            <input id="bsQtyBack"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                       placeholder="" disabled />
+</div>
+<div class="col-7">
+    <label for="bsUnitCost" class="form-label">Unit Cost</label>
+                                                            <input id="bsUnitCost"
+                                                                   class="form-control form-control-sm vtext vnumber"
+                                                                   type="text"
+                                                                   placeholder="" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div>
+                                                                <label for="bsTotalCost" class="form-label">Total Cost</label>
+                                                            <input id="bsTotalCost"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder="" disabled />
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer bg-body-tertiary pb-3">
+                                                <div class="px-sm-0 px-md-0">
+                                                    <ul class="pager wizard list-inline mb-0">
+                                                        <li class="previous">
+                                                            <button id="MaterialClear" class="btn btn-secondary px-5 px-sm-6" type="button">Clear<span class="fa fa-eraser fa-lg ms-2" data-fa-transform="shrink-3"> </span></button>
+                                                        </li>
+                                                        <li class="next">
+                                                            <button id="MaterialAdd" class="btn btn-info px-5 px-sm-6" type="button"><span id="MaterialAdds">Add</span><span class="far fa-plus-square fa-lg ms-2" data-fa-transform="shrink-3"> </span></button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="table-responsive text-nowrap py-4">
+                                            <table id="MaterialTable" class="table table-striped">
+                                                <thead class="table-dark">
+                                                    <tr>
+                                                        <th class="d-none">Id</th>
+                                                        <th class="d-none">ID</th>
+                                                            <th>KPC Stock No</th>
+                                                        <th>Stock Code</th>
+                                                        <th>Material Desc</th>
+                                                        <th>Unit</th>
+                                                        <th>Qty Rec'd</th>
+                                                            <th>Qty Used</th>
+                                                        <th>Qty Back</th>
+                                                        <th>Unit Cost</th>
+                                                        <th>Total Cost</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table-border-bottom-0">
+                                                    @if (Model.vBackChargeSub.Count > 0)
+                                                    {
+                                                        foreach (var item in Model.vBackChargeSub)
+                                                        {
+                                                            <tr>
+                                                                <td class="d-none">
+                                                                    <span class="rMaterialId">@item.Id</span>
+                                                                </td>
+                                                                <td class="d-none">
+                                                                    <span class="bsID">@item.bsID</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="bsKPCStoreNo">@item.bsKPCStoreNo</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="fas fa-circle fs-11 me-1 text-primary"></span><span class="bsODGStockCode">@item.bsODGStockCode</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="sDescription">@item.sDescription</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="uDescription">@item.uDescription</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="bsQty">@item.bsQty</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="bsQtyUsed">@item.bsQtyUsed</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="bsQtyBack">@item.bsQtyBack</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="bsUnitCost">@item.bsUnitCost</span>
+                                                                </td>
+                                                                <td>
+                                                                        <span class="bsTotalCost">@(item.bsUnitCost * item.bsQty)</span>
+                                                                </td>
+                                                                <td>
+                                                                    <div>
+                                                                        <a class="sEdit" data-code="@item.Id"><i class="icon-base bx bx-edit-alt icon-xm text-info me-1"></i></a>
+                                                                        <a class="sDelete" data-code="@item.Id"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <!-- / Content -->
+        <!-- Footer -->
+        <footer class="content-footer footer bg-footer-theme">
+            <div class="container-xxl">
+                <div class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                    <div class="mb-2 mb-md-0">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        made by
+                        <a href="https://ptodg.com/id/" target="_blank" class="footer-link">ODG Indonesia</a>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+        <!-- / Footer -->
+
+        <div class="content-backdrop fade"></div>
+        <div class="modal fade" id="findData" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body px-3 pt-2">
+                        <div class="table-responsive text-nowrap pb-3">
+                            <table id="requestFindTable" class="table table-striped">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="d-none">RequestFindID</th>
+                                        <th>KPC RM. No</th>
+                                        <th>KPC Cost Centre</th>
+                                        <th>KPC Issued By</th>
+                                        <th>Request Date</th>
+                                        <th>Project No</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                    @if (Model.vBackChargeFind.Count > 0)
+                                    {
+                                        foreach (var item in Model.vBackChargeFind)
+                                        {
+                                            <tr>
+                                                <td class="d-none">
+                                                    <span class="fRequestID">@item.Id</span>
+                                                </td>
+                                                <td>
+                                                    <span class="fbKPCReqNo">@item.bKPCReqNo</span>
+                                                </td>
+                                                <td>
+                                                    <span class="fbCostCenter">@item.bCostCenter</span>
+                                                </td>
+                                                <td>
+                                                    <span class="fbIssueBy">@item.bIssueBy</span>
+                                                </td>
+                                                <td>
+                                                    <span class="fbDate">@Convert.ToDateTime(item.bDate).ToString("dd MMM yyyy")</span>
+                                                </td>
+                                                <td>
+                                                    <span class="fbJobNo">@item.bJobNo</span>
+                                                </td>
+                                                
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div> 
+    <!-- Content wrapper -->
+
+
+    <script>
+        $(document).ready(function () {
+            var ext = false;
+            var addtyp = 'labour';
+            var dt_to = $.datepicker.formatDate('dd/mm/yy', new Date());
+            var stopBlinking = false;
+            $('#bDate').datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-5:+1",
+            });
+
+            $('#bJobNo').on('change', function () {
+                $('#bJobName').val($(this).find('option:selected').attr('data-code'));
+            });
+            $('#bsODGStockCode').on('change', function () {
+                $('#uDescription').val($(this).find('option:selected').attr('data-code'));
+                $('#sDescription').val($(this).find('option:selected').attr('data-city'));
+            });
+            
+            function GetExistingRequest() {
+                $.ajax({
+                    url: '/StoreIDR/GetExistingBackCharge',
+                    type: "POST",
+                    data: JSON.stringify(getRequest()),
+                    dataType: 'json',
+                    // cache: false,
+                    contentType: 'application/json; charset=utf-8',
+                    // traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            // alert(data.success);
+                            if (data.success) {
+                                Swal.fire({
+                                    title: 'Duplicate!!!',
+                                    text: 'Request no : ' + data.typ_ + ' already exist!',
+                                    icon: 'error'
+                                })
+                                ext = false;
+                            }
+                            else {
+                                Swal.fire({
+                                    title: 'Bank Charge!!!',
+                                    text: 'Unit no : ' + data.typ_ + ' Saved!',
+                                    icon: 'success'
+                                })
+                                $('#bKPCReqNo').prop("disabled", true);
+                                $("#RequestId").val(data.result);
+                                $('.tombol').removeClass('disabled');
+                                clearRequestValid();
+                            }
+
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            // window.location = "/LightingPlant/Index"
+                        }
+                        else {
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            alert(data.text);
+                            ext = false;
+                        }
+                    },
+                    error: function (data) {
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                        alert(data.text);
+                        ext = false;
+                    }
+                });
+                return ext;
+            }
+
+            function UpdateRequest() {
+                $.ajax({
+                    url: '/StoreIDR/UpdateBackCharge',
+                    type: "POST",
+                    data: JSON.stringify(getRequest()),
+                    dataType: 'json',
+                    // cache: false,
+                    contentType: 'application/json; charset=utf-8',
+                    // traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            Swal.fire({
+                                title: 'Request!!!',
+                                text: 'Req No : ' + data.typ_ + ' Updated!',
+                                icon: 'success'
+                            })
+
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            clearRequestValid();
+                            // window.location = "/LightingPlant/Index"
+                        }
+                        else {
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            alert(data.text);
+                            ext = false;
+                        }
+                    },
+                    error: function (data) {
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                        alert(data.text);
+                        ext = false;
+                    }
+                });
+                return ext;
+            }
+
+            function getRequest() {
+                var from = $("#bDate").val().split("/");
+                var dt_bDate = new Date(from[2] + '-' + from[1] + '-' + from[0]);
+                var tmp_RequestId = $('#RequestId').val();
+                var tmp_bKPCReqNo = $('#bKPCReqNo').val();
+                var tmp_bIssueBy = $('#bIssueBy').val();
+                var tmp_bJobNo = $('#bJobNo').val();
+                var tmp_bPickUP = $('#bPickUP').val();
+                var tmp_bCurrency = $('#bCurrency').val();
+                var tmp_bCostCenter = $('#bCostCenter').val();
+                var tmp_bDate = dt_bDate;
+                return (tmp_bKPCReqNo == "") ? null :
+                    {
+                        Id: tmp_RequestId,
+                        bKPCReqNo: tmp_bKPCReqNo,
+                        bIssueBy: tmp_bIssueBy,
+                        bJobNo: tmp_bJobNo,
+                        bPickUP: tmp_bPickUP,
+                        bCurrency: tmp_bCurrency,
+                        bCostCenter: tmp_bCostCenter,
+                        bDate: tmp_bDate
+                    };
+            }
+
+            function clearRequestValid() {
+                clearValidMain();
+            }
+            function clear() {
+                $('#RequestId').val('0');
+                $('#requestAdds').html('Save');
+                $('#bKPCReqNo').val('');
+                $('#bKPCReqNo').prop("disabled", false);
+                $('#bIssueBy').val('');
+                $('#bJobNo').val(null).trigger('change');
+                $('#bPickUP').val(null).trigger('change');
+                $('#bCurrency').val(null).trigger('change');
+                $('#bCostCenter').val('');
+                $('#bDate').val(dt_to);
+                clearValidMain();
+                clearMaterial();
+                $('#MaterialTable tbody').empty();
+                $('#bKPCReqNo').focus();
+            }
+
+            function clearValidMain() {
+                $(".is-valid").each(function () {
+                    $(this).removeClass('is-valid');
+                });
+                $(".is-invalid").each(function () {
+                    $(this).removeClass('is-invalid');
+                });
+                $(".select2-selection.select2-selection--single").each(function () {
+                    $(this).find('.select2-selection__rendered').removeAttr('title');
+                });
+            }
+            
+            $('#MaterialTable').DataTable({
+                //responsive: true,
+                // "columnDefs": [
+                //     { "width": "80%", "targets": 2 }
+                // ],
+                paging: true,
+                "autoWidth": false,
+                searching: false,
+                //"lengthChange": false
+            });
+            $('#requestFindTable').DataTable({
+                //responsive: true,
+                // "columnDefs": [
+                //     { "width": "80%", "targets": 2 }
+                // ],
+                paging: true,
+                "autoWidth": false,
+                // searching: false,
+                "lengthChange": false
+            });
+
+            $('#MaterialTable').on('click', 'tbody tr td', function () {
+                getEditMaterial($(this))
+            });
+
+           
+            function getEditMaterial(ths) {
+                $('#MaterialID').val(ths.closest('tr').find('.rMaterialId').html());
+                $('#bsKPCStoreNo').val(ths.closest('tr').find('.bsKPCStoreNo').html());
+                $('#bsID').val(ths.closest('tr').find('.bsID').html());
+                $('#bsODGStockCode').val(ths.closest('tr').find('.bsODGStockCode').html()).trigger('change');
+                $('#bsODGStockCode').removeClass('is-invalid').removeClass('is-valid');
+                $('#irsNo').val(ths.closest('tr').find('.irsNo').html());
+                $('#sDescription').val(ths.closest('tr').find('.sDescription').html());
+                $('#uDescription').val(ths.closest('tr').find('.uDescription').html());
+                $('#bsQty').val(ths.closest('tr').find('.bsQty').html());
+                $('#bsQtyUsed').val(ths.closest('tr').find('.bsQtyUsed').html());
+                $('#bsQtyBack').val(ths.closest('tr').find('.bsQtyBack').html());
+                $('#bsUnitCost').val(ths.closest('tr').find('.bsUnitCost').html());
+                $('#bsTotalCost').val(ths.closest('tr').find('.bsTotalCost').html());
+                $('#MaterialAdds').html('Update');
+            }
+
+            $('#MaterialTable').on('click', '.sEdit', function () {
+                getEditMaterial($(this))
+            });
+
+            $('#MaterialTable').on('click', '.sDelete', function () {
+                var Id = $(this).attr('data-code');
+                Swal.fire({
+                    title: 'Delete this Item?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes!',
+                    cancelButtonText: 'No!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        $(this).closest('tr').remove();
+                        DeleteItem('Material', Id);
+                    } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        Swal.fire(
+                            'Cancelled',
+                            '',
+                            'error'
+                        )
+                    }
+                })
+            });
+
+            function DeleteItem(typ, id) {
+                var itms = {};
+                itms.Id = id;
+                itms.Typ = typ
+                $.ajax({
+                    url: '/StoreIDR/DeleteBackCharge',
+                    type: "POST",
+                    data: JSON.stringify(itms),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            Swal.fire({
+                                    title: 'Bank Charge!!!',
+                                    text: 'Req data has been deleted!',
+                                    icon: 'success'
+                                })
+                        }
+                        else {
+                            alert(data.text);
+                        }
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                    }
+                });
+            }
+
+            function SaveMaterial() {
+                $.ajax({
+                    url: '/StoreIDR/SaveBackChargeSub',
+                    type: "POST",
+                    data: JSON.stringify(getMaterial()),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            if (data.value.success) {
+                                addMaterial()
+                                if (data.value.typ_ == 'Create') {
+                                    $("#MaterialTable>tbody>tr:first").find('.rMaterialId').text(data.value.result);
+                                    $("#MaterialTable>tbody>tr:first").find('.bsKPCStoreNo').text(data.value.item);
+                                    $("#MaterialTable>tbody>tr:first").find('.bsID').text(data.value.no);
+                                    $("#MaterialTable>tbody>tr:first").find('.sDelete').attr('data-code', data.value.result);
+                                    $("#MaterialTable>tbody>tr:first").find('.sEdit').attr('data-code', data.value.result);
+                                }
+                                // $('#aID').prop("disabled", true);
+
+                                clearMaterial();
+                                clearValidMain();
+
+                            }
+                            else {
+                                Swal.fire({
+                                    title: 'Duplicate!!!',
+                                    text: 'Request no : ' + data.value.typ_ + ' already exist!',
+                                    icon: 'error'
+                                })
+                            }
+
+
+                            // window.location = "/LightingPlant/Index"
+                        }
+                        else {
+                            alert(data.text);
+                        }
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    }
+                });
+            }
+            
+            function addMaterial() {
+                if ($('#MaterialID').val() != '0') {
+                    var elems = $('.rMaterialId').filter(function () {
+                        return this.textContent.trim() === $('#MaterialID').val()
+                    });
+                    elems.closest('tr').find('.bsID').text($('#bsID').val());
+                    elems.closest('tr').find('.bsKPCReqNo').text($('#bsKPCReqNo').val());
+                    elems.closest('tr').find('.bsODGStockCode').text($('#bsODGStockCode').val());
+                    elems.closest('tr').find('.sDescription').text($('#sDescription').val());
+                    elems.closest('tr').find('.uDescription').text($('#uDescription').val());
+                    elems.closest('tr').find('.bsQty').text($('#bsQty').val());
+                    elems.closest('tr').find('.bsQtyUsed').text($('#bsQtyUsed').val());
+                    elems.closest('tr').find('.bsQtyBack').text($('#bsQtyBack').val());
+                    elems.closest('tr').find('.bsUnitCost').text($('#bsUnitCost').val());
+                    elems.closest('tr').find('.bsTotalCost').text($('#bsUnitCost').val() * $('#bsQty').val());
+                    elems.closest('tr').find('.bsKPCStoreNo').text($('#bsKPCStoreNo').val());
+                    blink(elems.closest('tr'));
+                }
+                else {
+                    var newRow = $("<tr>");
+                    var cols = '';
+
+                    cols += '<td class="d-none"> <span class="rMaterialId">' + $('#MaterialID').val() + '</span> </td>';
+                    cols += '<td class="d-none"> <span class="bsID">' + $('#bsID').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="bsKPCStoreNo">' + $('#bsKPCStoreNo').val() + '</span> </td>';
+                    cols += '<td> <span class="fas fa-circle fs-11 me-1 text-primary"></span><span class="bsODGStockCode">' + $('#bsODGStockCode').val() + '</span> </td>';
+                    cols += '<td> <span class="sDescription">' + $('#sDescription').val() + '</span> </td>';
+                    cols += '<td> <span class="uDescription">' + $('#uDescription').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="bsQty">' + $('#bsQty').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="bsQtyUsed">' + $('#bsQtyUsed').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="bsQtyBack">' + $('#bsQtyBack').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="bsUnitCost">' + $('#bsUnitCost').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="bsTotalCost">' + $('#bsUnitCost').val() * $('#bsQty').val() + '</span> </td>';
+                    cols += '<td> <div> <a class="sEdit" data-code="' + $('#MaterialID').val() + '"><i class="icon-base bx bx-edit-alt icon-xm text-info me-1"></i></a> <a class="sDelete" data-code="' + $('#MaterialID').val() + '"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a> </div> </td>';
+
+
+                    newRow.append(cols);
+
+                    $("#MaterialTable >tbody").prepend(newRow);
+                    // $("#serviceTable").DataTable()
+                    //     .columns.adjust()
+                    //     .responsive.recalc();
+                    blink(newRow);
+                }
+            }
+
+            $('#requestAdd').on('click', function (e) {
+                e.preventDefault();
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                if (!ValidationCheckRequest()) {
+                    if ($('#RequestId').val() == '0') {
+                        GetExistingRequest();
+                    }
+                    else {
+                        UpdateRequest();
+                    }
+                    // $('#requestAdds').html('Save');
+                }
+                else {
+                    $("#spinner").hide();
+                    $("body").css("pointer-events", "");
+                    $(".layout-wrapper").css("opacity", 1);
+                }
+            });
+
+            
+
+            $('#MaterialAdd').on('click', function (e) {
+                e.preventDefault();
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                if (!ValidationCheck($(this).closest('form'))) {
+                    if ($('#RequestId').val() == '0') {
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                        Swal.fire({
+                            title: 'Request Data!!!',
+                            text: 'Please Adding Request data first!!!!',
+                            icon: 'error'
+                        })
+
+                    }
+                    else {
+                        SaveMaterial();
+                    }
+                }
+                else {
+                    $("#spinner").hide();
+                    $("body").css("pointer-events", "");
+                    $(".layout-wrapper").css("opacity", 1);
+                }
+            });
+
+            function getMaterial() {
+                var tmp_Id = $('#MaterialID').val() == '' ? 0 : $('#MaterialID').val();
+                var tmp_bsID = $('#bsID').val() == '' ? 0 : $('#bsID').val();
+                var tmp_bsKPCReqNo = $('#bKPCReqNo').val();
+                var tmp_bsQty = $('#bsQty').val();
+                var tmp_bsQtyUsed = $('#bsQtyUsed').val();
+                var tmp_bsODGStockCode = $('#bsODGStockCode').val();
+                var tmp_bsUnitCost = $('#bsUnitCost').val();
+                var tmp_bsKPCStoreNo = $('#bsKPCStoreNo').val() == '' ? 0 : $('#bsKPCStoreNo').val();
+                return (tmp_Id == "") ? null :
+                    {
+                        Id: tmp_Id,
+                        bsID: tmp_bsID,
+                        bsKPCReqNo : tmp_bsKPCReqNo,
+                        bsQty: tmp_bsQty,
+                        bsQtyUsed: tmp_bsQtyUsed,
+                        bsODGStockCode: tmp_bsODGStockCode,
+                        bsUnitCost: tmp_bsUnitCost,
+                        bsKPCStoreNo: tmp_bsKPCStoreNo
+                    };
+            }
+
+            function clearMaterial() {
+                $('#MaterialID').val('0');
+                $('#bsKPCStoreNo').val('0');
+                $('#bsODGStockCode').val(null).trigger('change');
+                $('#bsODGStockCode').removeClass('is-invalid').removeClass('is-valid')
+                $('#bsID').val('0');
+                $('#sDesription').val('');
+                $('#bsUnitCost').val('');
+                $('#bsTotalCost').val('');
+                $('#uDesription').val('');
+                $('#bsQty').val('');
+                $('#bsQtyUsed').val('');
+                $('#bsQtyBack').val('');
+                $('#bsUnitCost').val('');
+                $('#MaterialAdds').html('Add');
+            }
+
+
+            $('#mainnew').on('click', function () {
+                clear();
+            });
+
+            $('#mainfirst').on('click', function () {
+                GetRequestAll("first", $('#RequestId').val());
+                $('#bKPCReqNo').prop("disabled", true);
+                $('#requestAdds').html('Update');
+            });
+            $('#mainend').on('click', function () {
+                GetRequestAll("end", $('#RequestId').val());
+                $('#bKPCReqNo').prop("disabled", true);
+                $('#requestAdds').html('Update');
+            });
+            $('#mainprev').on('click', function () {
+                GetRequestAll("prev", $('#RequestId').val());
+                $('#bKPCReqNo').prop("disabled", true);
+                $('#requestAdds').html('Update');
+            });
+            $('#mainnext').on('click', function () {
+                GetRequestAll("next", $('#RequestId').val());
+                $('#bKPCReqNo').prop("disabled", true);
+                $('#requestAdds').html('Update');
+            });
+            $('#requestFindTable').on('click', 'tbody tr td', function () {
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                GetRequestAll("keep", $(this).closest('tr').find('.fRequestID').html());
+                $('#bKPCReqNo').prop("disabled", true);
+                $('#requestAdds').html('Update');
+                $('#findData').modal('toggle')
+            });
+            $('#bKPCReqNo').on('keypress', function (event) {
+                if (event.which === 13 || event.key === 'Enter') {
+                GetRequestAll("keep2",1, $(this).val());
+                $('#bKPCReqNo').prop("disabled", true);
+                $('#requestAdds').html('Update');
+                }
+            });
+
+
+            function GetRequestAll(typ, id, Idstr) {
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                var itms = {};
+                itms.Id = id;
+                itms.Typ = typ
+                itms.Idstr = Idstr
+                $.ajax({
+                    url: '/StoreIDR/GetBackCharge',
+                    type: "POST",
+                    data: JSON.stringify(itms),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    // traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            if (data.vBackCharge != null)
+                            {
+                                var dt_bDate = $.datepicker.formatDate('dd/mm/yy', new Date(data.vBackCharge.bDate));
+                            $('#MaterialTable').DataTable().clear().destroy();
+                            $('#RequestId').val(data.vBackCharge.id);
+                            $('#bKPCReqNo').val(data.vBackCharge.bKPCReqNo);
+                            $('#bIssueBy').val(data.vBackCharge.bIssueBy);
+                            $('#bJobNo').val(data.vBackCharge.bJobNo).trigger('change');
+                            $('#bPickUP').val(data.vBackCharge.bPickUP).trigger('change');
+                            $('#bDate').val(dt_bDate);
+                            $('#bCurrency').val(data.vBackCharge.bCurrency).trigger('change');
+                            $('#bCostCenter').val(data.vBackCharge.bCostCenter);
+                            $('#MaterialTable tbody').empty();
+                            clearMaterial();
+
+                            $(data.vBackChargeSub).each(function (index, item) {
+                                var newRow = $("<tr>");
+                                var cols = '';
+                                cols += '<td class="d-none"> <span class="rMaterialId">' + item.id + '</span> </td>';
+                                cols += '<td class="d-none"> <span class="bsID">' + item.bsID + '</span > </td > ';
+                                cols += '<td class="dt-type-numeric"> <span class="bsKPCStoreNo">' + item.bsKPCStoreNo + '</span > </td > ';
+                                cols += '<td> <span class="bsODGStockCode">' + item.bsODGStockCode + '</span > </td > ';
+                                cols += '<td> <span class="sDescription">' + item.sDescription + '</span > </td > ';
+                                cols += '<td> <span class="uDescription">' + item.uDescription + '</span > </td > ';
+                                cols += '<td class="dt-type-numeric"> <span class="bsQty">' + item.bsQty + '</span > </td > ';
+                                cols += '<td class="dt-type-numeric"> <span class="bsQtyUsed">' + item.bsQtyUsed + '</span > </td > ';
+                                cols += '<td class="dt-type-numeric"> <span class="bsQtyBack">' + item.bsQtyBack + '</span > </td > ';
+                                
+                                cols += '<td class="dt-type-numeric"> <span class="bsUnitCost">' + item.bsUnitCost + '</span > </td > ';
+                                cols += '<td class="dt-type-numeric"> <span class="bsTotalCost">' + item.bsUnitCost * item.bsQty + '</span > </td > ';
+                                        cols += '<td> <div> <a class="sEdit" data-code="' + item.id + '"><i class="icon-base bx bx-edit-alt icon-xm text-info me-1"></i></a> <a class="sDelete" data-code="' + item.id + '"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a> </div> </td>';
+
+
+
+                                newRow.append(cols);
+
+                                $("#MaterialTable >tbody").prepend(newRow);
+                            });
+
+                            $('#MaterialTable').DataTable({
+                                paging: true,
+                                "autoWidth": false,
+                                searching: false,
+                            });
+                            
+                            
+                            clearValidMain();
+                            }
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                        }
+                        else {
+                            alert(data.text);
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                        }
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    }
+                });
+            }
+
+            
+            function ValidationCheck(com) {
+                com.find(".vtext").each(function () {
+                    if (!$(this).hasClass('is-valid') || !$(this).hasClass('is-invalid')) {
+                        if ($(this).hasClass('form-select')) {
+                            (($(this).find('option:selected').attr('data-code') == "0") ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                        }
+                        else {
+                            (($(this).val() == '') ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                        }
+                    }
+                });
+                $(".select2-selection.select2-selection--single").each(function () {
+                    if (!$(this).hasClass('is-valid') || !$(this).hasClass('is-invalid')) {
+                        if (!$(this).find('.select2-selection__rendered').attr("title")) {
+                            $(this).find('.select2-selection__rendered').children().length > 0 ? $(this).addClass('is-invalid') : $(this).addClass('is-valid')
+                        }
+                    }
+                });
+                return com.find('.vtext').hasClass('is-invalid') || $(".select2-selection.select2-selection--single").hasClass('is-invalid') ? true : false;
+
+            }
+            $('select').on('change', function (e) {
+                $(this).removeClass('is-invalid').removeClass('is-valid').addClass('is-valid');
+                $(this).siblings('.select2').find('.select2-selection').removeClass('is-invalid').removeClass('is-valid');
+                
+            });
+            function ValidationCheckRequest() {
+                $("#firstForm").find(".vtext").each(function () {
+                    if (!$(this).hasClass('is-valid') || !$(this).hasClass('is-invalid')) {
+                        if ($(this).hasClass('form-select')) {
+                            (($(this).find('option:selected').attr('data-code') == "0") ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                        }
+                        else {
+                            (($(this).val() == '') ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                        }
+                    }
+                });
+                $("#firstForm .select2-selection.select2-selection--single").each(function () {
+                    if (!$(this).hasClass('is-valid') || !$(this).hasClass('is-invalid')) {
+                        if (!$(this).find('.select2-selection__rendered').attr("title")) {
+                            $(this).find('.select2-selection__rendered').children().length > 0 ? $(this).addClass('is-invalid') : $(this).addClass('is-valid')
+                        }
+                    }
+                });
+                // $("#firstForm").find(".vtext").each(function () {
+                //     if (!$(this).hasClass('is-valid')) {
+                //         if (!$(this).hasClass('is-invalid')) {
+                //             $(this).addClass('is-invalid');
+                //         }
+                //     }
+                // });
+                return $("#firstForm").find('.vtext').hasClass('is-invalid') || $("#firstForm .select2-selection.select2-selection--single").hasClass('is-invalid') ? true : false;
+
+            }
+
+            $('#bsQty,#bsQtyUsed,#bsUnitCost').on('change', function () {
+                var _Unit = $('#bsUnitCost').val() == '' ? 0 : $('#bsUnitCost').val();
+                var _Qty = $('#bsQty').val() == '' ? 0 : $('#bsQty').val();
+                var _QtyBack = $('#bsQtyUsed').val() == '' ? 0 : $('#bsQtyUsed').val();
+                $('#bsQtyBack').val(parseFloat(_Qty - _QtyBack).toFixed(2));
+                $('#bsTotalCost').val(parseFloat(_Unit * parseFloat(_Qty)).toFixed(2));
+            });
+            $('#MaterialClear').on('click', function () {
+                clearMaterial();
+            });
+            if ($('#pagestatus').val() == 0) {
+                clear();
+                $('.tombol:not(#mainsave)').addClass('disabled');
+            }
+        });
+
+    </script>
+}

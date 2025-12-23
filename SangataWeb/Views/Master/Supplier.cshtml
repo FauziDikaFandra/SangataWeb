@@ -1,0 +1,695 @@
+﻿@model SangataWeb.Models.ViewModel
+@{
+    ViewBag.Title = "Supplier Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Supplier Page";
+    ViewBag.UserName = @Model.User_Login.UserName;
+    ViewBag.Content = "Supplier";
+}
+@section pMain {
+    <nav class="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme"
+         id="layout-navbar">
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
+                <i class="icon-base bx bx-menu icon-md"></i>
+            </a>
+        </div>
+
+        <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
+            <!-- Search -->
+            <div class="navbar-nav align-items-center me-auto">
+                <div class="nav-item d-flex align-items-center">
+                   @*  <span class="w-px-22 h-px-22"><i class="icon-base bx bx-search icon-md"></i></span>
+                    <input type="text"
+                           class="form-control border-0 shadow-none ps-1 ps-sm-2 d-md-block d-none"
+                           placeholder="Search..."
+                           aria-label="Search..." /> *@
+                </div>
+
+            </div>
+            <!-- /Search -->
+
+            <ul class="navbar-nav flex-row align-items-center ms-md-auto">
+
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                    <a class="nav-link dropdown-toggle hide-arrow p-0"
+                       href="javascript:void(0);"
+                       data-bs-toggle="dropdown">
+                        <div class="avatar avatar-online">
+                            <img src="../../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0 me-3">
+                                        <div class="avatar avatar-online">
+                                            <img src="../../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0">@Model.User_Login.UserName</h6>
+                                        <small class="text-body-secondary">Admin</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown-divider my-1"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="icon-base bx bx-user icon-md me-3"></i><span>My Profile</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <div class="dropdown-divider my-1"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="../Home/Logout">
+                                <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--/ User -->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- / Navbar -->
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="row">
+                <!-- Supplier -->
+                <div class="col-md-12 col-lg-12 col-xl-12 order-0 mb-6">
+                    <div class="card h-100">
+                        <div class="card-header d-flex justify-content-between py-3">
+                            <div class="card-title mb-0">
+                                <h5 class="mb-1 me-2">Supplier</h5>
+                            </div>
+                            <!-- <div class="dropdown">
+                                 <button class="btn text-body-secondary p-0"
+                                         type="button"
+                                         id="orederStatistics"
+                                         data-bs-toggle="dropdown"
+                                         aria-haspopup="true"
+                                         aria-expanded="false">
+                                     <i class="icon-base bx bx-dots-vertical-rounded icon-lg"></i>
+                                 </button>
+                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
+                                     <a class="dropdown-item" href="javascript:void(0);">Select All</a>
+                                     <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
+                                     <a class="dropdown-item" href="javascript:void(0);">Share</a>
+                                 </div>
+                             </div> -->
+                            <div class="row">
+                                <div class="col">
+                                    <a id="suppliernew" title="Add New" href="#" class="btn btn-primary btn-circle ml-2">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                    <a id="suppliersave" title="Save" href="#" class="btn btn-success btn-circle ml-4">
+                                        <i class="fas fa-save"></i>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body px-3">
+                            <div class="card pb-2">
+                                <div class="card-body py-2">
+                                    <div class="row g-6 pb-1">
+                                        <div class="col-3 px-1">
+                                            <div>
+                                                <label for="sID" class="form-label">ID</label>
+                                                <input class="d-none" id="SupplierID" value="0" />
+                                                <input id="sID"
+                                                       class="form-control form-control-sm vtext vnumber"
+                                                       type="text"
+                                                       placeholder="" />
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-9 px-1">
+                                            <div>
+                                                <label for="sName" class="form-label">Supplier Name</label>
+                                                <input id="sName"
+                                                       class="form-control form-control-sm vtext"
+                                                       type="text"
+                                                       placeholder="" />
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row g-6 pb-1">
+                                        <div class="col px-1">
+                                            <div>
+                                                <label for="sMaterialCategory" class="form-label">Category</label>
+                                                <input id="sMaterialCategory"
+                                                       class="form-control form-control-sm vtext"
+                                                       type="text"
+                                                       placeholder="" />
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col px-1">
+                                            <div>
+                                                <label for="sPerson1" class="form-label">Contact</label>
+                                                <input id="sPerson1"
+                                                       class="form-control form-control-sm vtext"
+                                                       type="text"
+                                                       placeholder="" />
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row g-6 pb-1">
+                                        <div class="col px-1">
+                                            <div>
+                                                <label for="sStreet" class="form-label">Street</label>
+                                                <input id="sStreet"
+                                                       class="form-control form-control-sm vtext"
+                                                       type="text"
+                                                       placeholder="" />
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row g-6 pb-1">
+                                        <div class="col px-1">
+                                            <div>
+                                                <label for="sCity" class="form-label">City</label>
+                                                <input id="sCity"
+                                                       class="form-control form-control-sm vtext"
+                                                       type="text"
+                                                       placeholder="" />
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col px-1">
+                                            <div>
+                                                <label for="sZIP" class="form-label">Zip</label>
+                                                <input id="sZIP"
+                                                       class="form-control form-control-sm vtext"
+                                                       type="text"
+                                                       placeholder="" />
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col px-1">
+                                            <div>
+                                                <label for="sCountry" class="form-label">Country</label>
+                                                <input id="sCountry"
+                                                       class="form-control form-control-sm vtext"
+                                                       type="text"
+                                                       placeholder="" />
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row g-6 pb-1">
+                                        <div class="col px-1">
+                                            <div>
+                                                <label for="sPhoneNumber1" class="form-label">Phone</label>
+                                                <input id="sPhoneNumber1"
+                                                       class="form-control form-control-sm vtext"
+                                                       type="text"
+                                                       placeholder="" />
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col px-1">
+                                            <div>
+                                                <label for="sFaxNumber1" class="form-label">Fax</label>
+                                                <input id="sFaxNumber1"
+                                                       class="form-control form-control-sm vtext"
+                                                       type="text"
+                                                       placeholder="" />
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col px-1">
+                                            <div>
+                                                <label for="sMobile" class="form-label">Mobile</label>
+                                                <input id="sMobile"
+                                                       class="form-control form-control-sm vtext"
+                                                       type="text"
+                                                       placeholder="" />
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row g-6 pb-1">
+                                        <div class="col px-1">
+                                            <div>
+                                                <label for="sEMail" class="form-label">E_mail</label>
+                                                <input id="sEMail"
+                                                       class="form-control form-control-sm vtext"
+                                                       type="text"
+                                                       placeholder="" />
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col px-1">
+                                            <div>
+                                                <label for="sWebPage" class="form-label">Web Site</label>
+                                                <input id="sWebPage"
+                                                       class="form-control form-control-sm vtext"
+                                                       type="text"
+                                                       placeholder="" />
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive text-nowrap py-4">
+                                <table id="SupplierTable" class="table table-striped">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th class="d-none">Id</th>
+                                            <th scope="col" class="col-1">ID</th>
+                                            <th>Name</th>
+                                            <th>Category</th>
+                                            <th>Contact</th>
+                                            <th>Street</th>
+                                            <th>City</th>
+                                            <th>ZIP</th>
+                                            <th>Country</th>
+                                            <th>Phone</th>
+                                            <th>Fax</th>
+                                            <th>Mobile</th>
+                                            <th>E_mail</th>
+                                            <th>Web Site</th>
+                                            <th scope="col" class="col-1">Act</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                        @if (Model.vSupplierList.Count > 0)
+                                        {
+                                            foreach (var item in Model.vSupplierList)
+                                            {
+                                                <tr>
+                                                    <td class="d-none">
+                                                        <span class="rSupplierId">@item.Id</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="sID">@item.sID</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="sName">@item.sName</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="sMaterialCategory">@item.sMaterialCategory</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="sPerson1">@item.sPerson1</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="sStreet">@item.sStreet</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="sCity">@item.sCity</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="sZIP">@item.sZIP</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="sCountry">@item.sCountry</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="sPhoneNumber1">@item.sPhoneNumber1</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="sFaxNumber1">@item.sFaxNumber1</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="sMobile">@item.sMobile</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="sEMail">@item.sEMail</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="sWebPage">@item.sWebPage</span>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            <a class="sDelete" data-code="@item.Id"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / Content -->
+        <!-- Footer -->
+        <footer class="content-footer footer bg-footer-theme">
+            <div class="container-xxl">
+                <div class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                    <div class="mb-2 mb-md-0">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        made by
+                        <a href="https://ptodg.com/id/" target="_blank" class="footer-link">ODG Indonesia</a>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+        <!-- / Footer -->
+
+        <div class="content-backdrop fade"></div>
+    </div>
+    <!-- Content wrapper -->
+
+    <script>
+        $(document).ready(function () {
+            //SUPPLIER
+            $('#SupplierTable').DataTable({
+                //responsive: true,
+                // "columnDefs": [
+                //     { "width": "10%", "targets": 0 }
+                // ],
+                // columns: [null, { width: '10%' }, null, null, null, null, null, null, null, null, null, null, null, { width: '20%' }],
+                "aoColumnDefs": [
+                    { "bSortable": false, "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13] }
+                ],
+                paging: true,
+                // "autoWidth": false,
+                // searching: false,
+                "lengthChange": false
+            });
+            $('#SupplierTable').on('click', 'tbody tr td', function () {
+                $('#SupplierID').val($(this).closest('tr').find('.rSupplierId').html());
+                $('#sID').val($(this).closest('tr').find('.sID').html());
+                $('#sName').val($(this).closest('tr').find('.sName').html());
+                $('#sMaterialCategory').val($(this).closest('tr').find('.sMaterialCategory').html());
+                $('#sPerson1').val($(this).closest('tr').find('.sPerson1').html());
+                $('#sStreet').val($(this).closest('tr').find('.sStreet').html());
+                $('#sCity').val($(this).closest('tr').find('.sCity').html());
+                $('#sZIP').val($(this).closest('tr').find('.sZIP').html());
+                $('#sCountry').val($(this).closest('tr').find('.sCountry').html());
+                $('#sPhoneNumber1').val($(this).closest('tr').find('.sPhoneNumber1').html());
+                $('#sFaxNumber1').val($(this).closest('tr').find('.sFaxNumber1').html());
+                $('#sMobile').val($(this).closest('tr').find('.sMobile').html());
+                $('#sEMail').val($(this).closest('tr').find('.sEMail').html());
+                $('#sWebPage').val($(this).closest('tr').find('.sWebPage').html());
+                $('#sID').prop("disabled", true);
+            });
+            $('#suppliersave').on('click', function (e) {
+                e.preventDefault();
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                if (!ValidationCheck($(this).closest('.card'))) {
+                    SaveSupplier();
+                }
+                else {
+                    $("#spinner").hide();
+                    $("body").css("pointer-events", "");
+                    $(".layout-wrapper").css("opacity", 1);
+                }
+            });
+            $('#suppliernew').on('click', function (e) {
+                clearSupplier();
+            });
+            $('#SupplierTable').on('click', '.sDelete', function () {
+                var Id = $(this).attr('data-code');
+                Swal.fire({
+                    title: 'Delete this Item?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes!',
+                    cancelButtonText: 'No!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        $(this).closest('tr').remove();
+                        DeleteItem('Supplier', Id);
+                        clearSupplier();
+                    } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        Swal.fire(
+                            'Cancelled',
+                            '',
+                            'error'
+                        )
+                    }
+                })
+            });
+            function clearSupplier() {
+                $('#SupplierID').val(0);
+                $('#sID').val('');
+                $('#sName').val('');
+                $('#sMaterialCategory').val('');
+                $('#sPerson1').val('');
+                $('#sStreet').val('');
+                $('#sCity').val('');
+                $('#sZIP').val('');
+                $('#sCountry').val('');
+                $('#sPhoneNumber1').val('');
+                $('#sFaxNumber1').val('');
+                $('#sMobile').val('');
+                $('#sEMail').val('');
+                $('#sWebPage').val('');
+                clearValidMain();
+                $('#sID').prop("disabled", false);
+                $('#sID').focus();
+            }
+            function getSupplier() {
+                var tmp_Id = $('#SupplierID').val() == '' ? 0 : $('#SupplierID').val();
+                var tmp_sID = $('#sID').val();
+                var tmp_sName = $('#sName').val();
+                var tmp_sMaterialCategory = $('#sMaterialCategory').val();
+                var tmp_sPerson1 = $('#sPerson1').val();
+                var tmp_sStreet = $('#sStreet').val();
+                var tmp_sCity = $('#sCity').val();
+                var tmp_sZIP = $('#sZIP').val();
+                var tmp_sCountry = $('#sCountry').val();
+                var tmp_sPhoneNumber1 = $('#sPhoneNumber1').val();
+                var tmp_sFaxNumber1 = $('#sFaxNumber1').val();
+                var tmp_sMobile = $('#sMobile').val();
+                var tmp_sEMail = $('#sEMail').val();
+                var tmp_sWebPage = $('#sWebPage').val();
+                return (tmp_Id == "") ? null :
+                    {
+                        Id: tmp_Id,
+                        sID: tmp_sID,
+                        sName: tmp_sName,
+                        sMaterialCategory: tmp_sMaterialCategory,
+                        sPerson1: tmp_sPerson1,
+                        sStreet: tmp_sStreet,
+                        sCity: tmp_sCity,
+                        sZIP: tmp_sZIP,
+                        sCountry: tmp_sCountry,
+                        sPhoneNumber1: tmp_sPhoneNumber1,
+                        sFaxNumber1: tmp_sFaxNumber1,
+                        sMobile: tmp_sMobile,
+                        sEMail: tmp_sEMail,
+                        sWebPage: tmp_sWebPage
+                    };
+            }
+            function SaveSupplier() {
+                $.ajax({
+                    url: '/Master/SaveSupplier',
+                    type: "POST",
+                    data: JSON.stringify(getSupplier()),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            if (data.value.success) {
+                                addSupplier()
+                                if (data.value.typ_ == 'Create') {
+                                    $("#SupplierTable>tbody>tr:first").find('.rSupplierId').text(data.value.result);
+                                }
+                                clearSupplier();
+                            }
+                            else {
+                                Swal.fire({
+                                    title: 'Duplicate!!!',
+                                    text: 'Supplier no : ' + data.value.typ_ + ' already exist!',
+                                    icon: 'error'
+                                })
+                            }
+
+                        }
+                        else {
+                            alert(data.text);
+                        }
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    }
+                });
+            }
+            function addSupplier() {
+                if ($('#SupplierID').val() != '0') {
+                    var elems = $('.rSupplierId').filter(function () {
+                        return this.textContent.trim() === $('#SupplierID').val()
+                    });
+                    elems.closest('tr').find('.sID').text($('#sID').val());
+                    elems.closest('tr').find('.sName').text($('#sName').val());
+                    elems.closest('tr').find('.sMaterialCategory').text($('#sMaterialCategory').val());
+                    elems.closest('tr').find('.sPerson1').text($('#sPerson1').val());
+                    elems.closest('tr').find('.sStreet').text($('#sStreet').val());
+                    elems.closest('tr').find('.sCity').text($('#sCity').val());
+                    elems.closest('tr').find('.sZIP').text($('#sZIP').val());
+                    elems.closest('tr').find('.sCountry').text($('#sCountry').val());
+                    elems.closest('tr').find('.sPhoneNumber1').text($('#sPhoneNumber1').val());
+                    elems.closest('tr').find('.sFaxNumber1').text($('#sFaxNumber1').val());
+                    elems.closest('tr').find('.sMobile').text($('#sMobile').val());
+                    elems.closest('tr').find('.sEMail').text($('#sEMail').val());
+                    elems.closest('tr').find('.sWebPage').text($('#sWebPage').val());
+                    blink(elems.closest('tr'));
+                }
+                else {
+                    var newRow = $("<tr>");
+                    var cols = '';
+
+                    cols += '<td class="d-none"> <span class="rSupplierId">' + $('#SupplierID').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="sID">' + $('#sID').val() + '</span> </td>';
+                    cols += '<td> <span class="sName">' + $('#sName').val() + '</span> </td>';
+                    cols += '<td> <span class="sMaterialCategory">' + $('#sMaterialCategory').val() + '</span> </td>';
+                    cols += '<td> <span class="sPerson1">' + $('#sPerson1').val() + '</span> </td>';
+                    cols += '<td> <span class="sStreet">' + $('#sStreet').val() + '</span> </td>';
+                    cols += '<td> <span class="sCity">' + $('#sCity').val() + '</span> </td>';
+                    cols += '<td> <span class="sZIP">' + $('#sZIP').val() + '</span> </td>';
+                    cols += '<td> <span class="sCountry">' + $('#sCountry').val() + '</span> </td>';
+                    cols += '<td> <span class="sPhoneNumber1">' + $('#sPhoneNumber1').val() + '</span> </td>';
+                    cols += '<td> <span class="sFaxNumber1">' + $('#sFaxNumber1').val() + '</span> </td>';
+                    cols += '<td> <span class="sMobile">' + $('#sMobile').val() + '</span> </td>';
+                    cols += '<td> <span class="sEMail">' + $('#sEMail').val() + '</span> </td>';
+                    cols += '<td> <span class="sWebPage">' + $('#sWebPage').val() + '</span> </td>';
+                    cols += '<td> <div> <a class="sDelete" data-code="' + $('#SupplierID').val() + '"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a> </div> </td>';
+
+
+                    newRow.append(cols);
+
+                    $("#SupplierTable >tbody").prepend(newRow);
+                    // $("#serviceTable").DataTable()
+                    //     .columns.adjust()
+                    //     .responsive.recalc();
+                    blink(newRow);
+                }
+            }
+            //END
+            
+            function DeleteItem(typ, id) {
+                var itms = {};
+                itms.Id = id;
+                itms.Typ = typ
+                $.ajax({
+                    url: '/Master/DeleteItem',
+                    type: "POST",
+                    data: JSON.stringify(itms),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            Swal.fire({
+                                title: typ + ' Data!!!',
+                                text: typ + ' data has been deleted!',
+                                icon: 'success'
+                            })
+                        }
+                        else {
+                            alert(data.text);
+                        }
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                    }
+                });
+            }
+            function ValidationCheck(com) {
+                com.find(".vtext").each(function () {
+                    if (!$(this).hasClass('is-valid') || !$(this).hasClass('is-invalid')) {
+                        if ($(this).hasClass('form-select')) {
+                            (($(this).find('option:selected').attr('data-code') == "0") ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                        }
+                        else {
+                            (($(this).val() == '') ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                        }
+                    }
+                });
+                com.find(".select2-selection.select2-selection--single").each(function () {
+                    if (!$(this).hasClass('is-valid') || !$(this).hasClass('is-invalid')) {
+                        if (!$(this).find('.select2-selection__rendered').attr("title")) {
+                            $(this).find('.select2-selection__rendered').children().length > 0 ? $(this).addClass('is-invalid') : $(this).addClass('is-valid')
+                        }
+                    }
+                });
+                return com.find('.vtext').hasClass('is-invalid') || com.find(".select2-selection.select2-selection--single").hasClass('is-invalid') ? true : false;
+
+            }
+            function clearValidMain() {
+                $(".is-valid").each(function () {
+                    $(this).removeClass('is-valid');
+                });
+                $(".is-invalid").each(function () {
+                    $(this).removeClass('is-invalid');
+                });
+                $(".select2-selection.select2-selection--single").each(function () {
+                    $(this).find('.select2-selection__rendered').removeAttr('title');
+                });
+            }
+        })
+    </script>
+}

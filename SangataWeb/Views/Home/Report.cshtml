@@ -1,0 +1,9 @@
+﻿@model SangataWeb.Models.ErrorViewModel
+@{
+    ViewBag.Title = "Sangata | Report";
+    Layout = "~/Views/Shared/_Layout_Report.cshtml";
+}
+@section pReport {
+    <iframe id="iframe1" src="@Model.RequestId" style="border: 1px solid black; height: 500px; width: 100%">
+    </iframe>
+} 

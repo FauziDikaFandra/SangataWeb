@@ -1,0 +1,956 @@
+﻿@model SangataWeb.Models.ViewModel
+@{
+    ViewBag.Title = "Master CCL Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Master CCL Page";
+    ViewBag.UserName = @Model.User_Login.UserName;
+    ViewBag.Content = "Support2";
+}
+@section pMain {
+    <nav class="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme"
+         id="layout-navbar">
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
+                <i class="icon-base bx bx-menu icon-md"></i>
+            </a>
+        </div>
+
+        <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
+            <!-- Search -->
+            <div class="navbar-nav align-items-center me-auto">
+                <div class="nav-item d-flex align-items-center">
+                    @* <span class="w-px-22 h-px-22"><i class="icon-base bx bx-search icon-md"></i></span>
+                    <input type="text"
+                           class="form-control border-0 shadow-none ps-1 ps-sm-2 d-md-block d-none"
+                           placeholder="Search..."
+                           aria-label="Search..." /> *@
+                </div>
+
+            </div>
+            <!-- /Search -->
+
+            <ul class="navbar-nav flex-row align-items-center ms-md-auto">
+
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                    <a class="nav-link dropdown-toggle hide-arrow p-0"
+                       href="javascript:void(0);"
+                       data-bs-toggle="dropdown">
+                        <div class="avatar avatar-online">
+                            <img src="../../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0 me-3">
+                                        <div class="avatar avatar-online">
+                                            <img src="../../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0">@Model.User_Login.UserName</h6>
+                                        <small class="text-body-secondary">Admin</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown-divider my-1"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="icon-base bx bx-user icon-md me-3"></i><span>My Profile</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <div class="dropdown-divider my-1"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="../Home/Logout">
+                                <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--/ User -->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- / Navbar -->
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="row">
+                <!-- CCSCode -->
+                <div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-6">
+                    <div class="card h-100">
+                        <div class="card-header d-flex justify-content-between py-3">
+                            <div class="card-title mb-0">
+                                <h5 class="mb-1 me-2">CCSCode</h5>
+                            </div>
+                            <!-- <div class="dropdown">
+                                 <button class="btn text-body-secondary p-0"
+                                         type="button"
+                                         id="orederStatistics"
+                                         data-bs-toggle="dropdown"
+                                         aria-haspopup="true"
+                                         aria-expanded="false">
+                                     <i class="icon-base bx bx-dots-vertical-rounded icon-lg"></i>
+                                 </button>
+                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
+                                     <a class="dropdown-item" href="javascript:void(0);">Select All</a>
+                                     <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
+                                     <a class="dropdown-item" href="javascript:void(0);">Share</a>
+                                 </div>
+                             </div> -->
+                            <div class="row">
+                                <div class="col">
+                                    <a id="CCSCodenew" title="Add New" href="#" class="btn btn-primary btn-sm btn-circle ml-2">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                    <a id="CCSCodesave" title="Save" href="#" class="btn btn-success btn-sm btn-circle ml-4">
+                                        <i class="fas fa-save"></i>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body px-3">
+                            <div class="card pb-2">
+                                <div class="card-body py-2">
+                                    <div class="row g-6 pb-1">
+                                        <div class="col-3 px-1">
+                                            <div>
+                                                <label for="ccsID" class="form-label">CCS</label>
+                                                <input class="d-none" id="CCSCodeID" value="0" />
+                                                <input id="ccsID"
+                                                       class="form-control form-control-sm vtext vnumber"
+                                                       type="text"
+                                                       placeholder="" />
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-9 px-1">
+                                            <div>
+                                                <label for="ccsDescription" class="form-label">CCS Desc</label>
+                                                <input id="ccsDescription"
+                                                       class="form-control form-control-sm vtext"
+                                                       type="text"
+                                                       placeholder="" />
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive text-nowrap py-4">
+                                <table id="CCSCodeTable" class="table table-striped">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th class="d-none">Id</th>
+                                            <th scope="col" class="col-1">CCS</th>
+                                            <th>CCS Desc</th>
+                                            <th scope="col" class="col-1">Act</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                        @if (Model.vCCSCode.Count > 0)
+                                        {
+                                            foreach (var item in Model.vCCSCode)
+                                            {
+                                                <tr>
+                                                    <td class="d-none">
+                                                        <span class="rCCSCodeId">@item.Id</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="ccsID">@item.ccsID</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="ccsDescription">@item.ccsDescription</span>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            <a class="sDelete" data-code="@item.Id"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Customer -->
+                <div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-6">
+                    <div class="card h-100">
+                        <div class="card-header d-flex justify-content-between py-3">
+                            <div class="card-title mb-0">
+                                <h5 class="mb-1 me-2">Customer</h5>
+                            </div>
+                            <!-- <div class="dropdown">
+                                 <button class="btn text-body-secondary p-0"
+                                         type="button"
+                                         id="orederStatistics"
+                                         data-bs-toggle="dropdown"
+                                         aria-haspopup="true"
+                                         aria-expanded="false">
+                                     <i class="icon-base bx bx-dots-vertical-rounded icon-lg"></i>
+                                 </button>
+                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
+                                     <a class="dropdown-item" href="javascript:void(0);">Select All</a>
+                                     <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
+                                     <a class="dropdown-item" href="javascript:void(0);">Share</a>
+                                 </div>
+                             </div> -->
+                            <div class="row">
+                                <div class="col">
+                                    <a id="customernew" title="Add New" href="#" class="btn btn-primary btn-sm btn-circle ml-2">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                    <a id="customersave" title="Save" href="#" class="btn btn-success btn-sm btn-circle ml-4">
+                                        <i class="fas fa-save"></i>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body px-3">
+                            <div class="card pb-2">
+                                <div class="card-body py-2">
+                                    <div class="row g-6 pb-1">
+                                        <div class="col-3 px-1">
+                                            <div>
+                                                <label for="cID" class="form-label">ID</label>
+                                                <input class="d-none" id="CustomerID" value="0" />
+                                                <input id="cID"
+                                                       class="form-control form-control-sm vtext vnumber"
+                                                       type="text"
+                                                       placeholder="" />
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-9 px-1">
+                                            <div>
+                                                <label for="cName" class="form-label">Cust Name</label>
+                                                <input id="cName"
+                                                       class="form-control form-control-sm vtext"
+                                                       type="text"
+                                                       placeholder="" />
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive text-nowrap py-4">
+                                <table id="CustomerTable" class="table table-striped">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th class="d-none">Id</th>
+                                            <th scope="col" class="col-1">ID</th>
+                                            <th>Cust Name</th>
+                                            <th scope="col" class="col-1">Act</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                        @if (Model.vCustomer.Count > 0)
+                                        {
+                                            foreach (var item in Model.vCustomer)
+                                            {
+                                                <tr>
+                                                    <td class="d-none">
+                                                        <span class="rCustomerId">@item.Id</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="cID">@item.cID</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="cName">@item.cName</span>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            <a class="sDelete" data-code="@item.Id"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Location -->
+                <div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-6">
+                    <div class="card h-100">
+                        <div class="card-header d-flex justify-content-between py-3">
+                            <div class="card-title mb-0">
+                                <h5 class="mb-1 me-2">Location</h5>
+                            </div>
+                            <!-- <div class="dropdown">
+                                 <button class="btn text-body-secondary p-0"
+                                         type="button"
+                                         id="orederStatistics"
+                                         data-bs-toggle="dropdown"
+                                         aria-haspopup="true"
+                                         aria-expanded="false">
+                                     <i class="icon-base bx bx-dots-vertical-rounded icon-lg"></i>
+                                 </button>
+                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
+                                     <a class="dropdown-item" href="javascript:void(0);">Select All</a>
+                                     <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
+                                     <a class="dropdown-item" href="javascript:void(0);">Share</a>
+                                 </div>
+                             </div> -->
+                            <div class="row">
+                                <div class="col">
+                                    <a id="locationnew" title="Add New" href="#" class="btn btn-primary btn-sm btn-circle ml-2">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                    <a id="locationsave" title="Save" href="#" class="btn btn-success btn-sm btn-circle ml-4">
+                                        <i class="fas fa-save"></i>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body px-3">
+                            <div class="card pb-2">
+                                <div class="card-body py-2">
+                                    <div class="row g-6 pb-1">
+                                        <div class="col-3 px-1">
+                                            <div>
+                                                <label for="lLocationCode" class="form-label">Code</label>
+                                                <input class="d-none" id="LocationID" value="0" />
+                                                <input id="lLocationCode"
+                                                       class="form-control form-control-sm vtext"
+                                                       type="text"
+                                                       placeholder="" />
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-9 px-1">
+                                            <div>
+                                                <label for="lLocationName" class="form-label">Name</label>
+                                                <input id="lLocationName"
+                                                       class="form-control form-control-sm vtext"
+                                                       type="text"
+                                                       placeholder="" />
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive text-nowrap py-4">
+                                <table id="LocationTable" class="table table-striped">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th class="d-none">Id</th>
+                                            <th scope="col" class="col-1">Code</th>
+                                            <th>Name</th>
+                                            <th scope="col" class="col-1">Act</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                        @if (Model.vLocation.Count > 0)
+                                        {
+                                            foreach (var item in Model.vLocation)
+                                            {
+                                                <tr>
+                                                    <td class="d-none">
+                                                        <span class="rLocationId">@item.Id</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="lLocationCode">@item.lLocationCode</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="lLocationName">@item.lLocationName</span>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            <a class="sDelete" data-code="@item.Id"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / Content -->
+        <!-- Footer -->
+        <footer class="content-footer footer bg-footer-theme">
+            <div class="container-xxl">
+                <div class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                    <div class="mb-2 mb-md-0">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        made by
+                        <a href="https://ptodg.com/id/" target="_blank" class="footer-link">ODG Indonesia</a>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+        <!-- / Footer -->
+
+        <div class="content-backdrop fade"></div>
+    </div>
+    <!-- Content wrapper -->
+
+    <script>
+        $(document).ready(function () {
+            //CCSCode
+            $('#CCSCodeTable').DataTable({
+                //responsive: true,
+                // "columnDefs": [
+                //     { "width": "10%", "targets": 0 }
+                // ],
+                columns: [null, { width: '10%' }, null, { width: '20%' }],
+                "aoColumnDefs": [
+                    { "bSortable": false, "aTargets": [0, 1, 2, 3] }
+                ],
+                paging: true,
+                // "autoWidth": false,
+                // searching: false,
+                "lengthChange": false
+            });
+            $('#CCSCodeTable').on('click', 'tbody tr td', function () {
+                $('#CCSCodeID').val($(this).closest('tr').find('.rCCSCodeId').html());
+                $('#ccsID').val($(this).closest('tr').find('.ccsID').html());
+                $('#ccsDescription').val($(this).closest('tr').find('.ccsDescription').html());
+                $('#ccsID').prop("disabled", true);
+            });
+            $('#CCSCodesave').on('click', function (e) {
+                e.preventDefault();
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                if (!ValidationCheck($(this).closest('.card'))) {
+                    SaveCCSCode();
+                }
+                else {
+                    $("#spinner").hide();
+                    $("body").css("pointer-events", "");
+                    $(".layout-wrapper").css("opacity", 1);
+                }
+            });
+            $('#CCSCodenew').on('click', function (e) {
+                clearCCSCode();
+            });
+            $('#CCSCodeTable').on('click', '.sDelete', function () {
+                var Id = $(this).attr('data-code');
+                Swal.fire({
+                    title: 'Delete this Item?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes!',
+                    cancelButtonText: 'No!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        $(this).closest('tr').remove();
+                        DeleteItem('CCSCode', Id);
+                        clearCCSCode();
+                    } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        Swal.fire(
+                            'Cancelled',
+                            '',
+                            'error'
+                        )
+                    }
+                })
+            });
+            function clearCCSCode() {
+                $('#CCSCodeID').val(0);
+                $('#ccsID').val('');
+                $('#ccsDescription').val('');
+                $('#ccsID').prop("disabled", false);
+                clearValidMain();
+                $('#ccsID').focus();
+            }
+            function getCCSCode() {
+                var tmp_Id = $('#CCSCodeID').val() == '' ? 0 : $('#CCSCodeID').val();
+                var tmp_ccsID = $('#ccsID').val();
+                var tmp_ccsDescription = $('#ccsDescription').val();
+                return (tmp_Id == "") ? null :
+                    {
+                        Id: tmp_Id,
+                        ccsID: tmp_ccsID,
+                        ccsDescription: tmp_ccsDescription
+                    };
+            }
+            function SaveCCSCode() {
+                $.ajax({
+                    url: '/Master/SaveCCSCode',
+                    type: "POST",
+                    data: JSON.stringify(getCCSCode()),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            if (data.value.success) {
+                                addCCSCode()
+                                if (data.value.typ_ == 'Create') {
+                                    $("#CCSCodeTable>tbody>tr:first").find('.rCCSCodeId').text(data.value.result);
+                                }
+                                clearCCSCode();
+                            }
+                            else {
+                                Swal.fire({
+                                    title: 'Duplicate!!!',
+                                    text: 'CCSCode no : ' + data.value.typ_ + ' already exist!',
+                                    icon: 'error'
+                                })
+                            }
+
+                        }
+                        else {
+                            alert(data.text);
+                        }
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    }
+                });
+            }
+            function addCCSCode() {
+                if ($('#CCSCodeID').val() != '0') {
+                    var elems = $('.rCCSCodeId').filter(function () {
+                        return this.textContent.trim() === $('#CCSCodeID').val()
+                    });
+                    elems.closest('tr').find('.ccsID').text($('#ccsID').val());
+                    elems.closest('tr').find('.ccsDescription').text($('#ccsDescription').val());
+                    blink(elems.closest('tr'));
+                }
+                else {
+                    var newRow = $("<tr>");
+                    var cols = '';
+
+                    cols += '<td class="d-none"> <span class="rCCSCodeId">' + $('#CCSCodeID').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="ccsID">' + $('#ccsID').val() + '</span> </td>';
+                    cols += '<td> <span class="ccsDescription">' + $('#ccsDescription').val() + '</span> </td>';
+                    cols += '<td> <div> <a class="sDelete" data-code="' + $('#CCSCodeID').val() + '"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a> </div> </td>';
+
+
+                    newRow.append(cols);
+
+                    $("#CCSCodeTable >tbody").prepend(newRow);
+                    // $("#serviceTable").DataTable()
+                    //     .columns.adjust()
+                    //     .responsive.recalc();
+                    blink(newRow);
+                }
+            }
+            //END
+            //Customer
+            $('#CustomerTable').DataTable({
+                //responsive: true,
+                // "columnDefs": [
+                //     { "width": "10%", "targets": 0 }
+                // ],
+                columns: [null, { width: '10%' }, null, { width: '20%' }],
+                "aoColumnDefs": [
+                    { "bSortable": false, "aTargets": [0, 1, 2, 3] }
+                ],
+                paging: true,
+                // "autoWidth": false,
+                // searching: false,
+                "lengthChange": false
+            });
+            $('#CustomerTable').on('click', 'tbody tr td', function () {
+                $('#CustomerID').val($(this).closest('tr').find('.rCustomerId').html());
+                $('#cID').val($(this).closest('tr').find('.cID').html());
+                $('#cName').val($(this).closest('tr').find('.cName').html());
+                $('#cID').prop("disabled", true);
+            });
+            $('#customersave').on('click', function (e) {
+                e.preventDefault();
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                if (!ValidationCheck($(this).closest('.card'))) {
+                    SaveCustomer();
+                }
+                else {
+                    $("#spinner").hide();
+                    $("body").css("pointer-events", "");
+                    $(".layout-wrapper").css("opacity", 1);
+                }
+            });
+            $('#customernew').on('click', function (e) {
+                clearCustomer();
+            });
+            $('#CustomerTable').on('click', '.sDelete', function () {
+                var Id = $(this).attr('data-code');
+                Swal.fire({
+                    title: 'Delete this Item?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes!',
+                    cancelButtonText: 'No!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        $(this).closest('tr').remove();
+                        DeleteItem('Customer', Id);
+                        clearCustomer();
+                    } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        Swal.fire(
+                            'Cancelled',
+                            '',
+                            'error'
+                        )
+                    }
+                })
+            });
+            function clearCustomer() {
+                $('#CustomerID').val(0);
+                $('#cID').val('');
+                $('#cName').val('');
+                $('#cID').prop("disabled", false);
+                clearValidMain();
+                $('#cID').focus();
+            }
+            function getCustomer() {
+                var tmp_Id = $('#CustomerID').val() == '' ? 0 : $('#CustomerID').val();
+                var tmp_cID = $('#cID').val();
+                var tmp_cName = $('#cName').val();
+                return (tmp_Id == "") ? null :
+                    {
+                        Id: tmp_Id,
+                        cID: tmp_cID,
+                        cName: tmp_cName
+                    };
+            }
+            function SaveCustomer() {
+                $.ajax({
+                    url: '/Master/SaveCustomer',
+                    type: "POST",
+                    data: JSON.stringify(getCustomer()),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            if (data.value.success) {
+                                addCustomer()
+                                if (data.value.typ_ == 'Create') {
+                                    $("#CustomerTable>tbody>tr:first").find('.rCustomerId').text(data.value.result);
+                                }
+                                clearCustomer();
+                            }
+                            else {
+                                Swal.fire({
+                                    title: 'Duplicate!!!',
+                                    text: 'Customer no : ' + data.value.typ_ + ' already exist!',
+                                    icon: 'error'
+                                })
+                            }
+
+                        }
+                        else {
+                            alert(data.text);
+                        }
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    }
+                });
+            }
+            function addCustomer() {
+                if ($('#CustomerID').val() != '0') {
+                    var elems = $('.rCustomerId').filter(function () {
+                        return this.textContent.trim() === $('#CustomerID').val()
+                    });
+                    elems.closest('tr').find('.cID').text($('#cID').val());
+                    elems.closest('tr').find('.cName').text($('#cName').val());
+                    blink(elems.closest('tr'));
+                }
+                else {
+                    var newRow = $("<tr>");
+                    var cols = '';
+
+                    cols += '<td class="d-none"> <span class="rCustomerId">' + $('#CustomerID').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="cID">' + $('#cID').val() + '</span> </td>';
+                    cols += '<td> <span class="cName">' + $('#cName').val() + '</span> </td>';
+                    cols += '<td> <div> <a class="sDelete" data-code="' + $('#CustomerID').val() + '"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a> </div> </td>';
+
+
+                    newRow.append(cols);
+
+                    $("#CustomerTable >tbody").prepend(newRow);
+                    // $("#serviceTable").DataTable()
+                    //     .columns.adjust()
+                    //     .responsive.recalc();
+                    blink(newRow);
+                }
+            }
+            //END
+            //Location
+            $('#LocationTable').DataTable({
+                //responsive: true,
+                // "columnDefs": [
+                //     { "width": "10%", "targets": 0 }
+                // ],
+                columns: [null, { width: '10%' }, null, { width: '20%' }],
+                "aoColumnDefs": [
+                    { "bSortable": false, "aTargets": [0, 1, 2, 3] }
+                ],
+                paging: true,
+                // "autoWidth": false,
+                // searching: false,
+                "lengthChange": false
+            });
+            $('#LocationTable').on('click', 'tbody tr td', function () {
+                $('#LocationID').val($(this).closest('tr').find('.rLocationId').html());
+                $('#lLocationCode').val($(this).closest('tr').find('.lLocationCode').html());
+                $('#lLocationName').val($(this).closest('tr').find('.lLocationName').html());
+                $('#lLocationCode').prop("disabled", true);
+            });
+            $('#locationsave').on('click', function (e) {
+                e.preventDefault();
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                if (!ValidationCheck($(this).closest('.card'))) {
+                    SaveLocation();
+                }
+                else {
+                    $("#spinner").hide();
+                    $("body").css("pointer-events", "");
+                    $(".layout-wrapper").css("opacity", 1);
+                }
+            });
+            $('#locationnew').on('click', function (e) {
+                clearLocation();
+            });
+            $('#LocationTable').on('click', '.sDelete', function () {
+                var Id = $(this).attr('data-code');
+                Swal.fire({
+                    title: 'Delete this Item?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes!',
+                    cancelButtonText: 'No!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        $(this).closest('tr').remove();
+                        DeleteItem('Location', Id);
+                        clearLocation();
+                    } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        Swal.fire(
+                            'Cancelled',
+                            '',
+                            'error'
+                        )
+                    }
+                })
+            });
+            function clearLocation() {
+                $('#LocationID').val(0);
+                $('#lLocationCode').val('');
+                $('#lLocationName').val('');
+                $('#lLocationCode').prop("disabled", false);
+                clearValidMain();
+                $('#lLocationCode').focus();
+            }
+            function getLocation() {
+                var tmp_Id = $('#LocationID').val() == '' ? 0 : $('#LocationID').val();
+                var tmp_lLocationCode = $('#lLocationCode').val();
+                var tmp_lLocationName = $('#lLocationName').val();
+                return (tmp_Id == "") ? null :
+                    {
+                        Id: tmp_Id,
+                        lLocationCode: tmp_lLocationCode,
+                        lLocationName: tmp_lLocationName
+                    };
+            }
+            function SaveLocation() {
+                $.ajax({
+                    url: '/Master/SaveLocation',
+                    type: "POST",
+                    data: JSON.stringify(getLocation()),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            if (data.value.success) {
+                                addLocation()
+                                if (data.value.typ_ == 'Create') {
+                                    $("#LocationTable>tbody>tr:first").find('.rLocationId').text(data.value.result);
+                                }
+                                clearLocation();
+                            }
+                            else {
+                                Swal.fire({
+                                    title: 'Duplicate!!!',
+                                    text: 'Location no : ' + data.value.typ_ + ' already exist!',
+                                    icon: 'error'
+                                })
+                            }
+
+                        }
+                        else {
+                            alert(data.text);
+                        }
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    }
+                });
+            }
+            function addLocation() {
+                if ($('#LocationID').val() != '0') {
+                    var elems = $('.rLocationId').filter(function () {
+                        return this.textContent.trim() === $('#LocationID').val()
+                    });
+                    elems.closest('tr').find('.lLocationCode').text($('#lLocationCode').val());
+                    elems.closest('tr').find('.lLocationName').text($('#lLocationName').val());
+                    blink(elems.closest('tr'));
+                }
+                else {
+                    var newRow = $("<tr>");
+                    var cols = '';
+
+                    cols += '<td class="d-none"> <span class="rLocationId">' + $('#LocationID').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="lLocationCode">' + $('#lLocationCode').val() + '</span> </td>';
+                    cols += '<td> <span class="lLocationName">' + $('#lLocationName').val() + '</span> </td>';
+                    cols += '<td> <div> <a class="sDelete" data-code="' + $('#LocationID').val() + '"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a> </div> </td>';
+
+
+                    newRow.append(cols);
+
+                    $("#LocationTable >tbody").prepend(newRow);
+                    // $("#serviceTable").DataTable()
+                    //     .columns.adjust()
+                    //     .responsive.recalc();
+                    blink(newRow);
+                }
+            }
+            //END
+            function DeleteItem(typ, id) {
+                var itms = {};
+                itms.Id = id;
+                itms.Typ = typ
+                $.ajax({
+                    url: '/Master/DeleteItem',
+                    type: "POST",
+                    data: JSON.stringify(itms),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            Swal.fire({
+                                title: typ + ' Data!!!',
+                                text: typ + ' data has been deleted!',
+                                icon: 'success'
+                            })
+                        }
+                        else {
+                            alert(data.text);
+                        }
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                    }
+                });
+            }
+            function ValidationCheck(com) {
+                com.find(".vtext").each(function () {
+                    if (!$(this).hasClass('is-valid') || !$(this).hasClass('is-invalid')) {
+                        if ($(this).hasClass('form-select')) {
+                            (($(this).find('option:selected').attr('data-code') == "0") ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                        }
+                        else {
+                            (($(this).val() == '') ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                        }
+                    }
+                });
+                com.find(".select2-selection.select2-selection--single").each(function () {
+                    if (!$(this).hasClass('is-valid') || !$(this).hasClass('is-invalid')) {
+                        if (!$(this).find('.select2-selection__rendered').attr("title")) {
+                            $(this).find('.select2-selection__rendered').children().length > 0 ? $(this).addClass('is-invalid') : $(this).addClass('is-valid')
+                        }
+                    }
+                });
+                return com.find('.vtext').hasClass('is-invalid') || com.find(".select2-selection.select2-selection--single").hasClass('is-invalid') ? true : false;
+
+            }
+            function clearValidMain() {
+                $(".is-valid").each(function () {
+                    $(this).removeClass('is-valid');
+                });
+                $(".is-invalid").each(function () {
+                    $(this).removeClass('is-invalid');
+                });
+                $(".select2-selection.select2-selection--single").each(function () {
+                    $(this).find('.select2-selection__rendered').removeAttr('title');
+                });
+            }
+
+        })
+    </script>
+}

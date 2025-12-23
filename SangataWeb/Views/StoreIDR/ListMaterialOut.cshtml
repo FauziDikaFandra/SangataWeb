@@ -1,0 +1,537 @@
+﻿@model SangataWeb.Models.ViewModel
+@{
+    ViewBag.Title = "Sangata | List Stock";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.UserName = @Model.User_Login.UserName;
+    ViewBag.Content = "List Material Out";
+}
+@section pMain {
+    <nav class="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme"
+         id="layout-navbar">
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
+                <i class="icon-base bx bx-menu icon-md"></i>
+
+            </a>
+        </div>
+
+        <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
+            <!-- Search -->
+            <div class="navbar-nav align-items-center me-auto">
+                @* <div class="nav-item d-flex align-items-center">
+            <span class="w-px-22 h-px-22"><i class="icon-base bx bx-search icon-md"></i></span>
+            <input type="text"
+            class="form-control border-0 shadow-none ps-1 ps-sm-2 d-md-block d-none"
+            placeholder="Search..."
+            aria-label="Search..." />
+            </div> *@
+                
+            </div>
+            <!-- /Search -->
+
+            <ul class="navbar-nav flex-row align-items-center ms-md-auto">
+
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                    <a class="nav-link dropdown-toggle hide-arrow p-0"
+                       href="javascript:void(0);"
+                       data-bs-toggle="dropdown">
+                        <div class="avatar avatar-online">
+                            <img src="../../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                        </div>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0 me-3">
+                                        <div class="avatar avatar-online">
+                                            <img src="../../../assets/img/avatars/1.png" alt="" class="w-px-40 h-auto rounded-circle" />
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0">@Model.User_Login.UserName</h6>
+                                        <small class="text-body-secondary">Admin</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown-divider my-1"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="icon-base bx bx-user icon-md me-3"></i><span>My Profile</span>
+                            </a>
+                        </li>
+                        @*                         <li>
+                    <a class="dropdown-item" href="#">
+                    <i class="icon-base bx bx-cog icon-md me-3"></i><span>Settings</span>
+                    </a>
+                    </li>
+                    <li>
+                    <a class="dropdown-item" href="#">
+                    <span class="d-flex align-items-center align-middle">
+                    <i class="flex-shrink-0 icon-base bx bx-credit-card icon-md me-3"></i><span class="flex-grow-1 align-middle">Billing Plan</span>
+                    <span class="flex-shrink-0 badge rounded-pill bg-danger">4</span>
+                    </span>
+                    </a>
+                    </li> *@
+                        <li>
+                            <div class="dropdown-divider my-1"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="../Home/Logout">
+                                <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--/ User -->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- / Navbar -->
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+            <div class="col-md-12">
+                <div class="col-lg-6 col-xl-12 col-xxl-6 h-100">
+                    <div class="card theme-wizard pb-5">
+                        <div class="card-body py-0">
+                            <div class="card mt-5">
+                                <div class="card-body py-2">
+                                    <div class="row g-6 pb-3">
+                                        <div class="col">
+                                            <div class="px-sm-0 px-md-0">
+                                                <ul class="pager wizard list-inline mb-0">
+                                                    <li class="previous">
+                                                        <div>
+                                                            <label for="drType" class="form-label">Type</label>
+                                                            <select id="drType" data-placeholder="Choose Type" class="form-select form-select-sm select2 vtext">
+                                                                <option data-code="0"></option>
+                                                                <option data-code="1" value="Summary">Summary</option>
+                                                                <option data-code="2" value="Detail">Detail</option>
+                                                            </select>
+                                                        </div>
+                                                    </li>
+                                                    <li class="next mt-2 pt-1">
+                                                        <button id="rPrint" class="btn btn-primary px-5 px-sm-6" type="button">Print<span class="fa fa-print fa-lg ms-2" data-fa-transform="shrink-3"> </span></button>
+                                                        <button id="rDownload" class="btn btn-primary px-5 px-sm-6" type="button">Download<span class="fa fa-download fa-lg ms-2" data-fa-transform="shrink-3"> </span></button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        @* <div class="col-md-4">
+                                    <div class="d-none">
+                                    <label for="drJobNo" class="form-label">WI No</label>
+                                    <select id="drJobNo" data-placeholder="Choose Job" class="form-select form-select-sm select2 vtext">
+                                    <option data-code="0"></option>
+                                    @if (Model.vJob != null)
+                                    {
+                                    foreach (var item in Model.vJob)
+                                    {
+                                    <!option data-code="@item.rJobOrder">@item.rJobOrder</!option>
+                                    }
+                                    }
+                                    </select>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                    <div>
+                                    <label for="drType" class="form-label">Type</label>
+                                    <select id="drType" data-placeholder="Choose Type" class="form-select form-select-sm select2 vtext">
+                                    <option data-code="0"></option>
+                                    <option data-code="1" value="Summary">Summary</option>
+                                    <option data-code="2" value="Detail">Detail</option>
+                                    </select>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                    <div class="row">
+                                    <div class="col-6 d-none">
+                                    <button id="rShow" class="btn btn-secondary px-5 px-sm-6" type="button">Show<span class="fa fa-eye fa-lg ms-2" data-fa-transform="shrink-3"> </span></button>
+                                    </div>
+                                    <div class="col-6">
+                                    <label for="drJobNo" class="form-label">WI No</label>
+                                    <button id="rPrint" class="btn btn-primary px-5 px-sm-6" type="button">Print<span class="fa fa-print fa-lg ms-2" data-fa-transform="shrink-3"> </span></button>
+                                    </div>
+                                    </div>
+                                    </div> *@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mt-3">
+                                <div class="card-body py-2 px-2">
+                                    <div id="tbl1" class="table-responsive text-nowrap py-4 d-none">
+                                        <table id="MaterialTableSummary" class="table table-striped">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th>WO ID</th>
+                                                    <th>Stock Code</th>
+                                                    <th>Description</th>
+                                                    <th>Qty Used</th>
+                                                    <th>Last Foreman</th>
+                                                    <th>Last DRNo</th>
+                                                    <th>Last DRDate</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="table-border-bottom-0">
+                                                @if (Model.vListMaterialOutSummary != null)
+                                                {
+                                                    foreach (var item in Model.vListMaterialOutSummary)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                               <span class="JobNo">@item.JobNo</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="StockCode">@item.StockCode</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="sDescription">@item.sDescription</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="QtyUsed">@item.QtyUsed</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="Foreman">@item.Foreman</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="RefNo">@item.RefNo</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="Date">@Convert.ToDateTime(item.Date).ToString("dd-MM-yyyy")</span>
+                                                            </td>
+
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                    <div id="tbl2" class="table-responsive text-nowrap py-4 d-none">
+                                        <table id="MaterialTableDetail" class="table table-striped">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th>WO ID</th>
+                                                    <th>RefNo / DRNo</th>
+                                                    <th>DR Date</th>
+                                                    <th>Stock Code</th>
+                                                    <th>Description</th>
+                                                    <th>Qty Used</th>
+                                                    <th>Foreman</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody class="table-border-bottom-0">
+                                                @if (Model.vListMaterialOut != null)
+                                                {
+                                                    foreach (var item in Model.vListMaterialOut)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <span class="JobNo">@item.JobNo</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="RefNo">@item.RefNo</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="Date">@Convert.ToDateTime(item.Date).ToString("dd-MM-yyyy")</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="StockCode">@item.StockCode</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="sDescription">@item.sDescription</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="QtyUsed">@item.QtyUsed</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="Foreman">@item.Foreman</span>
+                                                            </td>
+
+
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="modal fade bd-example-modal-lg" id="RRPrint" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header d-flex justify-content-end">
+                        <div class="text-end px-1">
+                            <button id="mPrint" class="btn btn-outline-primary px-5 px-sm-6" type="button">Print<span class="fa fa-print fa-lg ms-2" data-fa-transform="shrink-3"> </span></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+                        
+        
+        
+      </div>
+                    @*  <div class="d-print-none mt-4">
+                            <div class="float-end">
+                                <div class="row">
+                                    
+                                                        <button id="rDownload" class="btn btn-primary px-5 px-sm-6" type="button">Download<span class="fa fa-download fa-lg ms-2" data-fa-transform="shrink-3"> </span></button>
+
+                                    <div class="col p-0"><a id="rrDetailCancel" data-dismiss="modal" class="btn btn-danger btn-user btn-block">
+    Cancel
+</a></div>
+                                    <div class="col"><a onclick="printDiv('printableArea')" class="btn btn-success me-1"><i class="fa fa-print"></i></a></div>
+                                </div>
+                                
+                               <a href="#" class="btn btn-primary w-md">Send</a>
+                            </div>
+                        </div> *@
+
+                    <div class="modal-body">
+                        <div class="container px-1">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="cardInv" id="printableArea">
+                                        <div class="card-body border border-secondary">
+                                           @*  <hr class="my-4"> *@
+                                            <div class="py-2 px-2">
+                                                <h5 class="font-size-15 mJudul">List Stock Summary</h5>
+
+                                                <div class="table-responsive">
+                                                    <table id="mTable" class="table align-middle table-nowrap table-centered mb-0 border">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>WO ID</th>
+                                                    <th>Stock Code</th>
+                                                    <th>Description</th>
+                                                    <th>Qty Used</th>
+                                                    <th>Last Foreman</th>
+                                                    <th>Last DRNo</th>
+                                                    <th>Last DRDate</th>
+                                                            </tr>
+                                                        </thead><!-- end thead -->
+                                                        <tbody>
+                                                            @if (Model.vListMaterialOutSummary != null)
+                                                {
+                                                    foreach (var item in Model.vListMaterialOutSummary)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <span class="JobNo">@item.JobNo</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="StockCode">@item.StockCode</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="sDescription">@item.sDescription</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="QtyUsed">@item.QtyUsed</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="Foreman">@item.Foreman</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="RefNo">@item.RefNo</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="Date">@Convert.ToDateTime(item.Date).ToString("dd-MM-yyyy")</span>
+                                                            </td>
+
+                                                        </tr>
+                                                    }
+                                                }
+                                                        </tbody><!-- end tbody -->
+                                                    </table><!-- end table -->
+                                                </div><!-- end table responsive -->
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- end col -->
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+        <!-- / Content -->
+        <!-- Footer -->
+        <footer class="content-footer footer bg-footer-theme">
+            <div class="container-xxl">
+                <div class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                    <div class="mb-2 mb-md-0">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        made by
+                        <a href="https://ptodg.com/id/" target="_blank" class="footer-link">ODG Indonesia</a>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+        <!-- / Footer -->
+
+        <div class="content-backdrop fade"></div>
+        
+    </div>
+    <!-- Content wrapper -->
+
+
+    <script>
+        $(document).ready(function () {
+            $('#MaterialTableSummary').DataTable({
+                //responsive: true,
+                // "columnDefs": [
+                //     { "width": "80%", "targets": 2 }
+                // ],
+                paging: true,
+                "autoWidth": false,
+                searching: true,
+                columnDefs: [
+                    { targets: [1, 2, 3, 4, 5, 6], searchable: false }
+                ]
+                //"lengthChange": false
+            });
+            $('#MaterialTableDetail').DataTable({
+                //responsive: true,
+                // "columnDefs": [
+                //     { "width": "80%", "targets": 2 }
+                // ],
+                paging: true,
+                "autoWidth": false,
+                searching: true,
+                columnDefs: [
+                    { targets: [1, 2, 3, 4, 5, 6], searchable: false }
+                ]
+                //"lengthChange": false
+            });
+            $('#drType').on('change', function (){
+                $('#tbl1').removeClass('d-none');
+                $('#tbl2').removeClass('d-none');
+                if ($(this).val() == 'Summary')
+                {
+                    $('#tbl2').addClass('d-none');
+                }
+                else
+                {
+                    $('#tbl1').addClass('d-none');
+                }
+            });
+            $('#rDownload').on('click', function () {
+                if ($('#drType').find('option:selected').attr('data-code') != "0") {
+                    $("#spinner").show();
+                    $("body").css("pointer-events", "none");
+                    $(".layout-wrapper").css("opacity", 0.6);
+                    window.open('/StoreIDR/PrintListMaterial?Idstr=' + $("#dt-search-0").val() + '&Typ=' + $('#drType').find('option:selected').attr('value') + '', '_blank');
+                    $("#spinner").hide();
+                    $("body").css("pointer-events", "");
+                    $(".layout-wrapper").css("opacity", 1);
+                }
+
+                
+            });
+            $('#rPrint').on('click', function () {
+                if ($('#drType').find('option:selected').attr('data-code') != "0") {
+                    $('#mTable tbody').empty();
+                    $('#mTable thead').empty();
+                    if ($('#drType').val() == 'Summary') {
+                        $('.mJudul').text('List Stock Summary');
+                        var newRowHeader = $("<tr>");
+                        var colsHeader = '';
+                        colsHeader += '<th>WO ID</th>';
+                        colsHeader += '<th>Stock Code</th>';
+                        colsHeader += '<th>Description</th>';
+                        colsHeader += '<th>Qty Used</th>';
+                        colsHeader += '<th>Last Foreman</th>';
+                        colsHeader += '<th>Last DRNo</th>';
+                        colsHeader += '<th>Last DRDate</th>';
+                        newRowHeader.append(colsHeader);
+
+                        $("#mTable >thead").prepend(newRowHeader);
+                        $('#MaterialTableSummary >tbody >tr').each(function (index, element) {
+                            var $row = $(this);
+                            var newRowDetail = $("<tr>");
+                            var colsDetail = '';
+                            $row.find('td').each(function (cellIndex, cellElement) {
+                                colsDetail += '<td>' + $(this).find('span').html() + '</td>';
+                            });
+                            newRowDetail.append(colsDetail);
+                            $("#mTable >tbody").append(newRowDetail);
+                        });
+
+                    }
+                    else {
+                        $('.mJudul').text('List Stock Detail');
+                        var newRowHeader = $("<tr>");
+                        var colsHeader = '';
+                        colsHeader += '<th>WO ID</th>';
+                        colsHeader += '<th>RefNo / DRNo</th>';
+                        colsHeader += '<th>DR Date</th>';
+                        colsHeader += '<th>Stock Code</th>';
+                        colsHeader += '<th>Description</th>';
+                        colsHeader += '<th>Qty Used</th>';
+                        colsHeader += '<th>Foreman</th>';
+                        newRowHeader.append(colsHeader);
+
+                        $("#mTable >thead").prepend(newRowHeader);
+                        $('#MaterialTableDetail >tbody >tr').each(function (index, element) {
+                            var $row = $(this);
+                            var newRowDetail = $("<tr>");
+                            var colsDetail = '';
+                            $row.find('td').each(function (cellIndex, cellElement) {
+                                colsDetail += '<td>' + $(this).find('span').html() + '</td>';
+                            });
+                            newRowDetail.append(colsDetail);
+                            $("#mTable >tbody").append(newRowDetail);
+                        });
+                    }
+
+                    $('#RRPrint').modal('show');
+                };
+                
+            });
+            $('#mPrint').on('click', function () {
+                printDiv('printableArea');
+            });
+            
+            function printDiv(divName) {
+                var width = $(window).width();
+
+                var printContents = document.getElementById(divName).innerHTML;
+                var originalContents = document.body.innerHTML;
+
+                document.body.innerHTML = printContents;
+
+                window.print();
+
+                if (width > 1000) {
+                    document.body.innerHTML = originalContents;
+                }
+                location.reload();
+            }
+        });
+
+    </script>
+}

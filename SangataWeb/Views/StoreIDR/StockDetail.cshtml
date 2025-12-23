@@ -1,0 +1,556 @@
+﻿@model SangataWeb.Models.ViewModel
+@{
+    ViewBag.Title = "Sangata | Stock Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.UserName = @Model.User_Login.UserName;
+    ViewBag.Content = "Stock Detail";
+}
+@section pMain {
+    <nav class="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme"
+         id="layout-navbar">
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
+                <i class="icon-base bx bx-menu icon-md"></i>
+
+            </a>
+        </div>
+
+        <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
+            <!-- Search -->
+            <div class="navbar-nav align-items-center me-auto">
+                @* <div class="nav-item d-flex align-items-center">
+            <span class="w-px-22 h-px-22"><i class="icon-base bx bx-search icon-md"></i></span>
+            <input type="text"
+            class="form-control border-0 shadow-none ps-1 ps-sm-2 d-md-block d-none"
+            placeholder="Search..."
+            aria-label="Search..." />
+            </div> *@
+                <div class="row">
+                    <div class="col">
+                       @*  <a id="mainnew" title="Add New" href="#" class="btn btn-primary btn-circle ml-2 tombol">
+                            <i class="fas fa-plus"></i>
+                        </a> *@
+                        @*                         <a id="mainsave" title="Save" href="#" class="btn btn-success btn-circle ml-4">
+                    <i class="fas fa-save"></i>
+                    </a> *@
+                        <a id="mainfirst" title="Previous" href="#" class="btn btn-info btn-circle ml-4 tombol">
+                            <i class="fas fa-fast-backward"></i>
+                        </a>
+                        <a id="mainprev" title="Previous" href="#" class="btn btn-info btn-circle ml-4 tombol">
+                            <i class="fas fa-step-backward"></i>
+                        </a>
+                        <a id="mainnext" title="Next" href="#" class="btn btn-warning btn-circle ml-4 tombol">
+                            <i class="fas fa-step-forward"></i>
+                        </a>
+                        <a id="mainend" title="Next" href="#" class="btn btn-warning btn-circle ml-4 tombol">
+                            <i class="fas fa-fast-forward"></i>
+                        </a>
+                        <a id="mainfind" title="Find" href="#" class="btn btn-danger btn-circle ml-4 tombol" data-bs-toggle="modal" data-bs-target="#findData">
+                            <i class="fas fa-search"></i>
+                        </a>
+                        @*                                     <a id="popost" title="Post" href="#" class="btn btn-success btn-circle ml-4 btn-sm">
+                    <i class="fas fa-paper-plane"></i>
+                    </a> *@
+                        <input class="d-none" id="pagestatus" value="@((Model.vStockDetail == null) ? 0 : Model.vStockDetail.Id)" />
+                    </div>
+                </div>
+            </div>
+            <!-- /Search -->
+
+            <ul class="navbar-nav flex-row align-items-center ms-md-auto">
+
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                    <a class="nav-link dropdown-toggle hide-arrow p-0"
+                       href="javascript:void(0);"
+                       data-bs-toggle="dropdown">
+                        <div class="avatar avatar-online">
+                            <img src="../../../assets/img/avatars/1.png" class="w-px-40 h-auto rounded-circle" />
+                        </div>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0 me-3">
+                                        <div class="avatar avatar-online">
+                                            <img src="../../../assets/img/avatars/1.png" alt="" class="w-px-40 h-auto rounded-circle" />
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0">@Model.User_Login.UserName</h6>
+                                        <small class="text-body-secondary">Admin</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown-divider my-1"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="icon-base bx bx-user icon-md me-3"></i><span>My Profile</span>
+                            </a>
+                        </li>
+                        @*                         <li>
+                    <a class="dropdown-item" href="#">
+                    <i class="icon-base bx bx-cog icon-md me-3"></i><span>Settings</span>
+                    </a>
+                    </li>
+                    <li>
+                    <a class="dropdown-item" href="#">
+                    <span class="d-flex align-items-center align-middle">
+                    <i class="flex-shrink-0 icon-base bx bx-credit-card icon-md me-3"></i><span class="flex-grow-1 align-middle">Billing Plan</span>
+                    <span class="flex-shrink-0 badge rounded-pill bg-danger">4</span>
+                    </span>
+                    </a>
+                    </li> *@
+                        <li>
+                            <div class="dropdown-divider my-1"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="../Home/Logout">
+                                <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--/ User -->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- / Navbar -->
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+            <div class="col-md-12">
+                <div class="col-lg-6 col-xl-12 col-xxl-6 h-100">
+                    <div class="card theme-wizard pb-5">
+                        <div class="card-header bg-body-tertiary pt-5 pb-0">
+                           <div class="card pb-5">
+                                            <div class="card-body pb-0">
+                                                <div class="row g-6 pb-3">
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <label for="sStockCode" class="form-label">Stock Code</label>
+                                                            <input class="d-none" id="RequestId" value="@Model.vStockDetail.Id" />
+                                                            <input id="sStockCode"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@Model.vStockDetail.sStockCode" disabled />
+                                                        </div>
+                                                        <div>
+                                                            <label for="sCCSCode" class="form-label">CCS Code</label>
+                                                            <input id="sCCSCode"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@Model.vStockDetail.sCCSCode @Model.vStockDetail.sCCSName" disabled />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <label for="sDescription" class="form-label">Material Description</label>
+                                                            <input id="sDescription"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@Model.vStockDetail.sDescription" disabled />
+                                                        </div>
+                                                        <div>
+                                                            <label for="sModel" class="form-label">Model/Type</label>
+                                                            <input id="sModel"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder=""
+                                                                   value="@Model.vStockDetail.sModel - @Model.vStockDetail.sManufacture" disabled />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer bg-body-tertiary pb-0">
+                                                
+                                            </div>
+                                        </div>
+                        </div>
+                        <div class="card-body py-3">
+                            <div class="tab-content px-0 py-3">
+                                <div>
+                                    <form id="firstForm">
+                                        <div class="card pb-5 mb-5 text-center">
+                                            <div class="card-body pb-0 pt-2 ps-2">
+                                                <ul class="pager wizard list-inline mb-0 ms-3">
+                                                    <li class="previous">
+                                                        <h6 class="card-title mb-0">Stock In History</h6>
+                                                    </li>
+                                                    <li class="next">
+                                                        <h6 class="card-title mb-0">Total : <span id="inSum">@((Model.vStockIn.Count > 0) ? Convert.ToDecimal(Model.vStockIn[0].inSum).ToString("N2") : 0)</span></h6>
+                                                    </li>
+                                                </ul>
+                                                
+                                                <div class="table-responsive text-nowrap py-0">
+                                            <table id="MaterialTable" class="table table-striped">
+                                                <thead class="table-dark">
+                                                    <tr>
+                                                        <th>Date</th>
+<th>Type</th>
+<th>Ref No</th>
+<th>PO No</th>
+<th>Supplier</th>
+<th>Currency</th>
+<th>Qty</th>
+<th>Unit Cost</th>
+<th>Sub Unit Cost</th>
+<th>Total Cost</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table-border-bottom-0">
+                                                    @if (Model.vStockIn.Count > 0)
+                                                    {
+                                                        foreach (var item in Model.vStockIn)
+                                                        {
+                                                            <tr>
+                                                             <td class="text-start"><span>@Convert.ToDateTime(item.Date).ToString("dd-MMM-yyyy")</span></td>
+
+<td><span>@item.Type</span></td>
+<td class="text-start"><span>@item.NoRef</span></td>
+<td><span>@item.PONo</span></td>
+<td class="text-start"><span>@item.Supplier</span></td> 
+<td><span>@item.Currency</span></td>
+<td><span>@Convert.ToDecimal(item.Quantity).ToString("N2")</span></td>
+<td><span>@Convert.ToDecimal(item.UnitCost).ToString("N2")</span></td>
+<td><span>@Convert.ToDecimal((Convert.ToDecimal(item.UnitCost) + @Convert.ToDecimal(item.FreightAlloc))).ToString("N2")</span></td>
+<td><span>@Convert.ToDecimal(((Convert.ToDecimal(item.UnitCost) + @Convert.ToDecimal(item.FreightAlloc)) * @Convert.ToDecimal(item.Quantity))).ToString("N2")</span></td>
+  
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                            </div>
+                                        </div>
+                                        <div class="card pb-5 text-center">
+                                            <div class="card-body pb-0 pt-2 ps-2">
+                                                <ul class="pager wizard list-inline mb-0 ms-3">
+                                                    <li class="previous">
+                                                        <h6 class="card-title mb-0">Stock Out History</h6>
+                                                    </li>
+                                                    <li class="next">
+                                                        <h6 class="card-title mb-0">Total : <span id="outSum">@((Model.vStockOut.Count > 0) ? Convert.ToDecimal(Model.vStockOut[0].outSum).ToString("N2") : 0)</span></h6>
+                                                    </li>
+                                                </ul>
+                                                <div class="table-responsive text-nowrap py-0">
+                                            <table id="LabourTable" class="table table-striped">
+                                                <thead class="table-dark">
+                                                    <tr>
+                                                        <th>Date</th>
+<th>Type</th>
+<th>Job No</th>
+<th>Job</th>
+<th>Qty</th>
+<th>Ref No</th>
+<th>Order By</th>
+
+
+
+
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table-border-bottom-0">
+                                                    @if (Model.vStockOut.Count > 0)
+                                                    {
+                                                        foreach (var item in Model.vStockOut)
+                                                        {
+                                                            <tr>
+                                                             <td class="text-start"><span>@item.Date</span></td>
+<td class="text-start"><span>@item.Type</span></td>
+<td class="text-start"><span>@item.JobNo</span></td>
+<td class="text-start"><span>@item.Job</span></td>
+<td><span>@item.QtyUsed</span></td>
+<td class="text-start"><span>@item.RefNo</span></td>
+<td class="text-start"><span>@item.StoreMan</span></td>
+
+
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                    </form>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <!-- / Content -->
+        <!-- Footer -->
+        <footer class="content-footer footer bg-footer-theme">
+            <div class="container-xxl">
+                <div class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                    <div class="mb-2 mb-md-0">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        made by
+                        <a href="https://ptodg.com/id/" target="_blank" class="footer-link">ODG Indonesia</a>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+        <!-- / Footer -->
+
+        <div class="content-backdrop fade"></div>
+        <div class="modal fade" id="findData" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body px-3 pt-2">
+                        <div class="table-responsive text-nowrap pb-3">
+                            <table id="requestFindTable" class="table table-striped">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="d-none">RequestFindID</th>
+                                        <th>Stock Code</th>
+                                        <th>CCS Code</th>
+                                        <th>Material Description</th>
+                                        <th>Model/Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                    @if (Model.vStoreFind.Count > 0)
+                                    {
+                                        foreach (var item in Model.vStoreFind)
+                                        {
+                                            <tr>
+                                                <td class="d-none">
+                                                    <span class="fRequestID">@item.Id</span>
+                                                </td>
+                                                <td>
+                                                    <span class="fsStockCode">@item.sStockCode</span>
+                                                </td>
+                                                <td>
+                                                    <span class="fsCCSCode">@item.sCCSCode</span>
+                                                </td>
+                                                <td>
+                                                    <span class="fsDescription">@item.sDescription</span>
+                                                </td>
+                                                 <td>
+                                                    <span class="fsModel">@item.sModel</span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Content wrapper -->
+
+
+    <script>
+        $(document).ready(function () {
+            var ext = false;
+            var addtyp = 'labour';
+            var dt_to = $.datepicker.formatDate('dd/mm/yy', new Date());
+            var stopBlinking = false;
+            
+            
+
+            
+            $('#MaterialTable').DataTable({
+                //responsive: true,
+                // "columnDefs": [
+                //     { "width": "80%", "targets": 2 }
+                // ],
+                paging: true,
+                "autoWidth": false,
+                searching: false,
+                "lengthChange": false
+            });
+            $('#LabourTable').DataTable({
+                //responsive: true,
+                // "columnDefs": [
+                //     { "width": "80%", "targets": 2 }
+                // ],
+                paging: true,
+                "autoWidth": false,
+                searching: false,
+                "lengthChange": false
+            });
+            $('#requestFindTable').DataTable({
+                //responsive: true,
+                // "columnDefs": [
+                //     { "width": "80%", "targets": 2 }
+                // ],
+                paging: true,
+                "autoWidth": false,
+                // searching: false,
+                "lengthChange": false
+            });
+
+
+            
+            $('#mainfirst').on('click', function () {
+                GetRequestAll("first", $('#RequestId').val());
+            });
+            $('#mainend').on('click', function () {
+                GetRequestAll("end", $('#RequestId').val());
+            });
+            $('#mainprev').on('click', function () {
+                GetRequestAll("prev", $('#RequestId').val());
+            });
+            $('#mainnext').on('click', function () {
+                GetRequestAll("next", $('#RequestId').val());
+            });
+            $('#requestFindTable').on('click', 'tbody tr td', function () {
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                GetRequestAll("keep", $(this).closest('tr').find('.fRequestID').html());
+                $('#findData').modal('toggle')
+            });
+
+
+            function GetRequestAll(typ, id, Idstr) {
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                var itms = {};
+                itms.Id = id;
+                itms.Typ = typ
+                itms.Idstr = Idstr
+                $.ajax({
+                    url: '/StoreIDR/GetStockDetailBy',
+                    type: "POST",
+                    data: JSON.stringify(itms),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    // traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            if (data.vStockDetail != null)
+                            {
+                            $('#MaterialTable').DataTable().clear().destroy();
+                            $('#LabourTable').DataTable().clear().destroy();
+                            $('#RequestId').val(data.vStockDetail.id);
+                            $('#sStockCode').val(data.vStockDetail.sStockCode);
+                            $('#sCCSCode').val(data.vStockDetail.sCCSCode);
+                            $('#sDescription').val(data.vStockDetail.sDescription);
+                            $('#sModel').val(data.vStockDetail.sModel + '-' + data.vStockDetail.sManufacture);
+                            $('#inSum').html(0);
+                            $('#outSum').html(0);
+                            if (data.vStockIn.length != 0)
+                            {
+                                $('#inSum').html(parseFloat(data.vStockIn[0].inSum).toLocaleString('en-US', {minimumFractionDigits: 2,maximumFractionDigits: 2}));
+                            }
+                            
+                            if (data.vStockOut.length != 0)
+                            {
+                                $('#outSum').html(parseFloat(data.vStockOut[0].outSum).toLocaleString('en-US', {minimumFractionDigits: 2,maximumFractionDigits: 2}));
+                            }
+                            
+                            $('#MaterialTable tbody').empty();
+                            $('#LabourTable tbody').empty();
+                            $(data.vStockIn).each(function (index, item) {
+                                var newRow = $("<tr>");
+                                var cols = '';
+                                var dt_Date = $.datepicker.formatDate('dd-M-yy', new Date(item.date));
+                                cols += '<td class="text-start"><span>' + dt_Date +'</span></td>';
+cols += '<td><span>' + item.type +'</span></td>';
+cols += '<td class="text-start"><span>' + item.noRef +'</span></td>';
+cols += '<td><span>' + item.poNo +'</span></td>';
+cols += '<td class="text-start"><span>' + item.supplier +'</span></td>';
+cols += '<td><span>' + item.currency +'</span></td>';
+cols += '<td><span>' + parseFloat(item.quantity).toLocaleString('en-US', {minimumFractionDigits: 2,maximumFractionDigits: 2}) +'</span></td>';
+cols += '<td><span>' + parseFloat(item.unitCost).toLocaleString('en-US', {minimumFractionDigits: 2,maximumFractionDigits: 2}) +'</span></td>';
+cols += '<td><span>' + parseFloat(parseFloat(item.unitCost) + parseFloat(item.freightAlloc)).toLocaleString('en-US', {minimumFractionDigits: 2,maximumFractionDigits: 2}) +'</span></td>';
+cols += '<td><span>' + parseFloat((parseFloat(item.unitCost) + parseFloat(item.freightAlloc)) * parseFloat(item.quantity)).toLocaleString('en-US', {minimumFractionDigits: 2,maximumFractionDigits: 2}) +'</span></td>';
+
+                                newRow.append(cols);
+
+                                $("#MaterialTable >tbody").prepend(newRow);
+                            });
+                                $(data.vStockOut).each(function (index, item) {
+                                    var newRow = $("<tr>");
+                                    var cols = '';
+                                    var dl_Date = $.datepicker.formatDate('dd-M-yy', new Date(item.date));
+                                    cols += '<td class="text-start"><span>' + dl_Date +'</span></td>';
+                                    cols += '<td class="text-start"><span>' + item.type +'</span></td>';
+                                    cols += '<td class="text-start"><span>' + item.jobNo +'</span></td>';
+                                    cols += '<td class="text-start"><span>' + item.job +'</span></td>';
+                                    cols += '<td><span>' + parseFloat(item.qtyUsed).toLocaleString('en-US', {minimumFractionDigits: 2,maximumFractionDigits: 2}) +'</span></td>';
+                                    cols += '<td class="text-start"><span>' + item.refNo +'</span></td>';
+                                    cols += '<td class="text-start"><span>' + item.storeMan +'</span></td>';
+
+
+                                    newRow.append(cols);
+
+                                    $("#LabourTable >tbody").prepend(newRow);
+                                });
+
+                            $('#MaterialTable').DataTable({
+                                paging: true,
+                                "autoWidth": false,
+                                searching: false,
+                "lengthChange": false
+                            });
+                                $('#LabourTable').DataTable({
+                                    paging: true,
+                                    "autoWidth": false,
+                                    searching: false,
+                "lengthChange": false
+                                });
+
+                            
+                            }
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                        }
+                        else {
+                            alert(data.text);
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                        }
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    }
+                });
+            }
+
+
+            
+            
+        });
+
+    </script>
+}

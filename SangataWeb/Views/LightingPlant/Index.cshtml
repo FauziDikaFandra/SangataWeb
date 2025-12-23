@@ -1,0 +1,1776 @@
+﻿@model SangataWeb.Models.ViewModel
+@{
+    ViewBag.Title = "Sangata | LightingPlant";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.UserName = @Model.User_Login.UserName;
+    ViewBag.Content = "Main";
+}
+@section pMain {
+    <nav class="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme"
+         id="layout-navbar">
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
+                <i class="icon-base bx bx-menu icon-md"></i>
+            </a>
+        </div>
+
+        <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
+            <!-- Search -->
+            <div class="navbar-nav align-items-center me-auto">
+                @* <div class="nav-item d-flex align-items-center">
+            <span class="w-px-22 h-px-22"><i class="icon-base bx bx-search icon-md"></i></span>
+            <input type="text"
+            class="form-control border-0 shadow-none ps-1 ps-sm-2 d-md-block d-none"
+            placeholder="Search..."
+            aria-label="Search..." />
+            </div> *@
+                <div class="row">
+                    <div class="col">
+                        <a id="mainnew" title="Add New" href="#" class="btn btn-primary btn-circle ml-2 tombol">
+                            <i class="fas fa-plus"></i>
+                        </a>
+@*                         <a id="mainsave" title="Save" href="#" class="btn btn-success btn-circle ml-4">
+                            <i class="fas fa-save"></i>
+                        </a> *@
+                        <a id="mainfirst" title="Previous" href="#" class="btn btn-info btn-circle ml-4 tombol">
+                            <i class="fas fa-fast-backward"></i>
+                        </a>
+                        <a id="mainprev" title="Previous" href="#" class="btn btn-info btn-circle ml-4 tombol">
+                            <i class="fas fa-step-backward"></i>
+                        </a>
+                        <a id="mainnext" title="Next" href="#" class="btn btn-warning btn-circle ml-4 tombol">
+                            <i class="fas fa-step-forward"></i>
+                        </a>
+                        <a id="mainend" title="Next" href="#" class="btn btn-warning btn-circle ml-4 tombol">
+                            <i class="fas fa-fast-forward"></i>
+                        </a>
+                        <a id="mainfind" title="Find" href="#" class="btn btn-danger btn-circle ml-4 tombol" data-bs-toggle="modal" data-bs-target="#findData">
+                            <i class="fas fa-search"></i>
+                        </a>
+                        @*                                     <a id="popost" title="Post" href="#" class="btn btn-success btn-circle ml-4 btn-sm">
+                    <i class="fas fa-paper-plane"></i>
+                    </a> *@
+                    </div>
+                </div>
+            </div>
+            <!-- /Search -->
+
+            <ul class="navbar-nav flex-row align-items-center ms-md-auto">
+
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                    <a class="nav-link dropdown-toggle hide-arrow p-0"
+                       href="javascript:void(0);"
+                       data-bs-toggle="dropdown">
+                        <div class="avatar avatar-online">
+                            <img src="../../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0 me-3">
+                                        <div class="avatar avatar-online">
+                                            <img src="../../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0">@Model.User_Login.UserName</h6>
+                                        <small class="text-body-secondary">Admin</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown-divider my-1"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="icon-base bx bx-user icon-md me-3"></i><span>My Profile</span>
+                            </a>
+                        </li>
+@*                         <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="icon-base bx bx-cog icon-md me-3"></i><span>Settings</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <span class="d-flex align-items-center align-middle">
+                                    <i class="flex-shrink-0 icon-base bx bx-credit-card icon-md me-3"></i><span class="flex-grow-1 align-middle">Billing Plan</span>
+                                    <span class="flex-shrink-0 badge rounded-pill bg-danger">4</span>
+                                </span>
+                            </a>
+                        </li> *@
+                        <li>
+                            <div class="dropdown-divider my-1"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="../Home/Logout">
+                                <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--/ User -->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- / Navbar -->
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+            <div class="col-md-12">
+                <div class="col-lg-6 col-xl-12 col-xxl-6 h-100">
+                    <div class="card theme-wizard pb-5">
+                        <div class="card-header bg-body-tertiary pt-5 pb-0">
+                            <ul class="nav nav-pills mb-3" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button id="tabUnit" class="nav-link active" data-wizard-step="1" data-bs-toggle="pill" data-bs-target="#form-wizard-tab1" type="button" role="tab" aria-controls="form-wizard-tab1" aria-selected="true"><span class="fab fa-artstation me-2" data-fa-transform="shrink-2"></span><span class="d-none d-md-inline-block fs-10">Unit</span></button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button id="tabServices" class="nav-link" data-wizard-step="2" data-bs-toggle="pill" data-bs-target="#form-wizard-tab2" type="button" role="tab" aria-controls="form-wizard-tab2" aria-selected="false"><span class="fas fa-archive me-2" data-fa-transform="shrink-2"></span><span class="d-none d-md-inline-block fs-10">Services</span></button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button id="tabBreakdowns" class="nav-link" data-wizard-step="3" data-bs-toggle="pill" data-bs-target="#form-wizard-tab3" type="button" role="tab" aria-controls="form-wizard-tab3" aria-selected="false"><span class="far fa-file-alt me-2" data-fa-transform="down-2 shrink-2"></span><span class="d-none d-md-inline-block fs-10">Breakdowns</span></button>
+                                </li>
+                                @*                         <li class="nav-item" role="presentation">
+                            <button class="nav-link" data-wizard-step="4" data-bs-toggle="pill" data-bs-target="#form-wizard-tab4" type="button" role="tab" aria-controls="form-wizard-tab4" aria-selected="false"><span class="fas fa-thumbs-up me-2" data-fa-transform="shrink-2"></span><span class="d-none d-md-inline-block fs-10">Done</span></button>
+                            </li> *@
+                            </ul>
+                        </div>
+                        <div class="card-body py-0">
+                            <div class="tab-content px-1 py-3">
+                                <div class="tab-pane px-sm-3 px-md-5 active show" role="tabpanel" aria-labelledby="form-wizard-tab1" id="form-wizard-tab1">
+                                    <form id="firstForm" data-wizard-form="1">
+                                        <div class="card pb-5">
+                                            <div class="card-body pb-0">
+
+                                                <div class="row g-6 pb-3">
+                                                    <div class="col-md-6">
+
+                                                        <div>
+                                                            <label for="aID" class="form-label">Unit No</label>
+                                                            <input class="d-none" id="AssetMainID" value="@Model.vAssetMain.Id" />
+                                                            <input id="aID"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder="Unit Number"
+                                                                   value="@Model.vAssetMain.aID" disabled />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="aAssetType" class="form-label">Type</label>
+                                                            <select id="aAssetType" class="selectpicker form-select form-select-sm select2 vtext">
+                                                                @* <option data-code="0" value="" selected disabled hidden>** Choose Type **</option> *@
+                                                                <option data-code="0"></option>
+                                                                @if (Model.vAssetType != null)
+                                                                {
+                                                                    foreach (var item in Model.vAssetType)
+                                                                    {
+                                                                        <!option data-code="@item.aAssetType" value="@item.aAssetType" @((item.aAssetType == Model.vAssetMain.aAssetType) ? "selected" : "")>@item.aAssetType</!option>
+                                                                    }
+                                                                }
+                                                            </select>
+                                                            @*                                                             <div id="validationServer04Feedback" class="invalid-feedback">
+                                                        Please select a valid Type.
+                                                        </div> *@
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <label for="aModel" class="form-label">Model</label>
+                                                            <select id="aModel" class="form-select form-select-sm select2 vtext">
+                                                                @* <option data-code="0" value="" selected disabled hidden>** Choose Model **</option> *@
+                                                                <option data-code="0"></option>
+                                                                @if (Model.vAssetModel != null)
+                                                                {
+                                                                    foreach (var item in Model.vAssetModel)
+                                                                    {
+                                                                        <!option data-code="@item.aModel" value="@item.aModel" @((item.aModel == Model.vAssetMain.aModel) ? "selected" : "")>@item.aModel</!option>
+                                                                    }
+                                                                }
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="aNotes" class="form-label">Notes</label>
+                                                            <textarea class="form-control form-control-sm vtext" id="aNotes" rows="1" placeholder="Notes">@Model.vAssetMain.aNotes</textarea>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                   
+                                                </div>
+                                               
+                                                    
+                                            </div>
+                                            <div class="card-footer bg-body-tertiary pb-3">
+                                                <div class="px-sm-0 px-md-0">
+                                                    <ul class="pager wizard list-inline mb-0">
+                                                        <li class="previous">
+                                                            <button class="btn btn-link ps-0" type="button"></button>
+                                                        </li>
+                                                        <li class="next">
+                                                            <button id="assetMainAdd" class="btn btn-primary px-5 px-sm-6" type="button"><span id="assetMainAdds">Update</span><span class="fas fa-save fa-lg ms-2" data-fa-transform="shrink-3"> </span></button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </form>
+                                </div>
+                                <div class="tab-pane px-sm-3 px-md-5 " role="tabpanel" aria-labelledby="form-wizard-tab2" id="form-wizard-tab2">
+
+                                    <!form data-wizard-form="2">
+                                        <div class="card pb-5">
+                                            <div class="card-body pb-0">
+                                                <div class="row g-6 pb-3">
+                                                    <div class="col-md-4">
+
+                                                        <div>
+                                                            <label for="sID" class="form-label">Job No</label>
+
+                                                            <input class="d-none" id="ServicesID" value="0" />
+                                                            <input id="sID"
+                                                                   class="form-control form-control-sm vtext vnumber"
+                                                                   type="text"
+                                                                   placeholder="Job Number" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="sWO" class="form-label">Client Ref</label>
+                                                            <input id="sWO"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder="Client Reference" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="sDateService" class="form-label">Date</label>
+                                                            <input id="sDateService"
+                                                                   class="form-control form-control-sm"
+                                                                   type="datetime" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="row">
+                                                            <div class="col-9">
+                                                                <label for="sHourMeter" class="form-label">Meter</label>
+                                                                <input id="sHourMeter"
+                                                                       class="form-control form-control-sm vtext vnumber"
+                                                                       type="text"
+                                                                       placeholder="Meter" />
+                                                                <div class="valid-feedback">
+                                                                    Looks good!
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-3">
+                                                                <label for="sFaultYesNo" class="form-label">Fault</label>
+                                                                <div class="form-check form-switch mb-2">
+                                                                    <input class="form-check-input" type="checkbox" id="sFaultYesNo">
+                                                                </div>
+                                                               
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="sTypeService" class="form-label">S.Type</label>
+                                                            <select id="sTypeService" data-placeholder="S.Type" data-first="6" data-two="6" class="form-select form-select-sm select2 ddmulti1 vtext">
+                                                                @* <option data-code="0" data-city="" selected disabled hidden>Choose S.Type</option> *@
+                                                                <option data-code="0"></option>
+                                                                <optgroup class="def-cursor" label="Type" data-city="Price">
+                                                                @if (Model.vServicePrice != null)
+                                                                {
+                                                                    foreach (var item in Model.vServicePrice)
+                                                                    {
+                                                                        <option data-code="@item.scName" data-city="@item.scPrice" value="@item.scId">@item.scName</option>
+                                                                    }
+                                                                }
+                                                                </optgroup>
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="sTechnicianID" class="form-label">Tech ID</label>
+                                                            <select id="sTechnicianID" data-placeholder="Choose Technical" data-first="2" data-two="5" data-three="5" class="form-select form-select-sm select2 ddmulti2 vtext" ">
+                                                                @* <option data-code="0" selected disabled hidden>** Choose Techincal **</option> *@
+                                                                <option data-code="0"></option>
+                                                                <optgroup class="def-cursor" label="EmpID" data-code="EmpName" data-city="Crew">
+                                                                    @if (Model.vTechnician != null)
+                                                                    {
+                                                                        foreach (var item in Model.vTechnician)
+                                                                        {
+                                                                            <option data-code="@item.tName" data-city="@item.crCrewName" value="@item.tID">@item.tID</option>
+                                                                        }
+                                                                    }
+                                                                 </optgroup>
+
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div>
+                                                            <label for="tName" class="form-label">Tech Name</label>
+                                                            <input id="tName"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text"
+                                                                   placeholder="Technical Name" disabled />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="sLocation" class="form-label">Location</label>
+                                                            <input id="sLocation"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder="Location" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="sFaultDesc" class="form-label">Description</label>
+                                                            <input id="sFaultDesc"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder="Description of Problem" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer bg-body-tertiary pb-3">
+                                                <div class="px-sm-0 px-md-0">
+                                                    <ul class="pager wizard list-inline mb-0">
+                                                        <li class="previous">
+                                                            <button id="goMaterial" class="btn btn-success px-5 px-sm-6" type="button"><span>Daily Req.</span><span class="fas fa-cog fa-spin fa-lg ms-2" data-fa-transform="shrink-3"> </span></button>
+                                                        </li>
+                                                        <li class="next">
+                                                        <button id="serviceAdd" class="btn btn-info px-5 px-sm-6" type="button"><span id="serviceAdds">Add</span><span class="far fa-plus-square fa-lg ms-2" data-fa-transform="shrink-3"> </span></button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="table-responsive text-nowrap py-4">
+                                            <table id="serviceTable" class="table table-striped">
+                                                <thead class="table-dark">
+                                                    <tr>
+                                                        <th class="d-none">Id</th>
+                                                        <th>Job No</th>
+                                                        <th>Client Ref</th>
+                                                        <th>Date</th>
+                                                        <th>Meter</th>
+                                                        <th>Fault</th>
+                                                        <th class="d-none">S.Type</th>
+                                                        <th>S.Type</th>
+                                                        <th>Tech ID</th>
+                                                        <th>Tech Name</th>
+                                                        <th>Location</th>
+                                                        <th>Description of Problem</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table-border-bottom-0">
+                                                @if (Model.vServices.Count > 0)
+                                                    {
+                                                        foreach (var item in Model.vServices)
+                                                        {
+                                                            <tr>
+                                                                <td class="d-none">
+                                                                    <span class="sServiceId">@item.Id</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="fas fa-circle fs-11 me-1 text-primary"></span><span class="sID">@item.sID</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="sWO">@item.sWO</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="fas fa-calendar-alt fs-11 me-2 text-success"></span><span class="sDateService">@Convert.ToDateTime(item.sDateService).ToString("dd-MMM-yyyy")</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="sHourMeter">@item.sHourMeter</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="sFaultYesNo">@((item.sFaultYesNo == 1) ? "Yes" : "No")</span>
+                                                                </td>
+                                                                <td class="d-none">
+                                                                    <span class="sTypeService">@item.sTypeService</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="sTypeServiceName">@item.sTypeServiceName</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="sTechnicianID">@item.sTechnicianID</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="tName">@item.tName</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="sLocation">@item.sLocation</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="sFaultDesc">@item.sFaultDesc</span>
+                                                                </td>
+                                                                <td>
+                                                                    <div>
+                                                                        <a class="sEdit" data-code="@item.Id"><i class="icon-base bx bx-edit-alt icon-xm text-info me-1"></i></a>
+                                                                        <a class="sDelete" data-code="@item.Id"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a>
+                                                                    </div>
+                                                                </td>
+</tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane px-sm-3 px-md-5" role="tabpanel" aria-labelledby="form-wizard-tab3" id="form-wizard-tab3">
+                                    <form data-wizard-form="2">
+                                        <div class="card pb-5">
+                                            <div class="card-body pb-0">
+                                                <div class="row g-6 pb-3">
+                                                    <div class="col-md-4">
+                                                        <div>
+                                                            <input class="d-none" id="BreakdownsID" value="0" />
+                                                            <label for="rJobOrder" class="form-label">Job No</label>
+                                                            <input id="rJobOrder"
+                                                                   class="form-control form-control-sm vtext vnumber"
+                                                                   type="text"
+                                                                   placeholder="Job Number" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="rProject" class="form-label">Project No</label>
+                                                            <select id="rProject" data-placeholder="Choose Project" data-first="3" data-two="9" class="form-select form-select-sm select2 ddmulti1 vtext">
+                                                                @* <option data-code="0" selected disabled hidden>** Choose Project **</option> *@
+                                                                <option data-code="0"></option>
+                                                                <optgroup class="def-cursor" label="No" data-city="Project Name">
+                                                                    @if (Model.vProject != null)
+                                                                    {
+                                                                        foreach (var item in Model.vProject)
+                                                                        {
+                                                                            <option data-code="@item.pName" data-city="@item.pName" value="@item.pNo">@item.pNo</option>
+                                                                        }
+                                                                    }
+                                                                </optgroup>
+
+                                                            </select>
+                                                                                                                        <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="rODGRefNo" class="form-label">ODG Ref</label>
+                                                            <input id="rODGRefNo"
+                                                                   class="form-control form-control-sm vtext vnumber"
+                                                                   type="text"
+                                                                   placeholder="ODG Ref No" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div>
+                                                            <label for="rOriginator" class="form-label">Originator</label>
+                                                            <input id="rOriginator"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder="Originator" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+
+                                                        <div>
+                                                            <label for="rHeadTech" class="form-label">Tech ID</label>
+                                                            <select id="rHeadTech" data-placeholder="Choose Technical" data-first="2" data-two="5" data-three="5" class="form-select form-select-sm select2 ddmulti2 vtext">
+                                                                @* <option data-code="0" selected disabled hidden>** Choose Techincal **</option> *@
+                                                                <option data-code="0"></option>
+                                                                <optgroup class="def-cursor" label="EmpID" data-code="EmpName" data-city="Crew">
+                                                                @if (Model.vTechnician != null)
+                                                                {
+                                                                    foreach (var item in Model.vTechnician)
+                                                                    {
+                                                                            <option data-code="@item.tName" data-city="@item.crCrewName" value="@item.tID">@item.tID</option>
+                                                                    }
+                                                                }
+                                                                </optgroup>
+
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="tName_" class="form-label">Tech Name</label>
+                                                            <input id="tName_"
+                                                                   class="form-control form-control-sm"
+                                                                   type="text" placeholder="Technical Name" disabled />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+
+                                                        <div>
+                                                            <label for="rDateOrder" class="form-label">Date Order</label>
+                                                            <input id="rDateOrder"
+                                                                   class="form-control form-control-sm"
+                                                                   type="datetime" />
+                                                        </div>
+                                                        <div>
+                                                            <label for="rDateStart" class="form-label">Date Start</label>
+                                                            <input id="rDateStart"
+                                                                   class="form-control form-control-sm"
+                                                                   type="datetime" />
+                                                        </div>
+                                                        <div>
+                                                            <label for="rRepairGroup" class="form-label">Group of Repair Problem</label>
+                                                            <select id="rRepairGroup" class="form-select form-select-sm select2 vtext">
+                                                                @* <option data-code="0" selected disabled hidden>** Choose Group **</option> *@
+                                                                <option data-code="0"></option>
+                                                                @if (Model.vRepairGroup != null)
+                                                                {
+                                                                    foreach (var item in Model.vRepairGroup)
+                                                                    {
+                                                                        <option data-code="@item.gbDecription" value="@item.gbID">@item.gbDecription</option>
+                                                                    }
+                                                                }
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer bg-body-tertiary pb-3">
+                                                <div class="px-sm-0 px-md-0">
+                                                    <ul class="pager wizard list-inline mb-0">
+                                                        <li class="previous">
+                                                            <button class="btn btn-link ps-0" type="button"></button>
+                                                        </li>
+                                                        <li class="next">
+                                                            <button id="BreakdownsAdd" class="btn btn-info px-5 px-sm-6" type="button"><span id="BreakdownsAdds">Add</span><span class="far fa-plus-square fa-lg ms-2" data-fa-transform="shrink-3"> </span></button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="table-responsive text-nowrap py-4">
+                                            <table id="BreakdownsTable" class="table table-striped">
+                                                <thead class="table-dark">
+                                                    <tr>
+                                                        <th class="d-none">Id</th>
+                                                        <th>Job No</th>
+                                                        <th>Project No</th>
+                                                        <th>ODG Ref</th>
+                                                        <th>Originator</th>
+                                                        <th>Tech ID</th>
+                                                        <th>Tech Name</th>
+                                                        <th>Date Order</th>
+                                                        <th>Date Start</th>
+                                                        <th class="d-none">Group of Repair Problem</th>
+                                                        <th>Group of Repair Problem</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table-border-bottom-0">
+                                                    @if (Model.vRepair.Count > 0)
+                                                    {
+                                                        foreach (var item in Model.vRepair)
+                                                        {
+                                                            <tr>
+                                                                <td class="d-none">
+                                                                    <span class="rBreakdownsId">@item.Id</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="fas fa-circle fs-11 me-1 text-primary"></span><span class="rJobOrder">@item.rJobOrder</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="rProject">@item.rProject</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="rODGRefNo">@item.rODGRefNo</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="rOriginator">@item.rOriginator</span>
+                                                                </td>
+
+                                                                <td>
+                                                                    <span class="rHeadTech">@item.rHeadTech</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="tName_">@item.tName</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="fas fa-calendar-alt fs-11 me-2 text-success"></span><span class="rDateOrder">@Convert.ToDateTime(item.rDateOrder).ToString("dd-MMM-yyyy")</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="fas fa-calendar-alt fs-11 me-2 text-success"></span><span class="rDateStart">@Convert.ToDateTime(item.rDateStart).ToString("dd-MMM-yyyy")</span>
+                                                                </td>
+                                                                <td class="d-none">
+                                                                    <span class="rRepairGroup">@item.rRepairGroup</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="RepairGroupName">@item.RepairGroupName</span>
+                                                                </td>
+                                                                <td>
+                                                                    <div>
+                                                                        <a class="sEdit" data-code="@item.Id"><i class="icon-base bx bx-edit-alt icon-xm text-info me-1"></i></a>
+                                                                        <a class="sDelete" data-code="@item.Id"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                        @* <div class="card-footer bg-body-tertiary">
+                    <div class="px-sm-3 px-md-5">
+                    <ul class="pager wizard list-inline mb-0">
+                    <li class="previous">
+                    <button class="btn btn-link ps-0" type="button"></button>
+                    </li>
+                    <li class="next">
+                    <button class="btn btn-primary px-5 px-sm-6" type="submit">Save<span class="fas fa-chevron-right ms-2" data-fa-transform="shrink-3"> </span></button>
+                    </li>
+                    </ul>
+                    </div>
+                    </div> *@
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <!-- / Content -->
+        <!-- Footer -->
+        <footer class="content-footer footer bg-footer-theme">
+            <div class="container-xxl">
+                <div class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                    <div class="mb-2 mb-md-0">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        made by
+                        <a href="https://ptodg.com/id/" target="_blank" class="footer-link">ODG Indonesia</a>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+        <!-- / Footer -->
+
+        <div class="content-backdrop fade"></div>
+        <div class="modal fade" id="findData" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body px-3 pt-2">
+                        <div class="table-responsive text-nowrap pb-3">
+                            <table id="assetMainFindTable" class="table table-striped">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="d-none">AssetMainFindID</th>
+                                        <th>Unit No</th>
+                                        <th>Type</th>
+                                        <th>Model</th>
+                                        <th>Notes</th>
+                                        <th>Services Total</th>
+                                        <th>Breakdowns Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                    @if (Model.vAssetMainFind.Count > 0)
+                                    {
+                                        foreach (var item in Model.vAssetMainFind)
+                                        {
+                                            <tr>
+                                                <td class="d-none">
+                                                    <span class="fAssetMainID">@item.Id</span>
+                                                </td>
+                                                <td>
+                                                    <span class="faID">@item.aID</span>
+                                                </td>
+                                                <td>
+                                                    <span class="faModel">@item.aModel</span>
+                                                </td>
+                                                <td>
+                                                    <span class="faAssetType">@item.aAssetType</span>
+                                                </td>
+                                                <td>
+                                                    <span class="faNotes">@item.aNotes</span>
+                                                </td>
+                                                <td>
+                                                    <span class="fTotal1">@item.Total1</span>
+                                                </td>
+                                                <td>
+                                                    <span class="fTotal2">@item.Total2</span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Content wrapper -->
+
+
+    <script>
+        $(document).ready(function () {
+            var ext = false;
+            var addtyp = 'service';
+            var dt_to = $.datepicker.formatDate('dd/mm/yy', new Date());
+            var stopBlinking = false;
+            $('#sDateService').datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-5:+1",
+            });
+            $('#rDateOrder').datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-5:+1",
+            });
+            $('#rDateStart').datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-5:+1",
+            });
+
+            $('#sDateService').attr("value", dt_to);
+            $('#rDateOrder').attr("value", dt_to);
+            $('#rDateStart').attr("value", dt_to);
+
+
+            $('#rHeadTech').on('change', function () {
+                $('#tName_').val($(this).find('option:selected').attr('data-code'));
+            });
+            $('#sTechnicianID').on('change', function () {
+                $('#tName').val($(this).find('option:selected').attr('data-code'));
+            });
+
+            
+            
+            $('#tabServices').on('click', function () {
+                $('#stype').select2();
+                $('#techid').select2();
+            });
+            $('#tabBreakdowns').on('click', function () {
+                $('#projectno').select2();
+                $('#techid_').select2();
+            });
+            // new DataTable('#serviceTable');
+            $('#serviceTable').DataTable({
+                //responsive: true,
+                // "columnDefs": [
+                //     { "width": "80%", "targets": 2 }
+                // ],
+                paging: true,
+                "autoWidth": false,
+                searching: false,
+                //"lengthChange": false
+            });
+            $('#BreakdownsTable').DataTable({
+                //responsive: true,
+                // "columnDefs": [
+                //     { "width": "80%", "targets": 2 }
+                // ],
+                paging: true,
+                "autoWidth": false,
+                searching: false,
+                //"lengthChange": false
+            });
+            $('#assetMainFindTable').DataTable({
+                //responsive: true,
+                // "columnDefs": [
+                //     { "width": "80%", "targets": 2 }
+                // ],
+                paging: true,
+                "autoWidth": false,
+                // searching: false,
+                "lengthChange": false
+            });
+            $('#serviceTable').on('click', 'tbody tr td', function () {
+                getEditService($(this))
+            });
+            $('#BreakdownsTable').on('click', 'tbody tr td', function () {
+                getEditBreakdowns($(this))
+            }); 
+            function getEditService(ths)
+            {
+                var dt_sDateService = $.datepicker.formatDate('dd/mm/yy', new Date(ths.closest('tr').find('.sDateService').html()));
+                $('#ServicesID').val(ths.closest('tr').find('.sServiceId').html());
+                $('#sID').val(ths.closest('tr').find('.sID').html());
+                $('#sID').prop("disabled", true);
+                $('#sWO').val(ths.closest('tr').find('.sWO').html());
+                $('#sDateService').val(dt_sDateService);
+                $('#sHourMeter').val(ths.closest('tr').find('.sHourMeter').html());
+                $('#sFaultYesNo').prop('checked', ths.closest('tr').find('.sFaultYesNo').html() == "Yes" ? true : false);
+                $('#sTypeService').val(ths.closest('tr').find('.sTypeService').html()).trigger('change');
+                $('#sTypeService').removeClass('is-invalid').removeClass('is-valid');
+                $('#sTechnicianID').val(ths.closest('tr').find('.sTechnicianID').html()).trigger('change');
+                $('#sTechnicianID').removeClass('is-invalid').removeClass('is-valid');
+                $('#tName').val(ths.closest('tr').find('.tName').html());
+                $('#sLocation').val(ths.closest('tr').find('.sLocation').html());
+                $('#sFaultDesc').val(ths.closest('tr').find('.sFaultDesc').html());
+                $('#serviceAdds').html('Update');
+            }
+            function getEditBreakdowns(ths) {
+                var dt_rDateOrder = $.datepicker.formatDate('dd/mm/yy', new Date(ths.closest('tr').find('.rDateOrder').html()));
+                var dt_rDateStart = $.datepicker.formatDate('dd/mm/yy', new Date(ths.closest('tr').find('.rDateStart').html()));
+                $('#BreakdownsID').val(ths.closest('tr').find('.rBreakdownsId').html());
+                $('#rProject').val(ths.closest('tr').find('.rProject').html()).trigger('change');
+                $('#rProject').removeClass('is-invalid').removeClass('is-valid');
+                $('#rProject').prop("disabled", true);
+                $('#rOriginator').val(ths.closest('tr').find('.rOriginator').html());
+                $('#rJobOrder').val(ths.closest('tr').find('.rJobOrder').html());
+                $('#rHeadTech').val(ths.closest('tr').find('.rHeadTech').html()).trigger('change');
+                $('#rHeadTech').removeClass('is-invalid').removeClass('is-valid');
+                $('#tName_').val(ths.closest('tr').find('.tName_').html());
+                $('#rDateOrder').val(dt_rDateOrder);
+                $('#rDateStart').val(dt_rDateStart);
+                $('#rRepairGroup').val(ths.closest('tr').find('.rRepairGroup').html()).trigger('change');
+                $('#rRepairGroup').removeClass('is-invalid').removeClass('is-valid');
+                $('#rODGRefNo').val(ths.closest('tr').find('.rODGRefNo').html());
+                $('#BreakdownsAdds').html('Update');
+            }
+            $('#serviceTable').on('click', '.sEdit', function () {
+                getEditService($(this))
+            });
+
+            $('#BreakdownsTable').on('click', '.sEdit', function () {
+                getEditBreakdowns($(this))
+            });
+
+            $('#serviceTable').on('click', '.sDelete', function () {
+                var Id = $(this).attr('data-code');
+                Swal.fire({
+                    title: 'Delete this Item?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes!',
+                    cancelButtonText: 'No!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        $(this).closest('tr').remove();
+                        DeleteItem('service',Id);
+                    } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        Swal.fire(
+                            'Cancelled',
+                            '',
+                            'error'
+                        )
+                    }
+                })
+            });
+
+            $('#BreakdownsTable').on('click', '.sDelete', function () {
+                var Id = $(this).attr('data-code');
+                Swal.fire({
+                    title: 'Delete this Item?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes!',
+                    cancelButtonText: 'No!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        $(this).closest('tr').remove();
+                        DeleteItem('Breakdowns', Id);
+                    } else if (
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        Swal.fire(
+                            'Cancelled',
+                            '',
+                            'error'
+                        )
+                    }
+                })
+            });
+
+            function DeleteItem(typ,id) {
+                var itms = {};
+                itms.Id = id;
+                itms.Typ = typ
+                $.ajax({
+                    url: '/LightingPlant/DeleteMain',
+                    type: "POST",
+                    data: JSON.stringify(itms),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    traditional: true,
+                    success: function (data) {
+                        if (data) {
+                           Swal.fire({
+                                    title: 'Main!!!',
+                                    text: 'Req data has been deleted!',
+                                    icon: 'success'
+                                })
+                        }
+                        else {
+                            alert(data.text);
+                        }
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                    }
+                });
+            }
+
+            function SaveServices() {
+                $.ajax({
+                    url: '/LightingPlant/SaveServices',
+                    type: "POST",
+                    data: JSON.stringify(getServices()),
+                    dataType: 'json',
+                    // cache: false,
+                    contentType: 'application/json; charset=utf-8',
+                    // traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            if (data.value.success)
+                            {
+                                                                addServices();
+                                if (data.value.typ_ == 'Create') {
+                                    $("#serviceTable>tbody>tr:first").find('.sServiceId').text(data.value.result);
+                                    $("#serviceTable>tbody>tr:first").find('.sDelete').attr('data-code', data.value.result);
+                                    $("#serviceTable>tbody>tr:first").find('.sEdit').attr('data-code', data.value.result);
+                                }
+                                $('#aID').prop("disabled", true);
+
+                                clearService();
+                            }
+                            else {
+                                Swal.fire({
+                                    title: 'Duplicate!!!',
+                                    text: 'Job no : ' + data.value.typ_ + ' already exist!',
+                                    icon: 'error'
+                                })
+                            }
+                            
+                            // window.location = "/LightingPlant/Index"
+                        }
+                        else {
+                            alert(data.text);
+                        }
+                        clearValidMain();
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    }
+                });
+            }
+
+            function SaveBreakdowns() {
+                $.ajax({
+                    url: '/LightingPlant/SaveBreakdowns',
+                    type: "POST",
+                    data: JSON.stringify(getBreakdowns()),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            if (data.value.success) {
+                                addBreakdowns()
+                                if (data.value.typ_ == 'Create') {
+                                    $("#BreakdownsTable>tbody>tr:first").find('.rBreakdownsId').text(data.value.result);
+                                    $("#BreakdownsTable>tbody>tr:first").find('.sDelete').attr('data-code', data.value.result);
+                                    $("#BreakdownsTable>tbody>tr:first").find('.sEdit').attr('data-code', data.value.result);
+                                }
+                                $('#aID').prop("disabled", true);
+ 
+                                clearBreakdowns();
+                            }
+                            else {
+                                Swal.fire({
+                                    title: 'Duplicate!!!',
+                                    text: 'Job no : ' + data.value.typ_ + ' already exist!',
+                                    icon: 'error'
+                                })
+                            }
+
+
+                            // window.location = "/LightingPlant/Index"
+                        }
+                        else {
+                            alert(data.text);
+                        }
+                        clearValidMain();
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    }
+                });
+            }
+
+            function GetExistingAssetMain() {
+                $.ajax({
+                    url: '/LightingPlant/GetExistingAssetMain',
+                    type: "POST",
+                    data: JSON.stringify(getMain()),
+                    dataType: 'json',
+                    // cache: false,
+                    contentType: 'application/json; charset=utf-8',
+                    // traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            // alert(data.success);
+                            if (data.success) {
+                                Swal.fire({
+                                    title: 'Duplicate!!!',
+                                    text: 'Unit no : ' + data.typ_ + ' already exist!',
+                                    icon: 'error'
+                                })
+                                ext = false;
+                            }
+                            else
+                            {
+                                Swal.fire({
+                                    title: 'Asset Main!!!',
+                                    text: 'Unit no : ' + data.typ_ + ' Saved!',
+                                    icon: 'success'
+                                })
+                                $('#aID').prop("disabled", true);
+                                $("#AssetMainID").val(data.result);
+                                clearValidMain();
+                            }
+
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            // window.location = "/LightingPlant/Index"
+                        }
+                        else {
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            alert(data.text);
+                            ext = false;
+                        }
+                    },
+                    error: function (data) {
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                        alert(data.text);
+                        ext = false;
+                    }
+                });
+                return ext;
+            }
+
+            function UpdateAssetMain() {
+                $.ajax({
+                    url: '/LightingPlant/UpdateAssetMain',
+                    type: "POST",
+                    data: JSON.stringify(getMain()),
+                    dataType: 'json',
+                    // cache: false,
+                    contentType: 'application/json; charset=utf-8',
+                    // traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            Swal.fire({
+                                title: 'Asset Main!!!',
+                                text: 'Unit no : ' + data.typ_ + ' Updated!',
+                                icon: 'success'
+                            })
+
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            
+                            // window.location = "/LightingPlant/Index"
+                        }
+                        else {
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            alert(data.text);
+                            ext = false;
+                        }
+                    },
+                    error: function (data) {
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                        alert(data.text);
+                        ext = false;
+                    }
+                });
+                return ext;
+            }
+
+            function addServices()
+            {
+                var from = $("#sDateService").val().split("/")
+                var dt_sDate = new Date(from[2] + '-' + from[1] + '-' + from[0]);
+                var dt_sDateService = $.datepicker.formatDate('dd-M-yy', new Date(dt_sDate));
+                if ($('#ServicesID').val() != '0') {
+                    var elems = $('.sServiceId').filter(function () {
+                        return this.textContent.trim() === $('#ServicesID').val()
+                    });
+                    elems.closest('tr').find('.sID').text($('#sID').val());
+                    elems.closest('tr').find('.sWO').text($('#sWO').val());
+                    elems.closest('tr').find('.sDateService').text(dt_sDateService);
+                    elems.closest('tr').find('.sHourMeter').text($('#sHourMeter').val());
+                    elems.closest('tr').find('.sFaultYesNo').text($('#sFaultYesNo').is(':checked') ? "Yes" : "No");
+                    elems.closest('tr').find('.sTypeService').text($('#sTypeService').val());
+                    elems.closest('tr').find('.sTypeServiceName').text($('#sTypeService').find('option:selected').attr('data-code'));
+                    elems.closest('tr').find('.sTechnicianID').text($('#sTechnicianID').val());
+                    elems.closest('tr').find('.tName').text($('#tName').val());
+                    elems.closest('tr').find('.sLocation').text($('#sLocation').val());
+                    elems.closest('tr').find('.sTypeService').text($('#sTypeService').val());
+                    blink(elems.closest('tr'));
+                }
+                else {
+                    var newRow = $("<tr>");
+                    var cols = '';
+
+                    cols += '<td class="dt-type-numeric d-none"> <span class="sServiceId">' + $('#ServicesID').val() + '</span> </td>';
+                    cols += '<td> <span class="fas fa-circle fs-11 me-1 text-primary"></span><span class="sID">' + $('#sID').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="sWO">' + $('#sWO').val() + '</span> </td>';
+                    cols += '<td> <span class="fas fa-calendar-alt fs-11 me-2 text-success"></span><span class="sDateService">' + dt_sDateService + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="sHourMeter">' + $('#sHourMeter').val() + '</span> </td>';
+                    cols += '<td> <span class="sFaultYesNo">' + (($('#sFaultYesNo').is(':checked') == true) ? "Yes" : "No") + '</span> </td>';
+                    cols += '<td class="d-none"> <span class="sTypeService">' + $('#sTypeService').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="sTypeServiceName">' + $('#sTypeService').find('option:selected').attr('data-code') + '</span </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="sTechnicianID">' + $('#sTechnicianID').val() + '</span> </td>';
+                    cols += '<td> <span class="tName">' + $('#tName').val() + '</span> </td>';
+                    cols += '<td> <span class="sLocation">' + $('#sLocation').val() + '</span> </td>';
+                    cols += '<td> <span class="sFaultDesc">' + $('#sFaultDesc').val() + '</span> </td>';
+                    cols += '<td> <div> <a class="sEdit" data-code="' + $('#ServicesID').val() + '"><i class="icon-base bx bx-edit-alt icon-xm text-info me-1"></i></a> <a class="sDelete" data-code="' + $('#ServicesID').val() + '"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a> </div> </td>';
+
+
+                    newRow.append(cols);
+
+                    $("#serviceTable >tbody").prepend(newRow);
+                    // $("#serviceTable").DataTable()
+                    //     .columns.adjust()
+                    //     .responsive.recalc();
+                    blink(newRow);
+                }
+            }
+            function addBreakdowns()
+            {
+                var from = $("#rDateOrder").val().split("/")
+                var dt_sDate = new Date(from[2] + '-' + from[1] + '-' + from[0]);
+                var dt_rDateOrder = $.datepicker.formatDate('dd-M-yy', new Date(dt_sDate));
+                var to = $("#rDateStart").val().split("/")
+                var dt_sDate_ = new Date(to[2] + '-' + to[1] + '-' + to[0]);
+                var dt_rDateStart = $.datepicker.formatDate('dd-M-yy', new Date(dt_sDate_));
+                if ($('#BreakdownsID').val() != '0') {
+                    var elems = $('.rBreakdownsId').filter(function () {
+                        return this.textContent.trim() === $('#BreakdownsID').val()
+                    });
+                    elems.closest('tr').find('.rJobOrder').text($('#rJobOrder').val());
+                    elems.closest('tr').find('.rProject').text($('#rProject').val());
+                    elems.closest('tr').find('.rODGRefNo').text($('#rODGRefNo').val());
+
+                    elems.closest('tr').find('.rOriginator').text($('#rOriginator').val());
+
+                    elems.closest('tr').find('.rHeadTech').text($('#rHeadTech').val());
+                    elems.closest('tr').find('.rRepairGroup').text($('#rRepairGroup').val());
+                    elems.closest('tr').find('.RepairGroupName').text($('#rRepairGroup').find('option:selected').attr('data-code'));
+                    elems.closest('tr').find('.tName_').text($('#tName_').val());
+
+                    elems.closest('tr').find('.rDateOrder').text(dt_rDateOrder);
+                    elems.closest('tr').find('.rDateStart').text(dt_rDateStart);
+                    blink(elems.closest('tr'));
+                }
+                else {
+                    var newRow = $("<tr>");
+                    var cols = '';
+
+                    cols += '<td class="d-none"> <span class="rBreakdownsId">' + $('#BreakdownsID').val() + '</span> </td>';
+                    cols += '<td> <span class="fas fa-circle fs-11 me-1 text-primary"></span><span class="rJobOrder">' + $('#rJobOrder').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="rProject">' + $('#rProject').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="rODGRefNo">' + $('#rODGRefNo').val() + '</span> </td>';
+                    cols += '<td> <span class="rOriginator">' + $('#rOriginator').val() + '</span> </td>';
+                    cols += '<td class="dt-type-numeric"> <span class="rHeadTech">' + $('#rHeadTech').val() + '</span> </td>';
+                    cols += '<td> <span class="tName_">' + $('#tName_').val() + '</span> </td>';
+                    cols += '<td> <span class="fas fa-calendar-alt fs-11 me-2 text-success"></span><span class="rDateOrder">' + dt_rDateOrder + '</span> </td>';
+                    cols += '<td> <span class="fas fa-calendar-alt fs-11 me-2 text-success"></span><span class="rDateStart">' + dt_rDateStart + '</span> </td>';
+                    cols += '<td class="d-none"> <span class="rRepairGroup">' + $('#rRepairGroup').val() + '</span> </td>';
+                    cols += '<td> <span class="RepairGroupName">' + $('#rRepairGroup').find('option:selected').attr('data-code') + '</span> </td>';
+                    cols += '<td> <div> <a class="sEdit" data-code="' + $('#BreakdownsID').val() + '"><i class="icon-base bx bx-edit-alt icon-xm text-info me-1"></i></a> <a class="sDelete" data-code="' + $('#BreakdownsID').val() + '"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a> </div> </td>';
+
+
+                    newRow.append(cols);
+
+                    $("#BreakdownsTable >tbody").prepend(newRow);
+                    // $("#serviceTable").DataTable()
+                    //     .columns.adjust()
+                    //     .responsive.recalc();
+                    blink(newRow);
+                }
+            }
+
+            $('#assetMainAdd').on('click', function (e) {
+                e.preventDefault();
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                if (!ValidationCheckMain()) {
+                    if ($('#AssetMainID').val() == '0') {
+                        GetExistingAssetMain();
+                    }
+                    else
+                    {
+                        UpdateAssetMain();
+                    }
+                    clearValidMain();
+                }
+                else
+                {
+                    $("#spinner").hide();
+                    $("body").css("pointer-events", "");
+                    $(".layout-wrapper").css("opacity", 1);
+                }
+            });
+
+            $('#serviceAdd').on('click', function (e) {
+                e.preventDefault();
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                if (!ValidationCheck($(this).closest('form'))) {
+                    if ($('#AssetMainID').val() == '0') {
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                        Swal.fire({
+                            title: 'Asset Data!!!',
+                            text: 'Please Adding Asset data first!!!!',
+                            icon: 'error'
+                        });
+                    }
+                    else {
+                        SaveServices();
+                    }
+                    clearValidMain();
+                }
+                else
+                {
+                    $("#spinner").hide();
+                    $("body").css("pointer-events", "");
+                    $(".layout-wrapper").css("opacity", 1);
+                }
+            });
+
+            $('#BreakdownsAdd').on('click', function (e) {
+                e.preventDefault();
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                if (!ValidationCheck($(this).closest('form'))) {
+                    if ($('#AssetMainID').val() == '0') {
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                        Swal.fire({
+                            title: 'Asset Data!!!',
+                            text: 'Please Adding Asset data first!!!!',
+                            icon: 'error'
+                        })
+
+                    }
+                    else
+                    {
+                        SaveBreakdowns();
+                    }
+                }
+                else
+                {
+                    $("#spinner").hide();
+                    $("body").css("pointer-events", "");
+                    $(".layout-wrapper").css("opacity", 1);
+                }
+            });
+
+
+            function getServices() {
+                var from = $("#sDateService").val().split("/");
+                var dt_sDateService = new Date(from[2] + '-' + from[1] + '-' + from[0]);
+                var tmp_Id = $('#ServicesID').val() == '' ? 0 : $('#ServicesID').val();
+                var tmp_sID = $('#sID').val() == '' ? 0 : $('#sID').val();
+                var tmp_sAssetID = $('#aID').val();
+                var tmp_sWO = $('#sWO').val();
+                var tmp_sDateService = dt_sDateService;
+                var tmp_sHourMeter = $('#sHourMeter').val() == '' ? 0 : $('#sHourMeter').val();
+                var tmp_sFaultYesNo = $('#sFaultYesNo').is(':checked') ? 1 : 0;
+                var tmp_sTypeService = $('#sTypeService').val();
+                var tmp_sTechnicianID = $('#sTechnicianID').val();
+                var tmp_sLocation = $('#sLocation').val();
+                var tmp_sFaultDesc = $('#sFaultDesc').val();
+                return (tmp_sID == "") ? null :
+                    {
+                        Id: tmp_Id,
+                        sID: tmp_sID,
+                        sAssetID: tmp_sAssetID,
+                        sWO: tmp_sWO,
+                        sDateService: tmp_sDateService,
+                        sHourMeter: tmp_sHourMeter,
+                        sFaultYesNo: tmp_sFaultYesNo,
+                        sTypeService: tmp_sTypeService,
+                        sTechnicianID: tmp_sTechnicianID,
+                        sLocation: tmp_sLocation,
+                        sFaultDesc: tmp_sFaultDesc
+                    };
+            }
+
+            function getBreakdowns() {
+                var from = $("#rDateOrder").val().split("/");
+                var dt_rDateOrder = new Date(from[2] + '-' + from[1] + '-' + from[0]);
+                var to = $("#rDateStart").val().split("/");
+                var dt_rDateStart = new Date(to[2] + '-' + to[1] + '-' + to[0]);
+                var tmp_Id = $('#BreakdownsID').val() == '' ? 0 : $('#BreakdownsID').val();
+                var tmp_rAssetID = $('#aID').val();
+                var tmp_rJobOrder = $('#rJobOrder').val() == '' ? 0 : $('#rJobOrder').val();
+                var tmp_rProject = $('#rProject').val();
+                var tmp_rODGRefNo = $('#rODGRefNo').val() == '' ? 0 : $('#rODGRefNo').val();
+                var tmp_rOriginator = $('#rOriginator').val();
+                var tmp_rHeadTech = $('#rHeadTech').val();
+                var tmp_tName_ = $('#tName_').val();
+                var tmp_rDateOrder = dt_rDateOrder;
+                var tmp_rDateStart = dt_rDateStart;
+                var tmp_rRepairGroup = $('#rRepairGroup').val();
+                return (tmp_rJobOrder == "") ? null :
+                    {
+                        Id: tmp_Id,
+                        rAssetID : tmp_rAssetID,
+                        rJobOrder: tmp_rJobOrder,
+                        rProject: tmp_rProject,
+                        rODGRefNo: tmp_rODGRefNo,
+                        rOriginator: tmp_rOriginator,
+                        rHeadTech: tmp_rHeadTech,
+                        tName_: tmp_tName_,
+                        rDateOrder: tmp_rDateOrder,
+                        rDateStart: tmp_rDateStart,
+                        rRepairGroup: tmp_rRepairGroup
+                    };
+            }
+
+            function getMain() {
+                // var tmp_Service = [];
+                // $("serviceTable tbody tr").each(function () {
+                //     tmp_Service.push({
+                //         Id: $(this).find('.sServiceId').text(),
+                //         sID: $(this).find('.sID').text(),
+                //         sWO: $(this).find('.sWO').text(),
+                //         sDateService: $(this).find('.sDateService').text(),
+                //         sHourMeter: $(this).find('.sHourMeter').text(),
+                //         sTypeService: $(this).find('.sTypeService').text(),
+                //         sTechnicianID: $(this).find('.sTechnicianID').text(),
+                //         sLocation: $(this).find('.sLocation').text(),
+                //         sFaultDesc: $(this).find('.sFaultDesc').text()
+                //     });
+                // })
+
+                // var tmp_Breakdowns = [];
+                // $("serviceTable tbody tr").each(function () {
+                //     tmp_Breakdowns.push({
+                //         Id: $(this).find('.rBreakdownsId').text(),
+                //         rProject: $(this).find('.rProject').text(),
+                //         rOriginator: $(this).find('.rOriginator').text(),
+                //         rJobOrder: $(this).find('.rJobOrder').text(),
+                //         rHeadTech: $(this).find('.rHeadTech').text(),
+                //         rDateOrder: $(this).find('.rDateOrder').text(),
+                //         rDateStart: $(this).find('.rDateStart').text(),
+                //         rRepairGroup: $(this).find('.rRepairGroup').text(),
+                //         rODGRefNo: $(this).find('.rODGRefNo').text()
+                //     });
+                // });
+
+                var tmp_AssetMainID = $('#AssetMainID').val();
+                var tmp_aID = $('#aID').val();
+                var tmp_aAssetType = $('#aAssetType').val();
+                var tmp_aModel = $('#aModel').val();
+                var tmp_aNotes = $('#aNotes').val();
+
+                return (tmp_aID == "") ? null :
+                    {
+                        Id: tmp_AssetMainID,
+                        aID: tmp_aID,
+                        aAssetType: tmp_aAssetType,
+                        aModel: tmp_aModel,
+                        aNotes: tmp_aNotes
+                    };
+            }
+
+            function clearValidMain()
+            {
+                $('#aID').removeClass('is-valid');
+                $('#aAssetType').removeClass('is-invalid').removeClass('is-valid');
+                $('#aModel').removeClass('is-invalid').removeClass('is-valid');
+                $('#aNotes').removeClass('is-valid');
+                $(".is-valid").each(function () {
+                    $(this).removeClass('is-valid');
+                });
+                $(".is-invalid").each(function () {
+                    $(this).removeClass('is-invalid');
+                });
+
+            }
+
+            function clear() {
+                $('#AssetMainID').val('0');
+                $('#assetMainAdds').html('Save');
+                $('#aID').val('');
+                $('#aID').removeAttr('disabled');
+                // $('#aID').removeClass('is-valid');
+                $('#aAssetType').val(null).trigger('change');
+                $('#aAssetType').removeClass('is-invalid').removeClass('is-valid');
+                // $('#aAssetType').removeClass('is-valid');
+                $('#aModel').val(null).trigger('change');
+                $('#aModel').removeClass('is-invalid').removeClass('is-valid');
+                // $('#aModel').removeClass('is-valid');
+                $('#aNotes').val('');
+                // $('#aNotes').removeClass('is-valid');
+                $('#tabUnit').removeClass('active');
+                $('#tabServices').removeClass('active');
+                $('#tabBreakdowns').removeClass('active');
+                $('#tabUnit').addClass('active');
+                $('#form-wizard-tab1').removeClass('active').removeClass('show');
+                $('#form-wizard-tab2').removeClass('active').removeClass('show');
+                $('#form-wizard-tab3').removeClass('active').removeClass('show');
+                $('#form-wizard-tab1').addClass('active').addClass('show');
+                clearService();
+                clearBreakdowns();
+                $('#serviceTable tbody').empty();
+                $('#BreakdownsTable tbody').empty();
+                clearValidMain();
+                $('#aID').focus();
+            }
+
+            function clearService()
+            {
+                $('#ServicesID').val('0');
+                $('#sID').val('');
+                $('#sID').removeAttr('disabled');
+                $('#sWO').val('');
+                $('#sDateService').attr("value", dt_to);
+                $('#sHourMeter').val('');
+                $('#sFaultYesNo').prop('checked', false);
+                $('#sTypeService').val(null).trigger('change');
+                $('#sTypeService').removeClass('is-invalid').removeClass('is-valid');
+                $('#sTechnicianID').val(null).trigger('change');
+                $('#sTechnicianID').removeClass('is-invalid').removeClass('is-valid');
+                $('#tName').val('');
+                $('#sLocation').val('');
+                $('#sFaultDesc').val('');
+                $('#serviceAdds').html('Add');
+            }
+
+            function clearBreakdowns() {
+                $('#BreakdownsID').val('0');
+                $('#rProject').val(null).trigger('change');
+                $('#rProject').removeClass('is-invalid').removeClass('is-valid');
+                $('#rProject').removeAttr('disabled');
+                $('#rOriginator').val('');
+                $('#rJobOrder').val('');
+                $('#rHeadTech').val(null).trigger('change');
+                $('#rHeadTech').removeClass('is-invalid').removeClass('is-valid');
+                $('#tName_').val('');
+                $('#rDateOrder').attr("value", dt_to);
+                $('#rDateStart').attr("value", dt_to);
+                $('#rRepairGroup').val(null).trigger('change');
+                $('#rRepairGroup').removeClass('is-invalid').removeClass('is-valid');
+                $('#rODGRefNo').val('');
+                $('#BreakdownsAdds').html('Add');
+            }
+
+
+            $('#mainnew').on('click', function () {
+                clear();
+            });
+
+            // $('#mainfirst').on('click', function () {
+            //     GetAssetMainAll("first", $('#AssetMainID').val(),'');
+            //     $('#aID').prop("disabled", true);
+            //     $('#assetMainAdds').html('Update');
+            // });
+            // $('#mainend').on('click', function () {
+            //     GetAssetMainAll("end", $('#AssetMainID').val(),'');
+            //     $('#aID').prop("disabled", true);
+            //     $('#assetMainAdds').html('Update');
+            // });
+            // $('#mainprev').on('click', function () {
+            //     GetAssetMainAll("prev", $('#AssetMainID').val(),'');
+            //     $('#aID').prop("disabled", true);
+            //     $('#assetMainAdds').html('Update');
+            // });
+            // $('#mainnext').on('click', function () {
+            //     GetAssetMainAll("next", $('#AssetMainID').val(),'');
+            //     $('#aID').prop("disabled", true);
+            //     $('#assetMainAdds').html('Update');
+            // });
+            $('#assetMainFindTable').on('click', 'tbody tr td', function () {
+                GetAssetMainAll("keep", $(this).closest('tr').find('.fAssetMainID').html(),'');
+                $('#aID').prop("disabled", true);
+                $('#assetMainAdds').html('Update');
+                $('#findData').modal('toggle')
+            });
+            $('#aID').on('keypress', function (event) {
+                if (event.which === 13 || event.key === 'Enter') {
+                    GetAssetMainAll("keep2", 1, $('#aID').val());
+                    $('#aID').prop("disabled", true);
+                    $('#assetMainAdds').html('Update');
+                };
+
+            });
+
+
+            function GetAssetMainAll(typ,id,idstr) {
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                var itms = {};
+                itms.Id = id;
+                itms.Typ = typ
+                itms.Idstr = idstr;
+                $.ajax({
+                    url: '/LightingPlant/GetAssetMainAll',
+                    type: "POST",
+                    data: JSON.stringify(itms),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    // traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            $('#serviceTable').DataTable().clear().destroy();
+                            $('#BreakdownsTable').DataTable().clear().destroy();
+                            $('#AssetMainID').val(data.vAssetMain.id);
+                            $('#aID').val(data.vAssetMain.aID);
+                            $('#aAssetType').val(data.vAssetMain.aAssetType).trigger('change');
+                            $('#aModel').val(data.vAssetMain.aModel).trigger('change');
+                            $('#aNotes').val(data.vAssetMain.aNotes);
+                            $('#serviceTable tbody').empty();
+                            $('#BreakdownsTable tbody').empty();
+
+                            $(data.vServices).each(function (index, item) {
+                                var dt_sDateService = $.datepicker.formatDate('dd-M-yy', new Date(item.sDateService));
+                                var newRow = $("<tr>");
+                                var cols = '';
+
+                                cols += '<td class="dt-type-numeric d-none"> <span class="sServiceId">' + item.Id + '</span> </td>';
+                                cols += '<td> <span class="fas fa-circle fs-11 me-1 text-primary"></span><span class="sID">' + item.sID + '</span> </td>';
+                                cols += '<td class="dt-type-numeric"> <span class="sWO">' + item.sWO + '</span> </td>';
+                                cols += '<td> <span class="fas fa-calendar-alt fs-11 me-2 text-success"></span><span class="sDateService">' + dt_sDateService + '</span> </td>';
+                                cols += '<td class="dt-type-numeric"> <span class="sHourMeter">' + item.sHourMeter + '</span> </td>';
+                                cols += '<td> <span class="sFaultYesNo">' + ((item.sFaultYesNo == "1") ? "Yes" : "No") + '</span> </td>';
+                                cols += '<td class="d-none"> <span class="sTypeService">' + item.sTypeService + '</span> </td>';
+                                cols += '<td class="dt-type-numeric"> <span class="sTypeServiceName">' + item.sTypeServiceName + '</span </td>';
+                                cols += '<td class="dt-type-numeric"> <span class="sTechnicianID">' + item.sTechnicianID + '</span> </td>';
+                                cols += '<td> <span class="tName">' + item.tName + '</span> </td>';
+                                cols += '<td> <span class="sLocation">' + item.sLocation + '</span> </td>';
+                                cols += '<td> <span class="sFaultDesc">' + item.sFaultDesc + '</span> </td>';
+                                cols += '<td> <div> <a class="sEdit" data-code="' + item.id + '"><i class="icon-base bx bx-edit-alt icon-xm text-info me-1"></i></a> <a class="sDelete" data-code="' + item.id + '"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a> </div> </td>';
+
+
+                                newRow.append(cols);
+
+                                $("#serviceTable >tbody").prepend(newRow);
+                            });
+
+                            $(data.vRepair).each(function (index, item) {
+                                var dt_sDateOrder = $.datepicker.formatDate('dd-M-yy', new Date(item.rDateOrder));
+                                var dt_sDateStart = $.datepicker.formatDate('dd-M-yy', new Date(item.rDateStart));
+                                var newRow = $("<tr>");
+                                var cols = '';
+
+                                cols += '<td class="d-none"> <span class="rBreakdownsId">' + item.id + '</span> </td>';
+                                cols += '<td> <span class="fas fa-circle fs-11 me-1 text-primary"></span><span class="rJobOrder">' + item.rJobOrder + '</span> </td>';
+                                cols += '<td class="dt-type-numeric"> <span class="rProject">' + item.rProject + '</span> </td>';
+                                cols += '<td class="dt-type-numeric"> <span class="rODGRefNo">' + item.rODGRefNo + '</span> </td>';
+                                cols += '<td class="dt-type-numeric"> <span class="rOriginator">' + item.rOriginator + '</span> </td>';
+                                cols += '<td class="dt-type-numeric"> <span class="rHeadTech">' + item.rHeadTech + '</span> </td>';
+                                cols += '<td> <span class="tName_">' + item.tName + '</span> </td>';
+                                cols += '<td> <span class="fas fa-calendar-alt fs-11 me-2 text-success"></span><span class="rDateOrder">' + dt_sDateOrder + '</span> </td>';
+                                cols += '<td> <span class="fas fa-calendar-alt fs-11 me-2 text-success"></span><span class="rDateStart">' + dt_sDateStart + '</span> </td>';
+                                cols += '<td class="d-none"> <span class="rRepairGroup">' + item.rRepairGroup + '</span> </td>';
+                                cols += '<td> <span class="RepairGroupName">' + item.repairGroupName + '</span> </td>';
+                                cols += '<td> <div> <a class="sEdit" data-code="' + item.id + '"><i class="icon-base bx bx-edit-alt icon-xm text-info me-1"></i></a> <a class="sDelete" data-code="' + item.id + '"><i class="icon-base bx bx-trash icon-xm text-danger me-4 me-1"></i></a> </div> </td>';
+
+
+                                newRow.append(cols);
+
+                                $("#BreakdownsTable >tbody").prepend(newRow);
+                            });
+                            $('#serviceTable').DataTable({
+                                paging: true,
+                                "autoWidth": false,
+                                searching: false,
+                            });
+                            $('#BreakdownsTable').DataTable({
+                                paging: true,
+                                "autoWidth": false,
+                                searching: false,
+                            });
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            clearValidMain();
+                        }
+                        else {
+                            alert(data.text);
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                        }
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    }
+                });
+            }
+
+            
+            function ValidationCheck(com)
+            {
+                com.find(".vtext").each(function () {
+                    if (!$(this).hasClass('is-valid') || !$(this).hasClass('is-invalid')) {
+                        if ($(this).hasClass('form-select')) {
+                            (($(this).find('option:selected').attr('data-code') == "0") ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                        }
+                        else {
+                            (($(this).val() == '') ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                        }
+                    }
+                });
+                com.find(".select2-selection.select2-selection--single").each(function () {
+                    if (!$(this).hasClass('is-valid') || !$(this).hasClass('is-invalid')) {
+                        if (!$(this).find('.select2-selection__rendered').attr("title")) {
+                            $(this).find('.select2-selection__rendered').children().length > 0 ? $(this).addClass('is-invalid') : $(this).addClass('is-valid')
+                        }
+                    }
+                });
+                return com.find('.vtext').hasClass('is-invalid') || com.find(".select2-selection.select2-selection--single").hasClass('is-invalid') ? true : false;
+               
+            }
+            $('select').on('change', function (e) {
+                $(this).removeClass('is-invalid').removeClass('is-valid').addClass('is-valid');
+                $(this).siblings('.select2').find('.select2-selection').removeClass('is-invalid').removeClass('is-valid');
+                
+            });
+            function ValidationCheckMain() {
+                $("#firstForm").find(".vtext").each(function () {
+                    if (!$(this).hasClass('is-valid') || !$(this).hasClass('is-invalid')) {
+                        if ($(this).hasClass('form-select')) {
+                            (($(this).find('option:selected').attr('data-code') == "0") ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                        }
+                        else
+                        {
+                            (($(this).val() == '') ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                        }
+                    }
+                });
+                $("#firstForm").find(".select2-selection.select2-selection--single").each(function () {
+                    if (!$(this).hasClass('is-valid') || !$(this).hasClass('is-invalid')) {
+                        if (!$(this).find('.select2-selection__rendered').attr("title")) {
+                            $(this).find('.select2-selection__rendered').children().length > 0 ? $(this).addClass('is-invalid') : $(this).addClass('is-valid')
+                        }
+                    }
+                });
+                // $("#firstForm").find(".vtext").each(function () {
+                //     if (!$(this).hasClass('is-valid')) {
+                //         if (!$(this).hasClass('is-invalid')) {
+                //             $(this).addClass('is-invalid');
+                //         }
+                //     }
+                // });
+                return $("#firstForm").find('.vtext').hasClass('is-invalid') || $("#firstForm").find(".select2-selection.select2-selection--single").hasClass('is-invalid') ? true : false;
+
+            }
+            $('#goMaterial').on('click', function () {
+                // if ($('#sID').val() != '')
+                // {
+                //     window.open("/LightingPlant/MaterialRequest", "_blank");
+                // Cookies.set('goMaterial', $('#sID').val());
+                // }
+
+            });
+
+            
+        });
+        
+    </script>
+}

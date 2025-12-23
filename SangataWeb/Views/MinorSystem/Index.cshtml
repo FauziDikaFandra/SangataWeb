@@ -1,0 +1,1124 @@
+﻿@model SangataWeb.Models.ViewModel
+@{
+    ViewBag.Title = "Sangata | MinorSystem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.UserName = @Model.User_Login.UserName;
+    ViewBag.Content = "Minor Main";
+}
+@section pMain {
+    <nav class="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme"
+         id="layout-navbar">
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
+                <i class="icon-base bx bx-menu icon-md"></i>
+            </a>
+        </div>
+
+        <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
+            <!-- Search -->
+            <div class="navbar-nav align-items-center me-auto">
+                @* <div class="nav-item d-flex align-items-center">
+            <span class="w-px-22 h-px-22"><i class="icon-base bx bx-search icon-md"></i></span>
+            <input type="text"
+            class="form-control border-0 shadow-none ps-1 ps-sm-2 d-md-block d-none"
+            placeholder="Search..."
+            aria-label="Search..." />
+            </div> *@
+                <div class="row">
+                    <div class="col">
+                        <a id="mainnew" title="Add New" href="#" class="btn btn-primary btn-circle ml-2 tombol">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                        <a id="mainsave" title="Save" href="#" class="btn btn-success btn-circle ml-4 tombol">
+                            <i class="fas fa-save"></i>
+                        </a>
+                        <a id="mainfirst" title="Previous" href="#" class="btn btn-info btn-circle ml-4 tombol">
+                            <i class="fas fa-fast-backward"></i>
+                        </a>
+                        <a id="mainprev" title="Previous" href="#" class="btn btn-info btn-circle ml-4 tombol">
+                            <i class="fas fa-step-backward"></i>
+                        </a>
+                        <a id="mainnext" title="Next" href="#" class="btn btn-warning btn-circle ml-4 tombol">
+                            <i class="fas fa-step-forward"></i>
+                        </a>
+                        <a id="mainend" title="Next" href="#" class="btn btn-warning btn-circle ml-4 tombol">
+                            <i class="fas fa-fast-forward"></i>
+                        </a>
+                        <a id="mainfind" title="Find" href="#" class="btn btn-danger btn-circle ml-4 tombol" data-bs-toggle="modal" data-bs-target="#findData">
+                            <i class="fas fa-search"></i>
+                        </a>
+                        @*                                     <a id="popost" title="Post" href="#" class="btn btn-success btn-circle ml-4 btn-sm">
+                    <i class="fas fa-paper-plane"></i>
+                    </a> *@
+                    </div>
+                </div>
+            </div>
+            <!-- /Search -->
+
+            <ul class="navbar-nav flex-row align-items-center ms-md-auto">
+
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                    <a class="nav-link dropdown-toggle hide-arrow p-0"
+                       href="javascript:void(0);"
+                       data-bs-toggle="dropdown">
+                        <div class="avatar avatar-online">
+                            <img src="../../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0 me-3">
+                                        <div class="avatar avatar-online">
+                                            <img src="../../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0">@Model.User_Login.UserName</h6>
+                                        <small class="text-body-secondary">Admin</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown-divider my-1"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="icon-base bx bx-user icon-md me-3"></i><span>My Profile</span>
+                            </a>
+                        </li>
+@*                         <li>
+                            <a class="dropdown-item" href="#">
+                                <i class="icon-base bx bx-cog icon-md me-3"></i><span>Settings</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <span class="d-flex align-items-center align-middle">
+                                    <i class="flex-shrink-0 icon-base bx bx-credit-card icon-md me-3"></i><span class="flex-grow-1 align-middle">Billing Plan</span>
+                                    <span class="flex-shrink-0 badge rounded-pill bg-danger">4</span>
+                                </span>
+                            </a>
+                        </li> *@
+                        <li>
+                            <div class="dropdown-divider my-1"></div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="../Home/Logout">
+                                <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--/ User -->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- / Navbar -->
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+            <div class="col-md-12">
+                <div class="col-lg-6 col-xl-12 col-xxl-6 h-100">
+                    <div class="card theme-wizard pb-5">
+                        <div class="card-header bg-body-tertiary pt-5 pb-0">
+                            <ul class="nav nav-pills mb-3" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button id="tabCodes" class="nav-link active" data-wizard-step="1" data-bs-toggle="pill" data-bs-target="#form-wizard-tab1" type="button" role="tab" aria-controls="form-wizard-tab1" aria-selected="true"><span class="fab fa-artstation me-2" data-fa-transform="shrink-2"></span><span class="d-none d-md-inline-block fs-10">Codes</span></button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button id="tabDescriptions" class="nav-link" data-wizard-step="2" data-bs-toggle="pill" data-bs-target="#form-wizard-tab2" type="button" role="tab" aria-controls="form-wizard-tab2" aria-selected="false"><span class="fas fa-archive me-2" data-fa-transform="shrink-2"></span><span class="d-none d-md-inline-block fs-10">Descriptions</span></button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button id="tabInformations" class="nav-link" data-wizard-step="3" data-bs-toggle="pill" data-bs-target="#form-wizard-tab3" type="button" role="tab" aria-controls="form-wizard-tab3" aria-selected="false"><span class="far fa-file-alt me-2" data-fa-transform="down-2 shrink-2"></span><span class="d-none d-md-inline-block fs-10">Informations</span></button>
+                                </li>
+                                @*                         <li class="nav-item" role="presentation">
+                            <button class="nav-link" data-wizard-step="4" data-bs-toggle="pill" data-bs-target="#form-wizard-tab4" type="button" role="tab" aria-controls="form-wizard-tab4" aria-selected="false"><span class="fas fa-thumbs-up me-2" data-fa-transform="shrink-2"></span><span class="d-none d-md-inline-block fs-10">Done</span></button>
+                            </li> *@
+                            </ul>
+                        </div>
+                        <div class="card-body py-0">
+                            <div class="tab-content px-1 py-3">
+                                <div class="tab-pane px-sm-3 px-md-5 active show" role="tabpanel" aria-labelledby="form-wizard-tab1" id="form-wizard-tab1">
+                                    <form id="firstForm" data-wizard-form="1">
+                                        <div class="card pb-5">
+                                            <div class="card-body pb-0">
+                                                <div class="row g-6 pb-3">
+                                                    <div class="col-md-4">
+                                                        <div>
+                                                            <label for="rJobOrder" class="form-label">W I No</label>
+                                                            <input class="d-none" id="RepairID" value="@Model.vOneRepair.Id" />
+                                                            <input id="rJobOrder"
+                                                                   class="form-control form-control-sm vtext vnumber"
+                                                                   type="text"
+                                                                   placeholder="W I No"
+                                                                   value="@Model.vOneRepair.rJobOrder" disabled />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="rProject" class="form-label">
+                                                                ODG Project No
+                                                            </label>
+                                                            <select id="rProject" data-placeholder="Choose Project" data-first="3" data-two="9"  class="form-select form-select-sm select2 ddmulti1 vtext">
+                                                                <option data-code="0"></option>
+                                                                <optgroup class="def-cursor" label="No" data-city="Project">
+                                                                    @if (Model.vProject != null)
+                                                                    {
+                                                                        foreach (var item in Model.vProject)
+                                                                        {
+                                                                            <!option data-code="@item.Id" data-city="@item.pName" value="@item.pNo" @((item.pNo == Model.vOneRepair.rProject) ? "selected" : "")>@item.pNo</!option>
+                                                                        }
+                                                                    }
+                                                                </optgroup>
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="rODGRefNo" class="form-label">
+                                                                ODG Ref. No
+                                                            </label>
+                                                            <input id="rODGRefNo"
+                                                                   class="form-control form-control-sm vtext vnumber"
+                                                                   type="text"
+                                                                   placeholder="ODG Ref. No"
+                                                                   value="@Model.vOneRepair.rODGRefNo" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div>
+                                                            <label for="rHeadTech" class="form-label">Action By</label>
+                                                            <select id="rHeadTech" class="selectpicker form-select form-select-sm select2 vtext">
+                                                                <option data-code="0"></option>
+                                                                <optgroup class="def-cursor" label="EmpID" data-code="EmpName" data-city="Crew">
+                                                                    @if (Model.vTechnician != null)
+                                                                    {
+                                                                        foreach (var item in Model.vTechnician)
+                                                                        {
+                                                                            <!option data-code="@item.tName" data-city="@item.crCrewName" value="@item.tID" @((item.tID == Model.vOneRepair.rHeadTech) ? "selected" : "")>@item.tID</!option>
+                                                                        }
+                                                                    }
+                                                                </optgroup>
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="rClientRefType" class="form-label">
+                                                                Client Ref. Type
+                                                            </label>
+                                                            <select id="rClientRefType" class="selectpicker form-select form-select-sm select2 vtext">
+                                                                <option data-code="0"></option>
+                                                                @if (Model.vClientRef != null)
+                                                                    {
+                                                                        foreach (var item in Model.vClientRef)
+                                                                        {
+                                                                        <!option data-code="@item.Id" data-city="@item.rClientRefType" value="@item.rClientRefType" @((item.rClientRefType == Model.vOneRepair.rClientRefType) ? "selected" : "")>@item.rClientRefType</!option>
+                                                                        }
+                                                                    }
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="rPRNo" class="form-label">
+                                                                PR No
+                                                            </label>
+                                                            <input id="rPRNo"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder="PR No"
+                                                                   value="@Model.vOneRepair.rPRNo" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div>
+                                                            <label for="rClientRefNo" class="form-label">WO No</label>
+                                                            <input id="rClientRefNo"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder="WO No"
+                                                                   value="@Model.vOneRepair.rClientRefNo" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="rCostCenter" class="form-label">
+                                                                Cost Code
+                                                            </label>
+                                                            <input id="rCostCenter"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder="Cost Code"
+                                                                   value="@Model.vOneRepair.rCostCenter" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="rOriginator" class="form-label">
+                                                                Originator
+                                                            </label>
+                                                            <input id="rOriginator"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder="Originator"
+                                                                   value="@Model.vOneRepair.rOriginator" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+
+</div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer bg-body-tertiary pb-3">
+                                                <div class="px-sm-0 px-md-0">
+                                                    <ul class="pager wizard list-inline mb-0">
+                                                        <li class="previous">
+                                                            <button id="goMaterial" class="btn btn-success px-5 px-sm-6" type="button"><span>Daily Req.</span><span class="fas fa-cog fa-spin fa-lg ms-2" data-fa-transform="shrink-3"> </span></button>
+                                                        </li>
+                                                        <li class="next">
+                                                            
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </form>
+                                </div>
+                                <div class="tab-pane px-sm-3 px-md-5 " role="tabpanel" aria-labelledby="form-wizard-tab2" id="form-wizard-tab2">
+                                    <form data-wizard-form="2">
+                                        <div class="card pb-5">
+                                            <div class="card-body pb-0">
+                                                <div class="row g-6 pb-3">
+                                                    <div class="col-md-4">
+                                                        <div>
+                                                            <label for="rLocation" class="form-label">Location</label>
+                                                            <select id="rLocation" class="selectpicker form-select form-select-sm select2 vtext">
+                                                                <option data-code="0"></option>
+                                                                @if (Model.vLocation != null)
+                                                                    {
+
+                                                                        foreach (var item in Model.vLocation)
+                                                                        {
+                                                                        <!option data-code="@item.Id" data-city="@item.lLocationName" value="@item.lLocationName" @((item.lLocationName == Model.vOneRepair.rLocation) ? "selected" : "")>@item.lLocationName</!option>
+                                                                        }
+                                                                    }
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="rCustomer" class="form-label">
+                                                                Customer
+                                                            </label>
+                                                            <select id="rCustomer" class="selectpicker form-select form-select-sm select2 vtext">
+                                                                <option data-code="0"></option>
+                                                                @if (Model.vCustomer != null)
+                                                                    {
+                                                                        foreach (var item in Model.vCustomer)
+                                                                        {
+                                                                        <!option data-code="@item.Id" data-city="@item.cName" value="@item.cID" @((item.cID == Model.vOneRepair.rCustomer) ? " selected" : "")>@item.cName</!option>
+                                                                        }
+                                                                    }
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="rCompanyName" class="form-label">
+                                                                Company
+                                                            </label>
+                                                            <select id="rCompanyName" class="selectpicker form-select form-select-sm select2 vtext">
+                                                                <option data-code="0"></option>
+                                                                @if (Model.vCustomer != null)
+                                                                    {
+                                                                        foreach (var item in Model.vCustomer)
+                                                                        {
+                                                                        <!option data-code="@item.Id" data-city="@item.cName" value="@item.cName" @((item.cName == Model.vOneRepair.rCompanyName) ? "selected" : "")>@item.cName</!option>
+                                                                        }
+                                                                    }
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div>
+                                                            <label for="rDateOrder" class="form-label">Date Order</label>
+                                                            <input id="rDateOrder"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder="Date Order"
+                                                                   value="@Convert.ToDateTime(Model.vOneRepair.rDateOrder).ToString("dd/MM/yyyy")" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="rDateStart" class="form-label">
+                                                                Date Start
+                                                            </label>
+                                                            <input id="rDateStart"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder="Date Start"
+                                                                   value="@Convert.ToDateTime(Model.vOneRepair.rDateStart).ToString("dd/MM/yyyy")" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="rDateFinish" class="form-label">
+                                                                Date Finish
+                                                            </label>
+                                                            <input id="rDateFinish"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder="Date Finish"
+                                                                   value="@Convert.ToDateTime(Model.vOneRepair.rDateFinish).ToString("dd/MM/yyyy")" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div>
+                                                            <label for="rJobOrderType" class="form-label">Order Type</label>
+                                                            <select id="rJobOrderType" class="selectpicker form-select form-select-sm select2 vtext">
+                                                                <option data-code="0"></option>
+                                                                @if (Model.vOrderType != null)
+                                                                    {
+                                                                        foreach (var item in Model.vOrderType)
+                                                                        {
+                                                                        <!option data-code="@item.Id" data-city="@item.rJobOrderType" value="@item.rJobOrderType" @((item.rJobOrderType == Model.vOneRepair.rJobOrderType) ? "selected" : "")>@item.rJobOrderType</!option>
+                                                                        }
+                                                                    }
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="rJobOrderGroup" class="form-label">
+                                                                DR No
+                                                            </label>
+                                                            <input id="rJobOrderGroup"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder="DR No"
+                                                                   value="@Model.vOneRepair.rJobOrderGroup" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="rCompleteBy" class="form-label">
+                                                                Completed By
+                                                            </label>
+                                                            <select id="rCompleteBy" class="selectpicker form-select form-select-sm select2 vtext">
+                                                                <option data-code="0"></option>
+                                                                @if (Model.vCompleteBy != null)
+                                                                    {
+                                                                        foreach (var item in Model.vCompleteBy)
+                                                                        {
+                                                                        <!option data-code="@item.Id" data-city="@item.rCompleteBy" value="@item.rCompleteBy" @((item.rCompleteBy == Model.vOneRepair.rCompleteBy) ? "selected" : "")>@item.rCompleteBy</!option>
+                                                                        }
+                                                                    }
+                                                            </select>
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane px-sm-3 px-md-5" role="tabpanel" aria-labelledby="form-wizard-tab3" id="form-wizard-tab3">
+                                    <form data-wizard-form="3">
+                                        <div class="card pb-5">
+                                            <div class="card-body pb-0">
+                                                <div class="row g-6 pb-3">
+                                                    <div class="col-md-4">
+                                                        <div>
+                                                            <label for="rTenderNo" class="form-label">Tender No</label>
+                                                            <input id="rTenderNo"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder="Tender No"
+                                                                   value="@Model.vOneRepair.rTenderNo" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="rDescription" class="form-label">
+                                                                Problem Description
+                                                            </label>
+                                                            <input id="rDescription"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder="Problem Description"
+                                                                   value="@Model.vOneRepair.rDescription" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="rRemark" class="form-label">
+                                                                Remark
+                                                            </label>
+                                                            <input id="rRemark"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder="Remark"
+                                                                   value="@Model.vOneRepair.rRemark" />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div>
+                                                            <label for="rInvoiced" class="form-label">Invoiced</label>
+                                                            <div class="form-check form-switch mb-2">
+                                                                <input class="form-check-input" type="checkbox" id="rInvoiced" @((Model.vOneRepair.rInvoiced == 1) ? " checked" : "")>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="rClose" class="form-label">
+                                                                Daily Rpt Closed
+                                                            </label>
+                                                            <div class="form-check form-switch mb-2">
+                                                                <input class="form-check-input" type="checkbox" id="rClose" @((Model.vOneRepair.rClose == 1) ? " checked" : "")>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="rCancelled" class="form-label">
+                                                                Canceled
+                                                            </label>
+                                                            <div class="form-check form-switch mb-2">
+                                                                <input class="form-check-input" type="checkbox" id="rCancelled" @((Model.vOneRepair.rCancelled == 1) ? " checked" : "")>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <label for="rDateCancelled" class="form-label">Date Canceled</label>
+                                                            <input id="rDateCancelled"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder="Date Canceled"
+                                                                   value="@((Model.vOneRepair.rDateCancelled == null) ? Model.vOneRepair.rDateCancelled : Convert.ToDateTime(Model.vOneRepair.rDateCancelled).ToString("dd/MM/yyyy"))" @((Model.vOneRepair.rCancelled == 0) ? " disabled" : "") />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="rCancelledBy" class="form-label">
+                                                                Canceled By
+                                                            </label>
+                                                            <input id="rCancelledBy"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder="Canceled By"
+                                                                   value="@Model.vOneRepair.rCancelledBy" @((Model.vOneRepair.rCancelled == 0) ? " disabled" : "") />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <label for="rCancelledReason" class="form-label">
+                                                                Reason
+                                                            </label>
+                                                            <input id="rCancelledReason"
+                                                                   class="form-control form-control-sm vtext"
+                                                                   type="text"
+                                                                   placeholder="Reason"
+                                                                   value="@Model.vOneRepair.rCancelledReason" @((Model.vOneRepair.rCancelled == 0) ? " disabled" : "") />
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                        @* <div class="card-footer bg-body-tertiary">
+                    <div class="px-sm-3 px-md-5">
+                    <ul class="pager wizard list-inline mb-0">
+                    <li class="previous">
+                    <button class="btn btn-link ps-0" type="button"></button>
+                    </li>
+                    <li class="next">
+                    <button class="btn btn-primary px-5 px-sm-6" type="submit">Save<span class="fas fa-chevron-right ms-2" data-fa-transform="shrink-3"> </span></button>
+                    </li>
+                    </ul>
+                    </div>
+                    </div> *@
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <!-- / Content -->
+        <!-- Footer -->
+        <footer class="content-footer footer bg-footer-theme">
+            <div class="container-xxl">
+                <div class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                    <div class="mb-2 mb-md-0">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        made by
+                        <a href="https://ptodg.com/id/" target="_blank" class="footer-link">ODG Indonesia</a>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+        <!-- / Footer -->
+
+        <div class="content-backdrop fade"></div>
+        <div class="modal fade" id="findData" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body px-3 pt-2">
+                        <div class="table-responsive text-nowrap pb-3">
+                            <table id="MainFindTable" class="table table-striped">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="d-none">MainFindID</th>
+                                        <th>W I No</th>
+                                        <th>Project No</th>
+                                        <th>Action By</th>
+                                        <th>Customer</th>
+                                        <th>Date Order</th>
+                                        <th>Completed By</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                    @if (Model.vMainFind.Count > 0)
+                                    {
+                                        foreach (var item in Model.vMainFind)
+                                        {
+                                            <tr>
+                                                <td class="d-none">
+                                                    <span class="fMainID">@item.Id</span>
+                                                </td>
+                                                <td>
+                                                    <span class="frJobOrder">@item.rJobOrder</span>
+                                                </td>
+                                                <td>
+                                                    <span class="frProject">@item.rProject</span>
+                                                </td>
+                                                <td>
+                                                    <span class="frHeadTech">@item.rHeadTech</span>
+                                                </td>
+                                                <td>
+                                                    <span class="frCustomer">@item.rCustomer</span>
+                                                </td>
+                                                <td>
+                                                    <span class="frDateOrder">@item.rDateOrder</span>
+                                                </td>
+                                                <td>
+                                                    <span class="frCompleteBy">@item.rCompleteBy</span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Content wrapper -->
+
+
+    <script>
+        $(document).ready(function () {
+            var ext = false;
+            // var addtyp = 'service';
+            var dt_to = $.datepicker.formatDate('dd/mm/yy', new Date());
+            var stopBlinking = false;
+            $('#rDateOrder').datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-5:+1",
+            });
+            $('#rDateFinish').datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-5:+1",
+            });
+            $('#rDateStart').datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-5:+1",
+            });
+            $('#rDateCancelled').datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-5:+1",
+            });
+
+            $('#MainFindTable').DataTable({
+                //responsive: true,
+                // "columnDefs": [
+                //     { "width": "80%", "targets": 2 }
+                // ],
+                paging: true,
+                "autoWidth": false,
+                // searching: false,
+                "lengthChange": false
+            });
+
+
+
+
+
+            $('#mainnew').on('click', function () {
+                clear();
+            });
+
+            function clear() {
+                $('input').val('');
+                $('#RepairID').val('0');
+                $('#rJobOrder').removeAttr('disabled');
+                $('select').val(null).trigger('change');
+                $('input , select').removeClass('is-invalid').removeClass('is-valid');
+                $('#rJobOrder').removeAttr('disabled');
+                $('#rDateFinish').attr("value", dt_to);
+                $('#rDateOrder').attr("value", dt_to);
+                $('#tabCodes').removeClass('active');
+                $('#tabDescriptions').removeClass('active');
+                $('#tabInformations').removeClass('active');
+                $('#tabCodes').addClass('active');
+                $('#form-wizard-tab1').removeClass('active').removeClass('show');
+                $('#form-wizard-tab2').removeClass('active').removeClass('show');
+                $('#form-wizard-tab3').removeClass('active').removeClass('show');
+                $('#form-wizard-tab1').addClass('active').addClass('show');
+                $('.form-check-input').prop('checked', false);
+                clearValidMain();
+                $('#rJobOrder').focus();
+            };
+            $('#rCancelled').on('change', function () {
+                if ($(this).is(':checked'))
+{
+                    $('#rDateCancelled').removeAttr('disabled');
+                    $('#rDateCancelled').focus();
+                    $('#rCancelledBy').removeAttr('disabled');
+                    $('#rCancelledReason').removeAttr('disabled');                       
+}
+else
+{
+                    $('#rDateCancelled').prop('disabled', true);
+                    $('#rDateCancelled').val('');
+                    $('#rCancelledBy').prop('disabled', true);
+                    $('#rCancelledReason').prop('disabled', true);
+}
+            });
+
+            $('#mainsave').on('click', function (e) {
+                e.preventDefault();
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                if (!ValidationCheckMain()) {
+                    if ($('#RepairID').val() == '0') {
+                        GetExistingMain();
+                    }
+                    else {
+                        UpdateMain();
+                    }
+                }
+                else {
+                    $("#spinner").hide();
+                    $("body").css("pointer-events", "");
+                    $(".layout-wrapper").css("opacity", 1);
+                }
+            });
+            $('select').on('change', function (e) {
+                $(this).removeClass('is-invalid').removeClass('is-valid').addClass('is-valid');
+                $(this).siblings('.select2').find('.select2-selection').removeClass('is-invalid').removeClass('is-valid');
+                
+            });
+            function ValidationCheckMain() {
+                $("form").each(function () {
+                    $(this).find(".vtext").each(function () {
+                        if (!$(this).hasClass('is-valid') || !$(this).hasClass('is-invalid')) {
+                            if ($(this).hasClass('form-select')) {
+                                (($(this).find('option:selected').attr('data-code') == "0") ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                            }
+                            else {
+                                (($(this).val() == '') ? $(this).addClass('is-invalid') : $(this).addClass('is-valid'));
+                            }
+                        }
+                    });
+                });
+                $(".select2-selection.select2-selection--single").each(function () {
+                    if (!$(this).hasClass('is-valid') || !$(this).hasClass('is-invalid')) {
+                        if (!$(this).find('.select2-selection__rendered').attr("title")) {
+                            $(this).find('.select2-selection__rendered').children().length > 0 ? $(this).addClass('is-invalid') : $(this).addClass('is-valid')
+                        }
+                    }
+                });
+                if (!$('#rCancelled').is(':checked')) {
+                    $('#rDateCancelled').removeClass('is-invalid').removeClass('is-valid').addClass('is-valid');
+                    $('#rCancelledBy').removeClass('is-invalid').removeClass('is-valid').addClass('is-valid');
+                    $('#rCancelledReason').removeClass('is-invalid').removeClass('is-valid').addClass('is-valid');
+                }
+                return $("form").find('.vtext').hasClass('is-invalid') || $(".select2-selection.select2-selection--single").hasClass('is-invalid') ? true : false;
+            }
+            function GetExistingMain() {
+                $.ajax({
+                    url: '/MinorSystem/GetExistingMain',
+                    type: "POST",
+                    data: JSON.stringify(getMain()),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        if (data) {
+                            // alert(data.success);
+                            if (data.success) {
+                                Swal.fire({
+                                    title: 'Duplicate!!!',
+                                    text: 'Job no : ' + data.typ_ + ' already exist!',
+                                    icon: 'error'
+                                })
+                                ext = false;
+                            }
+                            else {
+                                Swal.fire({
+                                    title: 'Minor Main!!!',
+                                    text: 'Job no : ' + data.typ_ + ' Saved!',
+                                    icon: 'success'
+                                })
+                                $('#rJobOrder').prop("disabled", true);
+                                $("#RepairID").val(data.result);
+                                clearValidMain();
+                            }
+
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            // window.location = "/LightingPlant/Index"
+                        }
+                        else {
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            alert(data.text);
+                            ext = false;
+                        }
+                    },
+                    error: function (data) {
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                        alert(data.text);
+                        ext = false;
+                    }
+                });
+                return ext;
+            }
+            function getMain() {
+                var from = $("#rDateOrder").val().split("/");
+                var dt_rDateOrder = new new Date(from[2] + '-' + from[1] + '-' + from[0]);
+                var from2 = $("#rDateStart").val().split("/");
+                var dt_rDateStart = new Date(from2[2] + '-' + from2[1] + '-' + from2[0]);
+                var from3 = $("#rDateFinish").val().split("/");
+                var dt_rDateFinish = new Date(from3[2] + '-' + from3[1] + '-' + from3[0]);
+
+                var tmp_RepairID = $('#RepairID').val();
+                var tmp_rJobOrder = $('#rJobOrder').val();
+                var tmp_rProject = $('#rProject').val();
+                var tmp_rODGRefNo = $('#rODGRefNo').val();
+                var tmp_rODGRefNoID = $('#rODGRefNo').val();
+                var tmp_rHeadTech = $('#rHeadTech').val();
+
+                var tmp_rClientRefType = $('#rClientRefType').val();
+                var tmp_rPRNo = $('#rPRNo').val();
+                var tmp_rClientRefNo = $('#rClientRefNo').val();
+                var tmp_rCostCenter = $('#rCostCenter').val();
+                var tmp_rOriginator = $('#rOriginator').val();
+
+                var tmp_rLocation = $('#rLocation').val();
+                var tmp_rCustomer = $('#rCustomer').find('option:selected').attr('value');
+                var tmp_rCompanyName = $('#rCompanyName').val();
+                var tmp_rDateOrder = dt_rDateOrder;
+                var tmp_rDateStart = dt_rDateStart;
+
+                var tmp_rDateFinish = dt_rDateFinish;
+                var tmp_rJobOrderType = $('#rJobOrderType').val();
+                var tmp_rCompleteBy = $('#rCompleteBy').val();
+                var tmp_rTenderNo = $('#rTenderNo').val();
+                var tmp_rDescription = $('#rDescription').val();
+
+                var tmp_rRemark = $('#rRemark').val();
+                var tmp_rInvoiced = $('#rInvoiced').is(':checked') ? 1 : 0;
+                var tmp_rClose = $('#rClose').is(':checked') ? 1 : 0;
+                var tmp_rCancelled = $('#rCancelled').is(':checked') ? 1 : 0;
+                var tmp_rDateCancelled = "";
+                var tmp_rCancelledBy = "";
+                var tmp_rCancelledReason = "";
+                if ($('#rCancelled').is(':checked')) {
+                    var from4 = $("#rDateCancelled").val().split("/");
+                    var dt_rDateCancelled = new Date(from4[2], from4[1] - 1, from4[0]);
+                    tmp_rDateCancelled = dt_rDateCancelled;
+                    tmp_rCancelledBy = $('#rCancelledBy').val();
+                    tmp_rCancelledReason = $('#rCancelledReason').val();
+                }
+                else
+                {
+                    tmp_rDateCancelled = null;
+                    tmp_rCancelledBy = null;
+                    tmp_rCancelledReason = null;
+                }
+
+
+
+                return (rJobOrder == "") ? null :
+                    {
+                        Id: tmp_RepairID,
+                        rJobOrder: tmp_rJobOrder,
+                        rProject: tmp_rProject,
+                        rODGRefNo: tmp_rODGRefNo,
+                        rODGRefNoID: tmp_rODGRefNoID,
+                        rHeadTech: tmp_rHeadTech,
+                        rClientRefType: tmp_rClientRefType,
+                        rPRNo: tmp_rPRNo,
+                        rClientRefNo: tmp_rClientRefNo,
+                        rCostCenter: tmp_rCostCenter,
+                        rOriginator: tmp_rOriginator,
+                        rLocation: tmp_rLocation,
+                        rCustomer: tmp_rCustomer,
+                        rCompanyName: tmp_rCompanyName,
+                        rDateOrder: tmp_rDateOrder,
+                        rDateStart: tmp_rDateStart,
+                        rDateFinish: tmp_rDateFinish,
+                        rJobOrderType: tmp_rJobOrderType,
+                        rCompleteBy: tmp_rCompleteBy,
+                        rTenderNo: tmp_rTenderNo,
+                        rDescription: tmp_rDescription,
+                        rRemark: tmp_rRemark,
+                        rInvoiced: tmp_rInvoiced,
+                        rClose: tmp_rClose,
+                        rCancelled: tmp_rCancelled,
+                        rDateCancelled: tmp_rDateCancelled,
+                        rCancelledBy: tmp_rCancelledBy,
+                        rCancelledReason: tmp_rCancelledReason
+                    };
+            }
+            function UpdateMain() {
+                $.ajax({
+                    url: '/MinorSystem/UpdateMain',
+                    type: "POST",
+                    data: JSON.stringify(getMain()),
+                    dataType: 'json',
+                    // cache: false,
+                    contentType: 'application/json; charset=utf-8',
+                    // traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            Swal.fire({
+                                title: 'Minor Main!!!',
+                                text: 'Job no : ' + data.typ_ + ' Updated!',
+                                icon: 'success'
+                            })
+
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            clearValidMain();
+                            // window.location = "/LightingPlant/Index"
+                        }
+                        else {
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                            alert(data.text);
+                            ext = false;
+                        }
+                    },
+                    error: function (data) {
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                        alert(data.text);
+                        ext = false;
+                    }
+                });
+                return ext;
+            }
+
+            function clearValidMain() {
+                $(".is-valid").each(function () {
+                    $(this).removeClass('is-valid');
+                });
+                $(".is-invalid").each(function () {
+                    $(this).removeClass('is-invalid');
+                });
+                $(".select2-selection.select2-selection--single").each(function () {
+                    $(this).find('.select2-selection__rendered').removeAttr('title');
+                });
+            }
+            $('#mainfirst').on('click', function () {
+                GetMainAll("first", $('#RepairID').val(), '');
+                $('#rJobOrder').prop("disabled", true);
+            });
+            $('#mainend').on('click', function () {
+                GetMainAll("end", $('#RepairID').val(), '');
+                $('#rJobOrder').prop("disabled", true);
+            });
+            $('#mainprev').on('click', function () {
+                GetMainAll("prev", $('#RepairID').val(), '');
+                $('#rJobOrder').prop("disabled", true);
+            });
+            $('#mainnext').on('click', function () {
+                GetMainAll("next", $('#RepairID').val(), '');
+                $('#rJobOrder').prop("disabled", true);
+            });
+            $('#MainFindTable').on('click', 'tbody tr td', function () {
+                GetMainAll("keep", $(this).closest('tr').find('.fMainID').html(), '');
+                $('#rJobOrder').prop("disabled", true);
+                $('#findData').modal('toggle')
+            });
+            $('#rJobOrder').on('keypress', function (event) {
+                if (event.which === 13 || event.key === 'Enter') {
+                    GetMainAll("keep2", 1, $('#rJobOrder').val());
+                    $('#rJobOrder').prop("disabled", true);
+                };
+               
+            });
+            function GetMainAll(typ, id, idstr) {
+                $("#spinner").show();
+                $("body").css("pointer-events", "none");
+                $(".layout-wrapper").css("opacity", 0.6);
+                var itms = {};
+                itms.Id = id;
+                itms.Typ = typ
+                itms.Idstr = idstr;
+                $.ajax({
+                    url: '/MinorSystem/GetMainAll',
+                    type: "POST",
+                    data: JSON.stringify(itms),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    // traditional: true,
+                    success: function (data) {
+                        if (data) {
+                            if (data.vOneRepair != null) {
+                                $('#RepairID').val(data.vOneRepair.id);
+                                $('#rJobOrder').val(data.vOneRepair.rJobOrder);
+                                $('#rProject').val(data.vOneRepair.rProject).trigger('change');
+                                $('#rODGRefNo').val(data.vOneRepair.rODGRefNo);
+                                $('#rHeadTech').val(data.vOneRepair.rHeadTech).trigger('change');
+                                $('#rClientRefType').val(data.vOneRepair.rClientRefType).trigger('change');
+                                $('#rPRNo').val(data.vOneRepair.rPRNo);
+                                $('#rClientRefNo').val(data.vOneRepair.rClientRefNo);
+                                $('#rCostCenter').val(data.vOneRepair.rCostCenter);
+                                $('#rOriginator').val(data.vOneRepair.rOriginator);
+                                $('#rLocation').val(data.vOneRepair.rLocation).trigger('change');
+                                $('#rCustomer').val(data.vOneRepair.rCustomer).trigger('change');
+                                $('#rCompanyName').val(data.vOneRepair.rCompanyName).trigger('change');
+                                var dt_rDateOrder = $.datepicker.formatDate('dd/mm/yy', new Date(data.vOneRepair.rDateOrder));
+                                $('#rDateOrder').val(dt_rDateOrder);
+                                var dt_rDateStart = $.datepicker.formatDate('dd/mm/yy', new Date(data.vOneRepair.rDateStart));
+                                $('#rDateStart').val(dt_rDateStart);
+                                var dt_rDateFinish = $.datepicker.formatDate('dd/mm/yy', new Date(data.vOneRepair.rDateFinish));
+                                $('#rDateFinish').val(dt_rDateFinish);
+                                $('#rJobOrderType').val(data.vOneRepair.rJobOrderType).trigger('change');
+                                $('#rJobOrderGroup').val(data.vOneRepair.rJobOrderGroup);
+                                $('#rCompleteBy').val(data.vOneRepair.rCompleteBy).trigger('change');
+                                $('#rTenderNo').val(data.vOneRepair.rTenderNo);
+                                $('#rDescription').val(data.vOneRepair.rDescription);
+                                $('#rRemark').val(data.vOneRepair.rRemark);
+                                $('#rInvoiced').prop('checked', data.vOneRepair.rInvoiced == "1" ? true : false);
+                                $('#rClose').prop('checked', data.vOneRepair.rClose == "1" ? true : false);
+                                $('#rCancelled').prop('checked', data.vOneRepair.rCancelled == "1" ? true : false);
+                                $('#rDateCancelled').removeAttr('disabled');
+                                $('#rCancelledBy').removeAttr('disabled');
+                                $('#rCancelledReason').removeAttr('disabled');
+                                if (data.vOneRepair.rCancelled == "1") {
+                                    var dt_rDateCancelled = $.datepicker.formatDate('dd/mm/yy', new Date(data.vOneRepair.rDateCancelled));
+                                    $('#rDateCancelled').val(dt_rDateCancelled);
+                                }
+                                else {
+                                    $('#rDateCancelled').val('');
+                                    $('#rDateCancelled').prop('disabled', true);
+                                    $('#rCancelledBy').prop('disabled', true);
+                                    $('#rCancelledReason').prop('disabled', true);
+                                }
+                                $('#rCancelledBy').val(data.vOneRepair.rCancelledBy);
+                                $('#rCancelledReason').val(data.vOneRepair.rCancelledReason);
+                               
+                                clearValidMain();
+                            }
+                            $("#spinner").hide();
+                            $("body").css("pointer-events", "");
+                            $(".layout-wrapper").css("opacity", 1);
+                        }
+                    },
+                    error: function (data) {
+                        alert(data.text);
+                        $("#spinner").hide();
+                        $("body").css("pointer-events", "");
+                        $(".layout-wrapper").css("opacity", 1);
+                    }
+
+                });
+            }
+            $('#goMaterial').on('click', function () {
+                if ($('#rJobOrder').val() != '') {
+                    window.open("/MinorSystem/MaterialRequest", "_blank");
+                    Cookies.set('goMaterial', $('#rJobOrder').val());
+                }
+
+            });
+        });
+        
+    </script>
+}
